@@ -46,13 +46,13 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <Link href="/start-up" className="text-sm font-medium hover:text-primary transition-colors">
+          <Link href="/startup" className="text-sm font-medium hover:text-primary transition-colors">
             Start Up
           </Link>
-          <Link href="/hiwot-fund" className="text-sm font-medium hover:text-primary transition-colors">
+          <Link href="/hiwot" className="text-sm font-medium hover:text-primary transition-colors">
             Hiwot Fund
           </Link>
-          <Link href="/job-applicant" className="text-sm font-medium hover:text-primary transition-colors">
+          <Link href="/job" className="text-sm font-medium hover:text-primary transition-colors">
             Job Applicant
           </Link>
           <Link href="/feedback" className="text-sm font-medium hover:text-primary transition-colors">
@@ -61,7 +61,7 @@ export default function Navbar() {
           <Link href="/blog" className="text-sm font-medium hover:text-primary transition-colors">
             Blog
           </Link>
-          <Link href="/about-us" className="text-sm font-medium hover:text-primary transition-colors">
+          <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">
             About us
           </Link>
         </nav>
@@ -81,7 +81,7 @@ export default function Navbar() {
           </DropdownMenu>
 
           <Button asChild className="bg-orange-50 text-black hover:bg-orange-100">
-            <Link href="/contact-us">Contact Us</Link>
+            <Link href="/contact">Contact Us</Link>
           </Button>
         </div>
 
@@ -96,21 +96,21 @@ export default function Navbar() {
         <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md py-4 px-4 animate-in slide-in-from-top duration-300">
           <nav className="flex flex-col space-y-4">
             <Link
-              href="/start-up"
+              href="/startup"
               className="text-sm font-medium hover:text-primary transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Start Up
             </Link>
             <Link
-              href="/hiwot-fund"
+              href="/hiwot"
               className="text-sm font-medium hover:text-primary transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Hiwot Fund
             </Link>
             <Link
-              href="/job-applicant"
+              href="/job"
               className="text-sm font-medium hover:text-primary transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
@@ -131,7 +131,7 @@ export default function Navbar() {
               Blog
             </Link>
             <Link
-              href="/about-us"
+              href="/about"
               className="text-sm font-medium hover:text-primary transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
@@ -139,7 +139,7 @@ export default function Navbar() {
             </Link>
             <div className="pt-2 border-t">
               <Button asChild className="w-full bg-orange-50 text-black hover:bg-orange-100">
-                <Link href="/contact-us" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
                   Contact Us
                 </Link>
               </Button>
