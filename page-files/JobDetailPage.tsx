@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { motion } from "framer-motion"
+import imgg from '@/public/collab.svg'
 
 export default function JobDetailPage() {
   const [liked, setLiked] = useState(false)
@@ -80,7 +81,7 @@ export default function JobDetailPage() {
             <div className="flex items-center gap-4 mb-4">
               <div className="relative h-12 w-12 bg-gray-200 rounded-md overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=48&width=48"
+                  src={imgg}
                   alt="Electrical Circuit"
                   fill
                   className="object-cover"
@@ -244,7 +245,7 @@ export default function JobDetailPage() {
               <h2 className="text-xl font-bold mb-4">Project Name</h2>
               <div className="relative rounded-lg overflow-hidden mb-4">
                 <Image
-                  src="/placeholder.svg?height=300&width=600"
+                  src={imgg}
                   alt="Project Proposal"
                   width={600}
                   height={300}
@@ -285,7 +286,7 @@ export default function JobDetailPage() {
               <div className="flex items-center gap-4 mb-4">
                 <div className="relative h-12 w-12 bg-gray-200 rounded-md overflow-hidden">
                   <Image
-                    src="/placeholder.svg?height=48&width=48"
+                    src={imgg}
                     alt="Electrical Circuit"
                     fill
                     className="object-cover"
@@ -302,14 +303,14 @@ export default function JobDetailPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <Image
-                  src="/placeholder.svg?height=200&width=300"
+                  src={imgg}
                   alt="Team working"
                   width={300}
                   height={200}
                   className="rounded-lg object-cover w-full h-auto"
                 />
                 <Image
-                  src="/placeholder.svg?height=200&width=300"
+                  src={imgg}
                   alt="Office space"
                   width={300}
                   height={200}

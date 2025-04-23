@@ -7,7 +7,6 @@ import { Calendar, User, ArrowLeft, Share2, ThumbsUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import BlogCard from "@/components/blog-comp/BlogCard"
-
 // Mock blog data
 const mockBlogs = Array.from({ length: 30 }, (_, i) => ({
   id: `blog-${i + 1}`,
@@ -31,9 +30,9 @@ const mockBlogs = Array.from({ length: 30 }, (_, i) => ({
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
   `,
   image: [
-    "/placeholder.svg?height=300&width=400",
-    "/placeholder.svg?height=300&width=400&text=Blog+Image+2",
-    "/placeholder.svg?height=300&width=400&text=Blog+Image+3",
+    "https://images.pexels.com/photos/13167951/pexels-photo-13167951.jpeg?cs=srgb&dl=pexels-ezgi-bulut-280715511-13167951.jpg&fm=jpg",
+    "https://images.pexels.com/photos/13167951/pexels-photo-13167951.jpeg?cs=srgb&dl=pexels-ezgi-bulut-280715511-13167951.jpg&fm=jpg",
+    "https://images.pexels.com/photos/13167951/pexels-photo-13167951.jpeg?cs=srgb&dl=pexels-ezgi-bulut-280715511-13167951.jpg&fm=jpg",
   ][i % 3],
   videoLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   referenceLink: "https://example.com/reference",

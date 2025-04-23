@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
-import careerImage from "@/public/carrer.svg"
+import careerImage from "@/public/people.jpg"
 
 export default function CareersSection() {
     return (
@@ -46,7 +46,7 @@ export default function CareersSection() {
                                 src={careerImage}
                                 alt="Illustration representing career growth and teamwork"
                                 fill
-                                className="object-contain"
+                                className="object-cover"
                             />
                         </div>
                     </motion.div>

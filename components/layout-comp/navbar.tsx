@@ -38,8 +38,8 @@ export default function Navbar() {
           <Image
             src={logo}
             alt="Sigma Logo"
-            width={50}
-            height={50}
+            width={80}
+            height={80}
             className="transition-transform duration-300 hover:scale-105"
           />
         </Link>
