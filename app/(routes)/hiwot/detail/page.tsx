@@ -1,10 +1,9 @@
-import JobApplicantPage from '@/page-files/JobApplicationPage'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-      <JobApplicantPage/>
+      detail
     </div>
   )
 }
