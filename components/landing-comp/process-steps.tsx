@@ -91,9 +91,14 @@ export default function ProcessSteps() {
               <p className={`mb-6 ${index === 1 ? "text-blue-100" : "text-gray-600"}`}>{step.description}</p>
               <Link
                 href="#"
-                className={`inline-flex items-center ${
-                  index === 1 ? "text-white" : "text-blue-500"
-                } font-medium hover:underline`}
+                onClick={(e) => {
+                  if (index === 1) {
+                    e.preventDefault(); // Prevent default link behavior
+                    document.getElementById('funding-categories')?.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}  
+                className={`inline-flex items-center ${index === 1 ? "text-white" : "text-blue-500"
+                  } font-medium hover:underline`}
               >
                 Get Started <ChevronRight className="ml-1 h-4 w-4" />
               </Link>

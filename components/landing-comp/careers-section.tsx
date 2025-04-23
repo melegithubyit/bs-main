@@ -1,9 +1,10 @@
 "use client"
 
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import careerImage from "@/public/people.jpg"
+import Link from "next/link"
 
 export default function CareersSection() {
     return (
@@ -16,7 +17,7 @@ export default function CareersSection() {
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-3xl font-bold mb-4">Join Our Team</h2>
+                        <h2 className="text-3xl font-bold mb-4">Armed with the best, ready to lead.</h2>
                         <p className="text-gray-700 mb-6 leading-relaxed">
                             At Elite National Benefits, LLC, we're building more than just a company; we're fostering a community of
                             driven professionals dedicated to excellence. With over 20 years of senior-level industry experience, we
@@ -25,12 +26,12 @@ export default function CareersSection() {
                         </p>
 
                         <div>
-                            <h3 className="text-2xl font-bold mb-2">
-                                Ready to join a <span className="text-orange-500">winning team?</span>
+                            <h3 className="text-2xl font-bold mb-6">
+                                Ready to conquer <span className="text-orange-500">the best?</span>
                             </h3>
-                            <Button size="lg" className="mt-4 bg-orange-500 hover:bg-orange-600 text-white">
-                                Explore Open Positions
-                            </Button>
+                            <Link href="job" className="p-3 rounded-md bg-orange-500 hover:bg-orange-600 text-white">
+                                Explore job Requests
+                            </Link>
                         </div>
                     </motion.div>
 

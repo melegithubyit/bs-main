@@ -1,10 +1,10 @@
-import JobApplicantPage from '@/page-files/JobApplicationPage'
+import JobOverviewPage from '@/page-files/JobOverviewPage'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-      <JobApplicantPage/>
+      <JobOverviewPage/>
     </div>
   )
 }

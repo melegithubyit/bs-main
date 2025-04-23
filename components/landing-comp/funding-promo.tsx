@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import fundingStartup from '@/public/funding-startup.svg'
 import projfund from '@/public/projFund.svg'
+import Link from "next/link"
 
 export default function FundingPromo() {
   return (
@@ -64,14 +65,16 @@ export default function FundingPromo() {
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent flex items-center">
-              <div className="p-12">
+              <div className="p-12 z-10">
                 <h2 className="text-3xl font-bold text-white mb-4">
                   Let your project
                   <br />
                   get Fund
                 </h2>
                 <p className="text-white/90 mb-6">Your search for your project fund begins here</p>
-                <Button className="bg-orange-500 hover:bg-orange-600 text-white">Learn more</Button>
+                <Button asChild className="bg-orange-500 hover:bg-orange-600 text-white">
+                  <Link href="/startup">Learn more</Link>
+                </Button>
               </div>
             </div>
             <div className="absolute bottom-0 left-0 opacity-20">

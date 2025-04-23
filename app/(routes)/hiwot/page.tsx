@@ -1,9 +1,10 @@
 import React from 'react'
+import HiwotOverviewPage from '@/page-files/HiwotOverviewPage'
 
 const page = () => {
   return (
     <div>
-      hiwot
+      <HiwotOverviewPage/>
     </div>
   )
 }

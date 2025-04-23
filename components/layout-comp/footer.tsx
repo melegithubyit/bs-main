@@ -18,7 +18,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <Link href="/" className="inline-block">
-              <h2 className="text-2xl font-bold">Sigma</h2>
+              <h2 className="text-2xl font-bold">Bole Starter</h2>
             </Link>
             <p className="text-sm text-gray-400">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
             <div className="flex space-x-4 pt-4">
@@ -66,18 +66,18 @@ export default function Footer() {
             <h3 className="font-medium mb-4">Join Us</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/start-up" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link href="/startup" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Start Up
                 </Link>
               </li>
               <li>
-                <Link href="/hiwot-fund" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link href="/hiwot" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Hiwot Fund
                 </Link>
               </li>
               <li>
-                <Link href="/job-applicant" className="text-sm text-gray-400 hover:text-white transition-colors">
-                  Job Applicant
+                <Link href="/job" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  Job Requests
                 </Link>
               </li>
             </ul>
@@ -86,14 +86,14 @@ export default function Footer() {
           <div>
             <h3 className="font-medium mb-4">Contact Us</h3>
             <ul className="space-y-2">
-              <li className="text-sm text-gray-400">info@sigma.com</li>
+              <li className="text-sm text-gray-400">info@bole-starter.com</li>
               <li className="text-sm text-gray-400">+251 91 111 1111</li>
             </ul>
           </div>
         </div>
 
         <div className="mt-12 pt-6 border-t border-gray-800 text-sm text-gray-400">
-          <p>© Sigma, 2024 All rights Reserved</p>
+          <p>© Bole Starter, 2024 All rights Reserved</p>
         </div>
       </div>
     </footer>

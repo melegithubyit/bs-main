@@ -1,9 +1,10 @@
 import React from 'react'
+import StartupOverviewPage from '@/page-files/StartupOverviewPage'
 
 const page = () => {
   return (
     <div>
-      start up page
+      <StartupOverviewPage/>
     </div>
   )
 }

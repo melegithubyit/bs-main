@@ -19,17 +19,17 @@ const categories: CategoryProps[] = [
     {
         title: "Start up Fund",
         image: startup,
-        link: "/start-up-fund",
+        link: "/startup",
     },
     {
         title: "Hiwot Fund",
         image: hiwot,
-        link: "/hiwot-fund",
+        link: "/hiwot",
     },
     {
-        title: "Project Fund",
+        title: "Job Applications",
         image: job,
-        link: "/project-fund",
+        link: "/job",
     },
 ]
 
@@ -37,7 +37,7 @@ export default function FundingCategories() {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
     return (
-        <section className="py-16 bg-gray-50">
+        <section id="funding-categories" className="py-16 bg-gray-50">
             <div className="container mx-auto px-4">
                 <motion.div
                     className="text-center mb-12"
@@ -45,7 +45,7 @@ export default function FundingCategories() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4">Sigma Funding Solutions</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4">Bole Starter Funding Solutions</h2>
                     <p className="text-gray-600 max-w-2xl mx-auto">
                         Explore flexible funding solutions tailored for your startup, project, or personal needs.
                     </p>

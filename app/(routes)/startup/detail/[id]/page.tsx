@@ -1,9 +1,9 @@
 import React from 'react'
-
+import StartupDetailPage from '@/page-files/StartupDetailPage'
 const page = () => {
   return (
     <div>
-      detail
+      <StartupDetailPage/>
     </div>
   )
 }

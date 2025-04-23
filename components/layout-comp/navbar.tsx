@@ -53,7 +53,7 @@ export default function Navbar() {
             Hiwot Fund
           </Link>
           <Link href="/job" className="text-sm font-medium hover:text-primary transition-colors">
-            Job Applicant
+            Job Requests
           </Link>
           <Link href="/feedback" className="text-sm font-medium hover:text-primary transition-colors">
             Feedback
@@ -114,7 +114,7 @@ export default function Navbar() {
               className="text-sm font-medium hover:text-primary transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Job Applicant
+              Job Requests
             </Link>
             <Link
               href="/feedback"

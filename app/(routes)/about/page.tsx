@@ -27,7 +27,7 @@ export default function AboutPage() {
       </div>
 
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 md:mb-24">
           <div className="flex items-center justify-center gap-4 mb-6">
             <div className="h-0.5 w-12 bg-orange-500"></div>
             <h1 className="text-3xl md:text-4xl font-bold">About Us</h1>

@@ -99,7 +99,7 @@ const salaryRanges = [
   { id: "2000-plus", label: "$2000 or above", count: 4 },
 ]
 
-export default function JobApplicantPage() {
+export default function HiwotOverviewPage() {
   // State
   const [searchTerm, setSearchTerm] = useState("")
   const [location, setLocation] = useState("Addis Ababa")
