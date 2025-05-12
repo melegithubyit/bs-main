@@ -1,9 +1,10 @@
 import React from 'react'
 import HiwotDetailPage from '@/page-files/HiwotDetailPage'
-const page = () => {
+
+const page = ({ params }: { params: { id: string } }) => {
   return (
     <div>
-      <HiwotDetailPage/>
+      <HiwotDetailPage params={params} />
     </div>
   )
 }

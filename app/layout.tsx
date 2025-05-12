@@ -1,18 +1,17 @@
+'use client'
+
 import type React from "react"
-import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import Navbar from "@/components/layout-comp/navbar"
 import Footer from "@/components/layout-comp/footer"
 import { Toaster } from "@/components/ui/toaster"
+import { Provider as StoreProvider } from "react-redux"
+import store from "@/redux/store";
 
 
 const inter = Inter({ subsets: ["latin"] })
 
-export const metadata: Metadata = {
-  title: "Sigma Funding Solutions",
-  description: "Find the top funding solutions available for individuals, family or business.",
-}
 
 export default function RootLayout({
   children,
@@ -22,9 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
-          <main>{children}</main>
-        <Footer />
+        <StoreProvider store={store}>
+          <Navbar />
+            <main>{children}</main>
+          <Footer />
+        </StoreProvider>
       </body>
       <Toaster/>
     </html>

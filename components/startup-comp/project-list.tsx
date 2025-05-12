@@ -1,44 +1,47 @@
 "use client"
 
 import { useState } from "react"
-import CandidateCard from "./candidate-card"
+import ProjectCard, { type StartupProject } from "./project-card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
-import Pagination from "../common-comp/pagination"
-import { Candidate } from "@/types/Job"
+import Pagination from "@/components/common-comp/pagination"
 
-interface CandidateListProps {
-  candidates: Candidate[]
+interface ProjectListProps {
+  projects: StartupProject[]
   layout: "list" | "grid"
   onLayoutChange: (layout: "list" | "grid") => void
 }
 
-export default function CandidateList({ candidates, layout, onLayoutChange }: CandidateListProps) {
+export default function ProjectList({ projects, layout, onLayoutChange }: ProjectListProps) {
   const [currentPage, setCurrentPage] = useState(1)
-  const [sortBy, setSortBy] = useState("most-relevant")
-  const candidatesPerPage = 9
+  const [sortBy, setSortBy] = useState("most-recent")
+  const projectsPerPage = 9
 
-  // Sort candidates
-  const sortedCandidates = [...candidates].sort((a, b) => {
+  // Sort projects
+  const sortedProjects = [...projects].sort((a, b) => {
     switch (sortBy) {
       case "name-asc":
-        return `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`)
+        return a.projectName.localeCompare(b.projectName)
       case "name-desc":
-        return `${b.firstName} ${b.lastName}`.localeCompare(`${a.firstName} ${a.lastName}`)
-      case "department":
-        return a.department.localeCompare(b.department)
-      case "location":
-        return a.location.localeCompare(b.location)
+        return b.projectName.localeCompare(a.projectName)
+      case "funding-high":
+        return b.goalFund - a.goalFund
+      case "funding-low":
+        return a.goalFund - b.goalFund
+      case "progress-high":
+        return (b.fundingProgress || 0) - (a.fundingProgress || 0)
+      case "progress-low":
+        return (a.fundingProgress || 0) - (b.fundingProgress || 0)
       default:
         return 0
     }
   })
 
   // Pagination
-  const indexOfLastCandidate = currentPage * candidatesPerPage
-  const indexOfFirstCandidate = indexOfLastCandidate - candidatesPerPage
-  const currentCandidates = sortedCandidates.slice(indexOfFirstCandidate, indexOfLastCandidate)
-  const totalPages = Math.ceil(sortedCandidates.length / candidatesPerPage)
+  const indexOfLastProject = currentPage * projectsPerPage
+  const indexOfFirstProject = indexOfLastProject - projectsPerPage
+  const currentProjects = sortedProjects.slice(indexOfFirstProject, indexOfLastProject)
+  const totalPages = Math.ceil(sortedProjects.length / projectsPerPage)
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
@@ -48,8 +51,8 @@ export default function CandidateList({ candidates, layout, onLayoutChange }: Ca
     <div className="bg-white rounded-lg shadow-sm p-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
-          <h2 className="text-xl font-bold">All Candidates</h2>
-          <p className="text-sm text-gray-500">Showing {sortedCandidates.length} results</p>
+          <h2 className="text-xl font-bold">All Startup Projects</h2>
+          <p className="text-sm text-gray-500">Showing {sortedProjects.length} results</p>
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">
           <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -59,11 +62,13 @@ export default function CandidateList({ candidates, layout, onLayoutChange }: Ca
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="most-relevant">Most relevant</SelectItem>
+                <SelectItem value="most-recent">Most recent</SelectItem>
                 <SelectItem value="name-asc">Name (A-Z)</SelectItem>
                 <SelectItem value="name-desc">Name (Z-A)</SelectItem>
-                <SelectItem value="department">Department</SelectItem>
-                <SelectItem value="location">Location</SelectItem>
+                <SelectItem value="funding-high">Funding Goal (High-Low)</SelectItem>
+                <SelectItem value="funding-low">Funding Goal (Low-High)</SelectItem>
+                <SelectItem value="progress-high">Progress (High-Low)</SelectItem>
+                <SelectItem value="progress-low">Progress (Low-High)</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -117,39 +122,39 @@ export default function CandidateList({ candidates, layout, onLayoutChange }: Ca
               </svg>
             </Button>
           </div>
-          <Button className="bg-orange-500 hover:bg-orange-600 text-white w-full sm:w-auto">Create Project</Button>
+          <Button className="bg-orange-500 hover:bg-orange-600 text-white w-full sm:w-auto">Post a Project</Button>
         </div>
       </div>
 
-      {/* Candidates */}
+      {/* Projects */}
       {layout === "list" ? (
         <div className="space-y-4">
-          {currentCandidates.length > 0 ? (
-            currentCandidates.map((candidate, index) => (
-              <CandidateCard key={candidate.id} candidate={candidate} index={index} layout="list" />
+          {currentProjects.length > 0 ? (
+            currentProjects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} layout="list" />
             ))
           ) : (
             <div className="text-center py-8">
-              <p className="text-gray-500">No candidates found matching your criteria.</p>
+              <p className="text-gray-500">No projects found matching your criteria.</p>
             </div>
           )}
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {currentCandidates.length > 0 ? (
-            currentCandidates.map((candidate, index) => (
-              <CandidateCard key={candidate.id} candidate={candidate} index={index} layout="grid" />
+          {currentProjects.length > 0 ? (
+            currentProjects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} layout="grid" />
             ))
           ) : (
             <div className="text-center py-8 col-span-full">
-              <p className="text-gray-500">No candidates found matching your criteria.</p>
+              <p className="text-gray-500">No projects found matching your criteria.</p>
             </div>
           )}
         </div>
       )}
 
       {/* Pagination */}
-      {sortedCandidates.length > 0 && (
+      {sortedProjects.length > 0 && (
         <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
       )}
     </div>

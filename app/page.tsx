@@ -15,7 +15,7 @@ export default function Home() {
       <HiwotFundCTA />
       <CareersSection />
       <FundingPromo />
-      <Newsletter />
+      {/* <Newsletter /> */}
     </div>
   );
 }

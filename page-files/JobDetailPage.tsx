@@ -32,7 +32,7 @@ import { Candidate } from "@/types/Job"
 
 // Update the mock data to include bank and bankAccount
 const mockCandidates: Candidate[] = Array.from({ length: 50 }, (_, i) => ({
-  id: `${i + 1}`,
+  id: `candidate-${i + 1}`,
   firstName: ["Sarah", "Meron", "Hiwot", "Tigist", "Bethel"][i % 5],
   lastName: ["Tadesse", "Abebe", "Kebede", "Haile", "Tesfaye"][i % 5],
   department: ["Engineering", "Design", "Marketing", "Finance", "Human Resources"][i % 5],
@@ -46,9 +46,8 @@ const mockCandidates: Candidate[] = Array.from({ length: 50 }, (_, i) => ({
     "Project Management",
   ][i % 7],
   phoneNumber: `+251 9${i % 10}${i % 10} ${i % 10}${i % 10}${i % 10} ${i % 10}${i % 10}${i % 10}${i % 10}`,
-  email: `${["sarah", "meron", "hiwot", "tigist", "bethel"][i % 5]}.${
-    ["tadesse", "abebe", "kebede", "haile", "tesfaye"][i % 5]
-  }@example.com`,
+  email: `${["sarah", "meron", "hiwot", "tigist", "bethel"][i % 5]}.${["tadesse", "abebe", "kebede", "haile", "tesfaye"][i % 5]
+    }@example.com`,
   location: ["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5],
   address: `${i + 1} Main Street, ${["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5]}`,
   bank: ["Commercial Bank of Ethiopia", "Dashen Bank", "Awash Bank", "Bank of Abyssinia", "Zemen Bank"][i % 5],
@@ -75,7 +74,11 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
       setLoading(true)
       try {
         // In a real app, you would fetch from an API
-        const foundCandidate = mockCandidates.find((c) => c.id === params.id)
+        // Check for both ID formats (with or without 'candidate-' prefix)
+        const foundCandidate = mockCandidates.find((c) =>
+          c.id === params.id ||
+          `candidate-${c.id}` === params.id
+        )
 
         if (foundCandidate) {
           setCandidate(foundCandidate)
@@ -105,7 +108,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
           <h2 className="text-2xl font-bold mb-4">Candidate Not Found</h2>
           <p className="text-gray-600 mb-6">The candidate you are looking for does not exist.</p>
           <Button asChild className="bg-orange-500 hover:bg-orange-600 text-white">
-            <Link href="/job-applicant">Back to Candidates</Link>
+            <Link href="/job">Back to Candidates</Link>
           </Button>
         </div>
       </div>
@@ -130,7 +133,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="min-h-screen pt-24 pb-16 relative overflow-hidden">
+    <div className="min-h-screen pt-40 pb-16 relative overflow-hidden">
       {/* Background patterns */}
       <div className="absolute -left-40 top-0 opacity-10">
         <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -151,7 +154,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
       <div className="container mx-auto px-4">
         <div className="mb-6">
           <Link
-            href="/job-applicant"
+            href="/job"
             className="inline-flex items-center text-gray-600 hover:text-orange-500 transition-colors"
           >
             <ArrowLeft size={16} className="mr-2" />
@@ -226,61 +229,6 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
 
               <div className="mt-6 pt-6 border-t">
                 <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white">Contact Candidate</Button>
-              </div>
-            </div>
-
-            {/* Documents Section */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-lg font-bold mb-4">Documents</h2>
-
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div className="flex items-center">
-                    <FileText className="h-5 w-5 text-orange-500 mr-3" />
-                    <span>CV</span>
-                  </div>
-                  <a
-                    href={candidate.CV}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center h-8 w-8 rounded-md text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                  >
-                    <Download className="h-4 w-4" />
-                  </a>
-                </div>
-
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div className="flex items-center">
-                    <FileText className="h-5 w-5 text-orange-500 mr-3" />
-                    <span>Identification</span>
-                  </div>
-                  <a
-                    href={candidate.identification}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center h-8 w-8 rounded-md text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                  >
-                    <Download className="h-4 w-4" />
-                  </a>
-                </div>
-
-                <h3 className="font-medium mt-4">Education Certificates</h3>
-                {candidate.educationCertificates.map((cert, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div className="flex items-center">
-                      <FileText className="h-5 w-5 text-orange-500 mr-3" />
-                      <span>Certificate {index + 1}</span>
-                    </div>
-                    <a
-                      href={cert}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center h-8 w-8 rounded-md text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                    >
-                      <Download className="h-4 w-4" />
-                    </a>
-                  </div>
-                ))}
               </div>
             </div>
           </motion.div>
@@ -456,13 +404,6 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
                   </div>
                 </TabsContent>
               </Tabs>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-bold mb-6">Actions</h2>
-              <div>
-                <Button className="bg-orange-500 hover:bg-orange-600 text-white">Hire for Project</Button>
-              </div>
             </div>
           </motion.div>
         </div>

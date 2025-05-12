@@ -1,12 +1,10 @@
 import JobDetailPage from '@/page-files/JobDetailPage'
 import React from 'react'
 
-const page = () => {
+const page = ({ params }: { params: { id: string } }) => {
   return (
     <div>
-      <JobDetailPage params={{
-        id: '2'
-      }}/>
+      <JobDetailPage params={params} />
     </div>
   )
 }

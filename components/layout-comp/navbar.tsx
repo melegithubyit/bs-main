@@ -3,15 +3,21 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Menu, X, Globe } from "lucide-react"
+import { Menu, X, Globe, User, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
-import logo from "@/public/logo/logo.svg"
+import { useSelector, useDispatch } from "react-redux"
+import type { RootState } from "@/redux/store"
+import { logout } from "@/redux/authSlice"
+import { useLogoutMutation } from "@/redux/api/authApi"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth)
+  const dispatch = useDispatch()
+  const [logoutUser] = useLogoutMutation()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +32,17 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  const handleLogout = async () => {
+    try {
+      await logoutUser().unwrap()
+      dispatch(logout())
+    } catch (error) {
+      console.error("Logout failed:", error)
+      // Even if the API call fails, we still want to clear local state
+      dispatch(logout())
+    }
+  }
+
   return (
     <header
       className={cn(
@@ -36,10 +53,10 @@ export default function Navbar() {
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Link href="/" className="flex items-center">
           <Image
-            src={logo}
+            src="/placeholder.svg?height=50&width=50"
             alt="Sigma Logo"
-            width={80}
-            height={80}
+            width={50}
+            height={50}
             className="transition-transform duration-300 hover:scale-105"
           />
         </Link>
@@ -53,7 +70,7 @@ export default function Navbar() {
             Hiwot Fund
           </Link>
           <Link href="/job" className="text-sm font-medium hover:text-primary transition-colors">
-            Job Requests
+            Job Applicant
           </Link>
           <Link href="/feedback" className="text-sm font-medium hover:text-primary transition-colors">
             Feedback
@@ -80,7 +97,43 @@ export default function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Button asChild className="bg-orange-50 text-black hover:bg-orange-100">
+          {isAuthenticated ? (
+            <>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    <span>{user?.username || user?.email?.split("@")[0]}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile">Profile</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/auth/change-password">Change Password</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <Button variant="destructive" size="sm" className="flex items-center gap-2" onClick={handleLogout}>
+                <LogOut className="h-4 w-4" />
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/auth/signin">Sign In</Link>
+              </Button>
+
+              <Button asChild className="bg-orange-50 text-black hover:bg-orange-100">
+                <Link href="/auth/signup">Sign Up</Link>
+              </Button>
+            </>
+          )}
+
+          <Button variant="outline" asChild>
             <Link href="/contact">Contact Us</Link>
           </Button>
         </div>
@@ -114,7 +167,7 @@ export default function Navbar() {
               className="text-sm font-medium hover:text-primary transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Job Requests
+              Job Applicant
             </Link>
             <Link
               href="/feedback"
@@ -137,8 +190,46 @@ export default function Navbar() {
             >
               About us
             </Link>
-            <div className="pt-2 border-t">
-              <Button asChild className="w-full bg-orange-50 text-black hover:bg-orange-100">
+            <div className="pt-2 border-t space-y-2">
+              {isAuthenticated ? (
+                <>
+                  <div className="flex items-center gap-2 px-2 py-1">
+                    <User className="h-4 w-4" />
+                    <span className="font-medium">{user?.username || user?.email?.split("@")[0]}</span>
+                  </div>
+                  <Button asChild variant="ghost" className="w-full justify-start" onClick={() => setIsMenuOpen(false)}>
+                    <Link href="/profile">Profile</Link>
+                  </Button>
+                  <Button asChild variant="ghost" className="w-full justify-start" onClick={() => setIsMenuOpen(false)}>
+                    <Link href="/auth/change-password">Change Password</Link>
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    className="w-full flex items-center gap-2"
+                    onClick={() => {
+                      handleLogout()
+                      setIsMenuOpen(false)
+                    }}
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button asChild variant="ghost" className="w-full justify-start">
+                    <Link href="/auth/signin" onClick={() => setIsMenuOpen(false)}>
+                      Sign In
+                    </Link>
+                  </Button>
+                  <Button asChild className="w-full bg-orange-50 text-black hover:bg-orange-100">
+                    <Link href="/auth/signup" onClick={() => setIsMenuOpen(false)}>
+                      Sign Up
+                    </Link>
+                  </Button>
+                </>
+              )}
+              <Button asChild variant="outline" className="w-full">
                 <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
                   Contact Us
                 </Link>

@@ -1,9 +1,9 @@
 import React from 'react'
 import StartupDetailPage from '@/page-files/StartupDetailPage'
-const page = () => {
+const page = ({ params }: { params: { id: string } }) => {
   return (
     <div>
-      <StartupDetailPage/>
+      <StartupDetailPage params={params} />
     </div>
   )
 }

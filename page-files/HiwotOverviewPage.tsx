@@ -1,267 +1,257 @@
 "use client"
 
-import { useState } from "react"
-import Image from "next/image"
-import { Search, MapPin, ChevronDown, ChevronUp, ChevronRight, ChevronLeft, SlidersHorizontal } from "lucide-react"
+import { useState, useEffect } from "react"
+import { SlidersHorizontal } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { motion, AnimatePresence } from "framer-motion"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { motion } from "framer-motion"
+import SearchBar from "@/components/hiwot-comp/search-bar"
+import ApplicantFilters from "@/components/hiwot-comp/applicant-filters"
+import ApplicantList from "@/components/hiwot-comp/applicant-list"
+import type { HiwotApplicant } from "@/components/hiwot-comp/applicant-card"
 
-// Types
-interface Candidate {
-  id: number
-  name: string
-  location: string
-  skills: Array<{
-    name: string
-    color: string
-  }>
-  image: string
-}
-
-// Mock data
-const mockCandidates: Candidate[] = Array.from({ length: 50 }, (_, i) => ({
-  id: i + 1,
-  name: "Abebe Kebede",
-  location: "Addis Ababa, Ethiopia",
-  skills: [
-    {
-      name:
-        i % 7 === 0
-          ? "Platform"
-          : i % 5 === 0
-            ? "Machine"
-            : i % 3 === 0
-              ? "Development"
-              : i % 2 === 0
-                ? "Engineering"
-                : "Services",
-      color:
-        i % 7 === 0
-          ? "text-red-500 bg-red-50"
-          : i % 5 === 0
-            ? "text-purple-500 bg-purple-50"
-            : i % 3 === 0
-              ? "text-orange-500 bg-orange-50"
-              : i % 2 === 0
-                ? "text-green-500 bg-green-50"
-                : "text-gray-500 bg-gray-50",
-    },
-    {
-      name: "TypeScript",
-      color: "text-blue-500 bg-blue-50",
-    },
-    {
-      name: "HTML",
-      color: "text-orange-500 bg-orange-50",
-    },
-    {
-      name: "CSS",
-      color: "text-blue-500 bg-blue-50",
-    },
+// Mock data for applicants
+const mockApplicants: HiwotApplicant[] = Array.from({ length: 50 }, (_, i) => ({
+  id: `applicant-${i + 1}`,
+  firstName: ["Sarah", "Meron", "Hiwot", "Tigist", "Bethel"][i % 5],
+  lastName: ["Tadesse", "Abebe", "Kebede", "Haile", "Tesfaye"][i % 5],
+  description: [
+    "Needs support for cancer treatment",
+    "Requires surgery for heart condition",
+    "Seeking help for chronic kidney disease",
+    "Needs assistance for diabetes treatment",
+    "Requires support for physical therapy after accident",
+  ][i % 5],
+  phoneNumber: `+251 9${i % 10}${i % 10} ${i % 10}${i % 10}${i % 10} ${i % 10}${i % 10}${i % 10}${i % 10}`,
+  email: `${["sarah", "meron", "hiwot", "tigist", "bethel"][i % 5]}.${["tadesse", "abebe", "kebede", "haile", "tesfaye"][i % 5]
+    }@example.com`,
+  postDuration: ["30", "60", "90", "120", "180"][i % 5],
+  dateOfBirth: new Date(1980 + (i % 30), i % 12, (i % 28) + 1).toISOString().split("T")[0],
+  videoLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  medicalDocuments: [
+    `https://storage.example.com/medical/document-${i + 1}-1.pdf`,
+    `https://storage.example.com/medical/document-${i + 1}-2.pdf`,
+    `https://storage.example.com/medical/document-${i + 1}-3.pdf`,
   ],
-  image: "/placeholder.svg?height=50&width=50",
+  goalFund: `${(50000 + i * 10000).toString()}`,
+  bank: ["Commercial Bank of Ethiopia", "Dashen Bank", "Awash Bank", "Bank of Abyssinia", "Zemen Bank"][i % 5],
+  bankAccount: `100${i}${i}${i}${i}${i}${i}`,
+  location: ["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5],
+  address: `${i + 1} Main Street, ${["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5]}`,
+  nationalId: `https://storage.example.com/id/id-${i + 1}.pdf`,
+  photo: `/placeholder.svg?height=50&width=50`,
+  fundingProgress: Math.floor(Math.random() * 100),
+  supporters: Math.floor(Math.random() * 100),
 }))
 
 // Filter options
-const employmentTypes = [
-  { id: "full-time", label: "Full-time", count: 5 },
-  { id: "part-time", label: "Part-Time", count: 0 },
-  { id: "remote", label: "Remote", count: 7 },
-  { id: "internship", label: "Internship", count: 24 },
-  { id: "contract", label: "Contract", count: 9 },
+const fundingRanges = [
+  { id: "under-50k", label: "Under ETB 50,000", count: 10 },
+  { id: "50k-100k", label: "ETB 50,000 - 100,000", count: 15 },
+  { id: "100k-200k", label: "ETB 100,000 - 200,000", count: 12 },
+  { id: "200k-500k", label: "ETB 200,000 - 500,000", count: 8 },
+  { id: "over-500k", label: "Over ETB 500,000", count: 5 },
 ]
 
-const categories = [
-  { id: "design", label: "Design", count: 34 },
-  { id: "sales", label: "Sales", count: 5 },
-  { id: "marketing", label: "Marketing", count: 3 },
-  { id: "business", label: "Business", count: 9 },
-  { id: "human-resource", label: "Human Resource", count: 6 },
-  { id: "finance", label: "Finance", count: 4 },
-  { id: "engineering", label: "Engineering", count: 4 },
-  { id: "technology", label: "Technology", count: 5 },
+const medicalConditions = [
+  { id: "cancer", label: "Cancer", count: 10 },
+  { id: "heart", label: "Heart Conditions", count: 12 },
+  { id: "kidney", label: "Kidney Disease", count: 8 },
+  { id: "diabetes", label: "Diabetes", count: 7 },
+  { id: "accident", label: "Accident Recovery", count: 13 },
 ]
 
-const jobLevels = [
-  { id: "entry", label: "Entry Level", count: 17 },
-  { id: "mid", label: "Mid Level", count: 9 },
-  { id: "senior", label: "Senior Level", count: 5 },
+const ageRanges = [
+  { id: "0-18", label: "Children (0-18)", count: 15 },
+  { id: "19-35", label: "Young Adults (19-35)", count: 12 },
+  { id: "36-50", label: "Adults (36-50)", count: 10 },
+  { id: "51-65", label: "Middle-aged (51-65)", count: 8 },
+  { id: "over-65", label: "Seniors (65+)", count: 5 },
 ]
 
-const salaryRanges = [
-  { id: "700-900", label: "$700 - $900", count: 4 },
-  { id: "900-1500", label: "$900 - $1500", count: 8 },
-  { id: "1500-2000", label: "$1500 - $2000", count: 10 },
-  { id: "2000-plus", label: "$2000 or above", count: 4 },
+const locations = [
+  { id: "addis-ababa", label: "Addis Ababa", count: 10 },
+  { id: "dire-dawa", label: "Dire Dawa", count: 10 },
+  { id: "bahir-dar", label: "Bahir Dar", count: 10 },
+  { id: "hawassa", label: "Hawassa", count: 10 },
+  { id: "mekelle", label: "Mekelle", count: 10 },
 ]
 
 export default function HiwotOverviewPage() {
   // State
   const [searchTerm, setSearchTerm] = useState("")
-  const [location, setLocation] = useState("Addis Ababa")
-  const [currentPage, setCurrentPage] = useState(1)
-  const [candidates, setCandidates] = useState<Candidate[]>(mockCandidates)
-  const [filteredCandidates, setFilteredCandidates] = useState<Candidate[]>(mockCandidates)
-  const [expandedFilters, setExpandedFilters] = useState({
-    employment: true,
-    categories: true,
-    jobLevel: true,
-    salaryRange: true,
-  })
-
-  // Filter states
-  const [selectedEmploymentTypes, setSelectedEmploymentTypes] = useState<string[]>([])
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-  const [selectedJobLevels, setSelectedJobLevels] = useState<string[]>([])
-  const [selectedSalaryRanges, setSelectedSalaryRanges] = useState<string[]>([])
-
-  // Add a layout state after the other state declarations
+  const [location, setLocation] = useState("all")
+  const [applicants, setApplicants] = useState<HiwotApplicant[]>(mockApplicants)
+  const [filteredApplicants, setFilteredApplicants] = useState<HiwotApplicant[]>(mockApplicants)
   const [layout, setLayout] = useState<"list" | "grid">("list")
 
-  // Pagination
-  const candidatesPerPage = 7
-  const totalPages = Math.ceil(filteredCandidates.length / candidatesPerPage)
-  const indexOfLastCandidate = currentPage * candidatesPerPage
-  const indexOfFirstCandidate = indexOfLastCandidate - candidatesPerPage
-  const currentCandidates = filteredCandidates.slice(indexOfFirstCandidate, indexOfLastCandidate)
-
-  // Toggle filter sections
-  const toggleFilter = (filter: keyof typeof expandedFilters) => {
-    setExpandedFilters({
-      ...expandedFilters,
-      [filter]: !expandedFilters[filter],
-    })
-  }
+  // Filter states
+  const [selectedFundingRanges, setSelectedFundingRanges] = useState<string[]>([])
+  const [selectedMedicalConditions, setSelectedMedicalConditions] = useState<string[]>([])
+  const [selectedAgeRanges, setSelectedAgeRanges] = useState<string[]>([])
+  const [selectedLocations, setSelectedLocations] = useState<string[]>([])
 
   // Handle checkbox changes
-  const handleEmploymentTypeChange = (id: string, checked: boolean) => {
+  const handleFundingRangeChange = (id: string, checked: boolean) => {
     if (checked) {
-      setSelectedEmploymentTypes([...selectedEmploymentTypes, id])
+      setSelectedFundingRanges([...selectedFundingRanges, id])
     } else {
-      setSelectedEmploymentTypes(selectedEmploymentTypes.filter((type) => type !== id))
+      setSelectedFundingRanges(selectedFundingRanges.filter((range) => range !== id))
     }
   }
 
-  const handleCategoryChange = (id: string, checked: boolean) => {
+  const handleMedicalConditionChange = (id: string, checked: boolean) => {
     if (checked) {
-      setSelectedCategories([...selectedCategories, id])
+      setSelectedMedicalConditions([...selectedMedicalConditions, id])
     } else {
-      setSelectedCategories(selectedCategories.filter((category) => category !== id))
+      setSelectedMedicalConditions(selectedMedicalConditions.filter((condition) => condition !== id))
     }
   }
 
-  const handleJobLevelChange = (id: string, checked: boolean) => {
+  const handleAgeRangeChange = (id: string, checked: boolean) => {
     if (checked) {
-      setSelectedJobLevels([...selectedJobLevels, id])
+      setSelectedAgeRanges([...selectedAgeRanges, id])
     } else {
-      setSelectedJobLevels(selectedJobLevels.filter((level) => level !== id))
+      setSelectedAgeRanges(selectedAgeRanges.filter((range) => range !== id))
     }
   }
 
-  const handleSalaryRangeChange = (id: string, checked: boolean) => {
+  const handleLocationChange = (id: string, checked: boolean) => {
     if (checked) {
-      setSelectedSalaryRanges([...selectedSalaryRanges, id])
+      setSelectedLocations([...selectedLocations, id])
     } else {
-      setSelectedSalaryRanges(selectedSalaryRanges.filter((range) => range !== id))
+      setSelectedLocations(selectedLocations.filter((loc) => loc !== id))
     }
   }
 
   // Apply filters
   const applyFilters = () => {
-    let results = [...candidates]
+    let results = [...applicants]
 
     // Apply search term filter
     if (searchTerm) {
+      const searchTermLower = searchTerm.toLowerCase()
       results = results.filter(
-        (candidate) =>
-          candidate.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          candidate.skills.some((skill) => skill.name.toLowerCase().includes(searchTerm.toLowerCase())),
+        (applicant) =>
+          `${applicant.firstName} ${applicant.lastName}`.toLowerCase().includes(searchTermLower) ||
+          applicant.description.toLowerCase().includes(searchTermLower),
       )
     }
 
-    // Apply employment type filter
-    if (selectedEmploymentTypes.length > 0) {
-      // In a real app, you would filter based on the candidate's employment type
-      // For this mock, we'll just filter randomly based on the candidate's ID
-      results = results.filter((candidate) =>
-        selectedEmploymentTypes.some((type) => {
-          if (type === "full-time") return candidate.id % 5 === 0
-          if (type === "part-time") return candidate.id % 7 === 0
-          if (type === "remote") return candidate.id % 3 === 0
-          if (type === "internship") return candidate.id % 2 === 0
-          if (type === "contract") return candidate.id % 4 === 0
-          return false
-        }),
-      )
+    // Apply location filter
+    if (location && location !== "all") {
+      results = results.filter((applicant) => {
+        const locationId = applicant.location.toLowerCase().replace(/\s+/g, "-")
+        return locationId === location
+      })
     }
 
-    // Apply category filter
-    if (selectedCategories.length > 0) {
-      // In a real app, you would filter based on the candidate's category
-      // For this mock, we'll just filter randomly based on the candidate's ID
-      results = results.filter((candidate) =>
-        selectedCategories.some((category) => {
-          const categoryIndex = categories.findIndex((c) => c.id === category)
-          return candidate.id % (categoryIndex + 2) === 0
-        }),
-      )
+    // Apply funding range filter
+    if (selectedFundingRanges.length > 0) {
+      results = results.filter((applicant) => {
+        const fundAmount = Number.parseInt(applicant.goalFund)
+        return selectedFundingRanges.some((range) => {
+          switch (range) {
+            case "under-50k":
+              return fundAmount < 50000
+            case "50k-100k":
+              return fundAmount >= 50000 && fundAmount < 100000
+            case "100k-200k":
+              return fundAmount >= 100000 && fundAmount < 200000
+            case "200k-500k":
+              return fundAmount >= 200000 && fundAmount < 500000
+            case "over-500k":
+              return fundAmount >= 500000
+            default:
+              return false
+          }
+        })
+      })
     }
 
-    // Apply job level filter
-    if (selectedJobLevels.length > 0) {
-      // In a real app, you would filter based on the candidate's job level
-      // For this mock, we'll just filter randomly based on the candidate's ID
-      results = results.filter((candidate) =>
-        selectedJobLevels.some((level) => {
-          if (level === "entry") return candidate.id % 3 === 0
-          if (level === "mid") return candidate.id % 5 === 0
-          if (level === "senior") return candidate.id % 7 === 0
-          return false
-        }),
-      )
+    // Apply medical condition filter
+    if (selectedMedicalConditions.length > 0) {
+      results = results.filter((applicant) => {
+        const description = applicant.description.toLowerCase()
+        return selectedMedicalConditions.some((condition) => {
+          switch (condition) {
+            case "cancer":
+              return description.includes("cancer")
+            case "heart":
+              return description.includes("heart")
+            case "kidney":
+              return description.includes("kidney")
+            case "diabetes":
+              return description.includes("diabetes")
+            case "accident":
+              return description.includes("accident")
+            default:
+              return false
+          }
+        })
+      })
     }
 
-    // Apply salary range filter
-    if (selectedSalaryRanges.length > 0) {
-      // In a real app, you would filter based on the candidate's salary range
-      // For this mock, we'll just filter randomly based on the candidate's ID
-      results = results.filter((candidate) =>
-        selectedSalaryRanges.some((range) => {
-          if (range === "700-900") return candidate.id % 4 === 0
-          if (range === "900-1500") return candidate.id % 3 === 0
-          if (range === "1500-2000") return candidate.id % 5 === 0
-          if (range === "2000-plus") return candidate.id % 7 === 0
-          return false
-        }),
-      )
+    // Apply age range filter
+    if (selectedAgeRanges.length > 0) {
+      results = results.filter((applicant) => {
+        const birthDate = new Date(applicant.dateOfBirth)
+        const today = new Date()
+        let age = today.getFullYear() - birthDate.getFullYear()
+        const monthDiff = today.getMonth() - birthDate.getMonth()
+
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--
+        }
+
+        return selectedAgeRanges.some((range) => {
+          switch (range) {
+            case "0-18":
+              return age >= 0 && age <= 18
+            case "19-35":
+              return age >= 19 && age <= 35
+            case "36-50":
+              return age >= 36 && age <= 50
+            case "51-65":
+              return age >= 51 && age <= 65
+            case "over-65":
+              return age > 65
+            default:
+              return false
+          }
+        })
+      })
     }
 
-    setFilteredCandidates(results)
-    setCurrentPage(1) // Reset to first page after filtering
+    // Apply location filter from checkboxes
+    if (selectedLocations.length > 0) {
+      results = results.filter((applicant) => {
+        const locationId = applicant.location.toLowerCase().replace(/\s+/g, "-")
+        return selectedLocations.includes(locationId)
+      })
+    }
+
+    setFilteredApplicants(results)
   }
 
   // Clear all filters
   const clearFilters = () => {
-    setSelectedEmploymentTypes([])
-    setSelectedCategories([])
-    setSelectedJobLevels([])
-    setSelectedSalaryRanges([])
     setSearchTerm("")
-    setFilteredCandidates(candidates)
-    setCurrentPage(1)
+    setLocation("all")
+    setSelectedFundingRanges([])
+    setSelectedMedicalConditions([])
+    setSelectedAgeRanges([])
+    setSelectedLocations([])
+    setFilteredApplicants(applicants)
   }
 
-  // Handle pagination
-  const goToPage = (page: number) => {
-    setCurrentPage(page)
-  }
+  // Apply filters when any filter state changes
+  useEffect(() => {
+    applyFilters()
+  }, [searchTerm, location])
 
   return (
-    <div className="min-h-screen pt-24 pb-16 relative overflow-hidden">
+    <div className="min-h-screen pt-40 pb-16 relative overflow-hidden">
       {/* Background patterns */}
       <div className="absolute -left-40 top-0 opacity-10">
         <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -284,11 +274,12 @@ export default function HiwotOverviewPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-8 mt-16"
+          className="mb-8"
         >
           <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center">
-            Find the right <span className="text-orange-500">Female Candidates</span> for your project
+            Hiwot Fund: <span className="text-orange-500">Health Support</span> for those in need
           </h1>
+          <p className="text-gray-600 text-center py-4">Support individuals with medical conditions who need financial assistance</p>
         </motion.div>
 
         {/* Search Bar */}
@@ -296,36 +287,16 @@ export default function HiwotOverviewPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex flex-col md:flex-row gap-4 mb-8"
+          className="mb-8"
         >
-          <div className="relative flex-grow">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-            <Input
-              type="text"
-              placeholder="Profession Title"
-              className="pl-10"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div className="relative md:w-1/3">
-            <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-            <Select value={location} onValueChange={setLocation}>
-              <SelectTrigger className="pl-10">
-                <SelectValue placeholder="Select location" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Addis Ababa">Addis Ababa</SelectItem>
-                <SelectItem value="Dire Dawa">Dire Dawa</SelectItem>
-                <SelectItem value="Bahir Dar">Bahir Dar</SelectItem>
-                <SelectItem value="Hawassa">Hawassa</SelectItem>
-                <SelectItem value="Mekelle">Mekelle</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <Button className="bg-orange-500 hover:bg-orange-600 text-white" onClick={applyFilters}>
-            Search
-          </Button>
+          <SearchBar
+            searchTerm={searchTerm}
+            location={location}
+            locations={locations}
+            onSearchChange={setSearchTerm}
+            onLocationChange={setLocation}
+            onSearch={applyFilters}
+          />
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -342,168 +313,23 @@ export default function HiwotOverviewPage() {
                 <SheetHeader>
                   <SheetTitle>Filter Options</SheetTitle>
                 </SheetHeader>
-                <div className="py-4 space-y-6">
-                  {/* Employment Type Filter */}
-                  <div className="border rounded-lg overflow-hidden">
-                    <div
-                      className="flex justify-between items-center p-4 cursor-pointer bg-gray-50"
-                      onClick={() => toggleFilter("employment")}
-                    >
-                      <h3 className="font-medium">Type of Employment</h3>
-                      {expandedFilters.employment ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-                    </div>
-                    <AnimatePresence>
-                      {expandedFilters.employment && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="p-4 space-y-3"
-                        >
-                          {employmentTypes.map((type) => (
-                            <div key={type.id} className="flex items-center space-x-2">
-                              <Checkbox
-                                id={`mobile-employment-${type.id}`}
-                                checked={selectedEmploymentTypes.includes(type.id)}
-                                onCheckedChange={(checked) => handleEmploymentTypeChange(type.id, checked as boolean)}
-                              />
-                              <label
-                                htmlFor={`mobile-employment-${type.id}`}
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                {type.label} ({type.count})
-                              </label>
-                            </div>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Categories Filter */}
-                  <div className="border rounded-lg overflow-hidden">
-                    <div
-                      className="flex justify-between items-center p-4 cursor-pointer bg-gray-50"
-                      onClick={() => toggleFilter("categories")}
-                    >
-                      <h3 className="font-medium">Categories</h3>
-                      {expandedFilters.categories ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-                    </div>
-                    <AnimatePresence>
-                      {expandedFilters.categories && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="p-4 space-y-3"
-                        >
-                          {categories.map((category) => (
-                            <div key={category.id} className="flex items-center space-x-2">
-                              <Checkbox
-                                id={`mobile-category-${category.id}`}
-                                checked={selectedCategories.includes(category.id)}
-                                onCheckedChange={(checked) => handleCategoryChange(category.id, checked as boolean)}
-                              />
-                              <label
-                                htmlFor={`mobile-category-${category.id}`}
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                {category.label} ({category.count})
-                              </label>
-                            </div>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Job Level Filter */}
-                  <div className="border rounded-lg overflow-hidden">
-                    <div
-                      className="flex justify-between items-center p-4 cursor-pointer bg-gray-50"
-                      onClick={() => toggleFilter("jobLevel")}
-                    >
-                      <h3 className="font-medium">Job Level</h3>
-                      {expandedFilters.jobLevel ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-                    </div>
-                    <AnimatePresence>
-                      {expandedFilters.jobLevel && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="p-4 space-y-3"
-                        >
-                          {jobLevels.map((level) => (
-                            <div key={level.id} className="flex items-center space-x-2">
-                              <Checkbox
-                                id={`mobile-level-${level.id}`}
-                                checked={selectedJobLevels.includes(level.id)}
-                                onCheckedChange={(checked) => handleJobLevelChange(level.id, checked as boolean)}
-                              />
-                              <label
-                                htmlFor={`mobile-level-${level.id}`}
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                {level.label} ({level.count})
-                              </label>
-                            </div>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Salary Range Filter */}
-                  <div className="border rounded-lg overflow-hidden">
-                    <div
-                      className="flex justify-between items-center p-4 cursor-pointer bg-gray-50"
-                      onClick={() => toggleFilter("salaryRange")}
-                    >
-                      <h3 className="font-medium">Salary Range</h3>
-                      {expandedFilters.salaryRange ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-                    </div>
-                    <AnimatePresence>
-                      {expandedFilters.salaryRange && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="p-4 space-y-3"
-                        >
-                          {salaryRanges.map((range) => (
-                            <div key={range.id} className="flex items-center space-x-2">
-                              <Checkbox
-                                id={`mobile-range-${range.id}`}
-                                checked={selectedSalaryRanges.includes(range.id)}
-                                onCheckedChange={(checked) => handleSalaryRangeChange(range.id, checked as boolean)}
-                              />
-                              <label
-                                htmlFor={`mobile-range-${range.id}`}
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                {range.label} ({range.count})
-                              </label>
-                            </div>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Filter Action Buttons */}
-                  <div className="flex gap-3 mt-6">
-                    <Button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white" onClick={applyFilters}>
-                      Go
-                    </Button>
-                    <Button className="flex-1" variant="outline" onClick={clearFilters}>
-                      Clear filter
-                    </Button>
-                  </div>
+                <div className="py-4">
+                  <ApplicantFilters
+                    fundingRanges={fundingRanges}
+                    medicalConditions={medicalConditions}
+                    ageRanges={ageRanges}
+                    locations={locations}
+                    selectedFundingRanges={selectedFundingRanges}
+                    selectedMedicalConditions={selectedMedicalConditions}
+                    selectedAgeRanges={selectedAgeRanges}
+                    selectedLocations={selectedLocations}
+                    onFundingRangeChange={handleFundingRangeChange}
+                    onMedicalConditionChange={handleMedicalConditionChange}
+                    onAgeRangeChange={handleAgeRangeChange}
+                    onLocationChange={handleLocationChange}
+                    onApplyFilters={applyFilters}
+                    onClearFilters={clearFilters}
+                  />
                 </div>
               </SheetContent>
             </Sheet>
@@ -514,417 +340,34 @@ export default function HiwotOverviewPage() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-6 hidden lg:block"
+            className="hidden lg:block"
           >
-            {/* Employment Type Filter */}
-            <div className="border rounded-lg overflow-hidden">
-              <div
-                className="flex justify-between items-center p-4 cursor-pointer bg-gray-50"
-                onClick={() => toggleFilter("employment")}
-              >
-                <h3 className="font-medium">Type of Employment</h3>
-                {expandedFilters.employment ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-              </div>
-              <AnimatePresence>
-                {expandedFilters.employment && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="p-4 space-y-3"
-                  >
-                    {employmentTypes.map((type) => (
-                      <div key={type.id} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`employment-${type.id}`}
-                          checked={selectedEmploymentTypes.includes(type.id)}
-                          onCheckedChange={(checked) => handleEmploymentTypeChange(type.id, checked as boolean)}
-                        />
-                        <label
-                          htmlFor={`employment-${type.id}`}
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          {type.label} ({type.count})
-                        </label>
-                      </div>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Categories Filter */}
-            <div className="border rounded-lg overflow-hidden">
-              <div
-                className="flex justify-between items-center p-4 cursor-pointer bg-gray-50"
-                onClick={() => toggleFilter("categories")}
-              >
-                <h3 className="font-medium">Categories</h3>
-                {expandedFilters.categories ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-              </div>
-              <AnimatePresence>
-                {expandedFilters.categories && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="p-4 space-y-3"
-                  >
-                    {categories.map((category) => (
-                      <div key={category.id} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`category-${category.id}`}
-                          checked={selectedCategories.includes(category.id)}
-                          onCheckedChange={(checked) => handleCategoryChange(category.id, checked as boolean)}
-                        />
-                        <label
-                          htmlFor={`category-${category.id}`}
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          {category.label} ({category.count})
-                        </label>
-                      </div>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Job Level Filter */}
-            <div className="border rounded-lg overflow-hidden">
-              <div
-                className="flex justify-between items-center p-4 cursor-pointer bg-gray-50"
-                onClick={() => toggleFilter("jobLevel")}
-              >
-                <h3 className="font-medium">Job Level</h3>
-                {expandedFilters.jobLevel ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-              </div>
-              <AnimatePresence>
-                {expandedFilters.jobLevel && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="p-4 space-y-3"
-                  >
-                    {jobLevels.map((level) => (
-                      <div key={level.id} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`level-${level.id}`}
-                          checked={selectedJobLevels.includes(level.id)}
-                          onCheckedChange={(checked) => handleJobLevelChange(level.id, checked as boolean)}
-                        />
-                        <label
-                          htmlFor={`level-${level.id}`}
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          {level.label} ({level.count})
-                        </label>
-                      </div>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Salary Range Filter */}
-            <div className="border rounded-lg overflow-hidden">
-              <div
-                className="flex justify-between items-center p-4 cursor-pointer bg-gray-50"
-                onClick={() => toggleFilter("salaryRange")}
-              >
-                <h3 className="font-medium">Salary Range</h3>
-                {expandedFilters.salaryRange ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-              </div>
-              <AnimatePresence>
-                {expandedFilters.salaryRange && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="p-4 space-y-3"
-                  >
-                    {salaryRanges.map((range) => (
-                      <div key={range.id} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`range-${range.id}`}
-                          checked={selectedSalaryRanges.includes(range.id)}
-                          onCheckedChange={(checked) => handleSalaryRangeChange(range.id, checked as boolean)}
-                        />
-                        <label
-                          htmlFor={`range-${range.id}`}
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          {range.label} ({range.count})
-                        </label>
-                      </div>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Filter Action Buttons */}
-            <div className="flex gap-3">
-              <Button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white" onClick={applyFilters}>
-                Go
-              </Button>
-              <Button className="flex-1" variant="outline" onClick={clearFilters}>
-                Clear filter
-              </Button>
-            </div>
+            <ApplicantFilters
+              fundingRanges={fundingRanges}
+              medicalConditions={medicalConditions}
+              ageRanges={ageRanges}
+              locations={locations}
+              selectedFundingRanges={selectedFundingRanges}
+              selectedMedicalConditions={selectedMedicalConditions}
+              selectedAgeRanges={selectedAgeRanges}
+              selectedLocations={selectedLocations}
+              onFundingRangeChange={handleFundingRangeChange}
+              onMedicalConditionChange={handleMedicalConditionChange}
+              onAgeRangeChange={handleAgeRangeChange}
+              onLocationChange={handleLocationChange}
+              onApplyFilters={applyFilters}
+              onClearFilters={clearFilters}
+            />
           </motion.div>
 
-          {/* Candidates List */}
+          {/* Applicants List */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             className="lg:col-span-3"
           >
-            <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                <div>
-                  <h2 className="text-xl font-bold">All Candidates</h2>
-                  <p className="text-sm text-gray-500">Showing {filteredCandidates.length} results</p>
-                </div>
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">
-                  <div className="flex items-center gap-2 w-full sm:w-auto">
-                    <span className="text-sm text-gray-500 whitespace-nowrap">Sort by:</span>
-                    <Select defaultValue="most-relevant">
-                      <SelectTrigger className="w-full sm:w-[180px]">
-                        <SelectValue placeholder="Sort by" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="most-relevant">Most relevant</SelectItem>
-                        <SelectItem value="newest">Newest</SelectItem>
-                        <SelectItem value="oldest">Oldest</SelectItem>
-                        <SelectItem value="highest-salary">Highest salary</SelectItem>
-                        <SelectItem value="lowest-salary">Lowest salary</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className={`h-8 w-8 ${layout === "grid" ? "bg-orange-50" : ""}`}
-                      onClick={() => setLayout("grid")}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <rect x="3" y="3" width="7" height="7" />
-                        <rect x="14" y="3" width="7" height="7" />
-                        <rect x="3" y="14" width="7" height="7" />
-                        <rect x="14" y="14" width="7" height="7" />
-                      </svg>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className={`h-8 w-8 ${layout === "list" ? "bg-orange-50" : ""}`}
-                      onClick={() => setLayout("list")}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <line x1="8" y1="6" x2="21" y2="6" />
-                        <line x1="8" y1="12" x2="21" y2="12" />
-                        <line x1="8" y1="18" x2="21" y2="18" />
-                        <line x1="3" y1="6" x2="3.01" y2="6" />
-                        <line x1="3" y1="12" x2="3.01" y2="12" />
-                        <line x1="3" y1="18" x2="3.01" y2="18" />
-                      </svg>
-                    </Button>
-                  </div>
-                  <Button className="bg-orange-500 hover:bg-orange-600 text-white w-full sm:w-auto">
-                    Create Project
-                  </Button>
-                </div>
-              </div>
-
-              {/* Candidates */}
-              {layout === "list" ? (
-                <div className="space-y-4">
-                  {currentCandidates.length > 0 ? (
-                    currentCandidates.map((candidate) => (
-                      <motion.div
-                        key={candidate.id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="border rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
-                      >
-                        <div className="flex items-center gap-4">
-                          <div className="relative h-12 w-12 rounded-full overflow-hidden">
-                            <Image
-                              src={candidate.image || "/placeholder.svg"}
-                              alt={candidate.name}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                          <div>
-                            <h3 className="font-medium">{candidate.name}</h3>
-                            <p className="text-sm text-gray-500">{candidate.location}</p>
-                            <div className="flex flex-wrap gap-2 mt-2">
-                              {candidate.skills.map((skill, index) => (
-                                <span key={index} className={`text-xs px-2 py-1 rounded-full ${skill.color}`}>
-                                  {skill.name}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                        <Button
-                          variant="outline"
-                          className="text-orange-500 border-orange-500 hover:bg-orange-50 w-full sm:w-auto"
-                        >
-                          See More
-                        </Button>
-                      </motion.div>
-                    ))
-                  ) : (
-                    <div className="text-center py-8">
-                      <p className="text-gray-500">No candidates found matching your criteria.</p>
-                      <Button variant="link" onClick={clearFilters} className="mt-2">
-                        Clear filters and try again
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {currentCandidates.length > 0 ? (
-                    currentCandidates.map((candidate) => (
-                      <motion.div
-                        key={candidate.id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="border rounded-lg p-4 flex flex-col"
-                      >
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="relative h-12 w-12 rounded-full overflow-hidden">
-                            <Image
-                              src={candidate.image || "/placeholder.svg"}
-                              alt={candidate.name}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                          <div>
-                            <h3 className="font-medium">{candidate.name}</h3>
-                            <p className="text-xs text-gray-500">{candidate.location}</p>
-                          </div>
-                        </div>
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {candidate.skills.map((skill, index) => (
-                            <span key={index} className={`text-xs px-2 py-1 rounded-full ${skill.color}`}>
-                              {skill.name}
-                            </span>
-                          ))}
-                        </div>
-                        <Button
-                          variant="outline"
-                          className="text-orange-500 border-orange-500 hover:bg-orange-50 mt-auto"
-                        >
-                          See More
-                        </Button>
-                      </motion.div>
-                    ))
-                  ) : (
-                    <div className="text-center py-8 col-span-full">
-                      <p className="text-gray-500">No candidates found matching your criteria.</p>
-                      <Button variant="link" onClick={clearFilters} className="mt-2">
-                        Clear filters and try again
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Pagination */}
-              {filteredCandidates.length > 0 && (
-                <div className="flex justify-center items-center mt-8">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => goToPage(Math.max(1, currentPage - 1))}
-                    disabled={currentPage === 1}
-                    className="h-8 w-8 mr-2"
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                  </Button>
-
-                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                    // Show pages around current page
-                    let pageNum = i + 1
-                    if (totalPages > 5) {
-                      if (currentPage > 3) {
-                        pageNum = currentPage - 3 + i
-                      }
-                      if (currentPage > totalPages - 2) {
-                        pageNum = totalPages - 4 + i
-                      }
-                    }
-
-                    return pageNum <= totalPages ? (
-                      <Button
-                        key={pageNum}
-                        variant={currentPage === pageNum ? "default" : "outline"}
-                        className={`h-8 w-8 mx-1 ${
-                          currentPage === pageNum ? "bg-orange-500 hover:bg-orange-600 text-white" : ""
-                        }`}
-                        onClick={() => goToPage(pageNum)}
-                      >
-                        {pageNum}
-                      </Button>
-                    ) : null
-                  })}
-
-                  {totalPages > 5 && currentPage < totalPages - 2 && (
-                    <>
-                      <span className="mx-1">...</span>
-                      <Button variant="outline" className="h-8 w-8 mx-1" onClick={() => goToPage(totalPages)}>
-                        {totalPages}
-                      </Button>
-                    </>
-                  )}
-
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => goToPage(Math.min(totalPages, currentPage + 1))}
-                    disabled={currentPage === totalPages}
-                    className="h-8 w-8 ml-2"
-                  >
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                </div>
-              )}
-            </div>
+            <ApplicantList applicants={filteredApplicants} layout={layout} onLayoutChange={setLayout} />
           </motion.div>
         </div>
       </div>
