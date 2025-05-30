@@ -1,18 +1,25 @@
-import { ChangePasswordPayload, ForgotPasswordPayload, RefreshTokenPayload, ResetPasswordPayload, UserLoginPayload, UserRegistrationPayload } from "@/types/authApi";
+import {
+  ChangePasswordPayload,
+  ForgotPasswordPayload,
+  RefreshTokenPayload,
+  ResetPasswordPayload,
+  UserLoginPayload,
+  UserRegistrationPayload,
+} from "@/types/authApi";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://bole.adgo.et:5002",
+    baseUrl: "https://bole.weytech.et:5002",
     prepareHeaders: (headers, { getState }) => {
-      headers.set("Content-Type", `application/json`)
+      headers.set("Content-Type", `application/json`);
 
       // Get token from state
-      const token = (getState() as RootState).auth.accessToken
+      const token = (getState() as RootState).auth.accessToken;
       if (token) {
-        headers.set("Authorization", `Bearer ${token}`)
+        headers.set("Authorization", `Bearer ${token}`);
       }
 
       return headers;
@@ -21,7 +28,6 @@ export const authApi = createApi({
 
   tagTypes: [],
   endpoints: (builder) => ({
-
     // register a new user
     registerUser: builder.mutation<any, UserRegistrationPayload>({
       query: (user) => ({
@@ -40,7 +46,6 @@ export const authApi = createApi({
       }),
     }),
 
-
     // logout a current user
     logout: builder.mutation<any, void>({
       query: () => ({
@@ -49,16 +54,14 @@ export const authApi = createApi({
       }),
     }),
 
-
     // change the current user's password
     changePassword: builder.mutation<any, ChangePasswordPayload>({
-        query: (user) => ({
-            url: "/auth/change-password",
-            method: "PATCH",
-            body: user,
-        }),
+      query: (user) => ({
+        url: "/auth/change-password",
+        method: "PATCH",
+        body: user,
+      }),
     }),
-
 
     // forgot password
     forgotPassword: builder.mutation<any, ForgotPasswordPayload>({
@@ -69,7 +72,6 @@ export const authApi = createApi({
       }),
     }),
 
-
     resetPassword: builder.mutation<any, ResetPasswordPayload>({
       query: (payload) => ({
         url: "/auth/reset-password",
@@ -77,7 +79,6 @@ export const authApi = createApi({
         body: payload,
       }),
     }),
-
 
     // refresh token
     refreshToken: builder.mutation<any, RefreshTokenPayload>({
@@ -87,16 +88,15 @@ export const authApi = createApi({
         body: payload,
       }),
     }),
-
   }),
 });
 
 export const {
-    useRegisterUserMutation,
-    useLogoutMutation,
-    useChangePasswordMutation,
-    useForgotPasswordMutation,
-    useResetPasswordMutation,
-    useRefreshTokenMutation,
-    useLoginUserMutation,
+  useRegisterUserMutation,
+  useLogoutMutation,
+  useChangePasswordMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+  useRefreshTokenMutation,
+  useLoginUserMutation,
 } = authApi;

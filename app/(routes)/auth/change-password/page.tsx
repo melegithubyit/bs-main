@@ -1,64 +1,67 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import Link from "next/link"
-import { ArrowLeft, Lock } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useState } from "react"
-import { useChangePasswordMutation } from "@/redux/api/authApi"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { useRouter } from "next/navigation"
-import { useSelector } from "react-redux"
-import type { RootState } from "@/redux/store"
+import Link from "next/link";
+import { ArrowLeft, Lock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import { useChangePasswordMutation } from "@/redux/api/authApi";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/redux/store";
 
 export default function ChangePassword() {
-  const [oldPassword, setOldPassword] = useState("")
-  const [newPassword, setNewPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState("")
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const [changePassword, { isLoading }] = useChangePasswordMutation()
-  const router = useRouter()
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth)
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
+  const router = useRouter();
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   // Redirect if not authenticated
   if (typeof window !== "undefined" && !isAuthenticated) {
-    router.push("/auth/signin")
+    router.push("/auth/signin");
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    setSuccess("")
+    e.preventDefault();
+    setError("");
+    setSuccess("");
 
     if (newPassword !== confirmPassword) {
-      setError("New passwords do not match")
-      return
+      setError("New passwords do not match");
+      return;
     }
 
     try {
       const result = await changePassword({
         oldPassword,
         newPassword,
-      }).unwrap()
+      }).unwrap();
 
       if (result.status === "success") {
-        setSuccess("Password has been changed successfully.")
+        setSuccess("Password has been changed successfully.");
         // Clear form
-        setOldPassword("")
-        setNewPassword("")
-        setConfirmPassword("")
+        setOldPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
       } else {
-        setError("Failed to change password. Please try again.")
+        setError("Failed to change password. Please try again.");
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      setError(err.data?.message || "Failed to change password. Please try again.")
+      setError(
+        err.data?.message || "Failed to change password. Please try again."
+      );
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-gray-50">
@@ -87,7 +90,9 @@ export default function ChangePassword() {
 
         {success && (
           <Alert className="mb-6 bg-green-50 border-green-200">
-            <AlertDescription className="text-green-800">{success}</AlertDescription>
+            <AlertDescription className="text-green-800">
+              {success}
+            </AlertDescription>
           </Alert>
         )}
 
@@ -114,7 +119,9 @@ export default function ChangePassword() {
               onChange={(e) => setNewPassword(e.target.value)}
               required
             />
-            <p className="text-xs text-gray-500">Must be at least 8 characters long</p>
+            <p className="text-xs text-gray-500">
+              Must be at least 8 characters long
+            </p>
           </div>
 
           <div className="space-y-2">
@@ -129,11 +136,15 @@ export default function ChangePassword() {
             />
           </div>
 
-          <Button type="submit" className="w-full bg-orange-600 hover:bg-orange-700" disabled={isLoading}>
+          <Button
+            type="submit"
+            className="w-full bg-orange-600 hover:bg-orange-700"
+            disabled={isLoading}
+          >
             {isLoading ? "Updating..." : "Update Password"}
           </Button>
         </form>
       </div>
     </div>
-  )
+  );
 }

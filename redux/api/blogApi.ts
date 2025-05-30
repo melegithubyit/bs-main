@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const blogApi = createApi({
   reducerPath: "blogApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://bole.adgo.et:5002",
+    baseUrl: "https://bole.weytech.et:5002",
     // credentials: "include",
     prepareHeaders: (headers) => {
       headers.set("Content-Type", `application/json`);
@@ -13,7 +13,6 @@ export const blogApi = createApi({
 
   tagTypes: [],
   endpoints: (builder) => ({
-
     //  get all blogs
     getAllBlogs: builder.query<any, void>({
       query: () => ({
@@ -21,7 +20,6 @@ export const blogApi = createApi({
         method: "GET",
       }),
     }),
-
 
     // get blog by id
     getBlogById: builder.query<any, string>({
@@ -38,7 +36,6 @@ export const blogApi = createApi({
         method: "PATCH",
       }),
     }),
-    
 
     // dislike a blog post
     dislikeBlog: builder.mutation<any, string>({
@@ -47,13 +44,12 @@ export const blogApi = createApi({
         method: "PATCH",
       }),
     }),
-
   }),
 });
 
 export const {
-    useGetAllBlogsQuery,
-    useGetBlogByIdQuery,
-    useLikeBlogMutation,
-    useDislikeBlogMutation,
+  useGetAllBlogsQuery,
+  useGetBlogByIdQuery,
+  useLikeBlogMutation,
+  useDislikeBlogMutation,
 } = blogApi;

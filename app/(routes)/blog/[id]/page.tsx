@@ -1,19 +1,23 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { Calendar, User, ArrowLeft, Share2, ThumbsUp } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
-import BlogCard from "@/components/blog-comp/BlogCard"
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Calendar, User, ArrowLeft, Share2, ThumbsUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import BlogCard from "@/components/blog-comp/BlogCard";
 // Mock blog data
 const mockBlogs = Array.from({ length: 30 }, (_, i) => ({
   id: `blog-${i + 1}`,
   title:
     i === 0
       ? "Integer Maecenas Eget Viverra"
-      : ["Integer Maecenas Eget Viverra", "Aenean eleifend ante maecenas", "Vivamus laoreet mauris fusce"][i % 3],
+      : [
+          "Integer Maecenas Eget Viverra",
+          "Aenean eleifend ante maecenas",
+          "Vivamus laoreet mauris fusce",
+        ][i % 3],
   secondaryHeading: "The Future of Digital Marketing",
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
@@ -42,70 +46,129 @@ const mockBlogs = Array.from({ length: 30 }, (_, i) => ({
     day: "numeric",
     year: "numeric",
   }),
-}))
+}));
 
 export default function BlogDetailPage({ params }: { params: { id: string } }) {
-  const [blog, setBlog] = useState<any>(null)
-  const [relatedBlogs, setRelatedBlogs] = useState<any[]>([])
-  const [liked, setLiked] = useState(false)
-  const [likeCount, setLikeCount] = useState(15)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [blog, setBlog] = useState<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [relatedBlogs, setRelatedBlogs] = useState<any[]>([]);
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(15);
 
   useEffect(() => {
     // Find the blog with the matching ID
-    const foundBlog = mockBlogs.find((blog) => blog.id === params.id)
+    const foundBlog = mockBlogs.find((blog) => blog.id === params.id);
 
     if (foundBlog) {
-      setBlog(foundBlog)
+      setBlog(foundBlog);
 
       // Get 3 related blogs (excluding the current one)
       const related = mockBlogs
         .filter((b) => b.id !== params.id)
         .sort(() => 0.5 - Math.random())
-        .slice(0, 3)
+        .slice(0, 3);
 
-      setRelatedBlogs(related)
+      setRelatedBlogs(related);
     }
-  }, [params.id])
+  }, [params.id]);
 
   const handleLike = () => {
     if (liked) {
-      setLikeCount(likeCount - 1)
+      setLikeCount(likeCount - 1);
     } else {
-      setLikeCount(likeCount + 1)
+      setLikeCount(likeCount + 1);
     }
-    setLiked(!liked)
-  }
+    setLiked(!liked);
+  };
 
   if (!blog) {
     return (
       <div className="min-h-screen pt-24 pb-16 flex items-center justify-center">
         <p>Loading...</p>
       </div>
-    )
+    );
   }
 
   return (
     <div className="min-h-screen pt-40 pb-16 relative overflow-hidden">
       {/* Background patterns */}
       <div className="absolute -left-40 top-0 opacity-10">
-        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="200" cy="200" r="200" stroke="#FFA500" strokeWidth="0.5" fill="none" />
-          <circle cx="200" cy="200" r="180" stroke="#FFA500" strokeWidth="0.5" fill="none" />
-          <circle cx="200" cy="200" r="160" stroke="#FFA500" strokeWidth="0.5" fill="none" />
+        <svg
+          width="400"
+          height="400"
+          viewBox="0 0 400 400"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="200"
+            cy="200"
+            r="200"
+            stroke="#FFA500"
+            strokeWidth="0.5"
+            fill="none"
+          />
+          <circle
+            cx="200"
+            cy="200"
+            r="180"
+            stroke="#FFA500"
+            strokeWidth="0.5"
+            fill="none"
+          />
+          <circle
+            cx="200"
+            cy="200"
+            r="160"
+            stroke="#FFA500"
+            strokeWidth="0.5"
+            fill="none"
+          />
         </svg>
       </div>
 
       <div className="absolute -right-40 bottom-0 opacity-10">
-        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="200" cy="200" r="200" stroke="#3B82F6" strokeWidth="0.5" fill="none" />
-          <circle cx="200" cy="200" r="180" stroke="#3B82F6" strokeWidth="0.5" fill="none" />
-          <circle cx="200" cy="200" r="160" stroke="#3B82F6" strokeWidth="0.5" fill="none" />
+        <svg
+          width="400"
+          height="400"
+          viewBox="0 0 400 400"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="200"
+            cy="200"
+            r="200"
+            stroke="#3B82F6"
+            strokeWidth="0.5"
+            fill="none"
+          />
+          <circle
+            cx="200"
+            cy="200"
+            r="180"
+            stroke="#3B82F6"
+            strokeWidth="0.5"
+            fill="none"
+          />
+          <circle
+            cx="200"
+            cy="200"
+            r="160"
+            stroke="#3B82F6"
+            strokeWidth="0.5"
+            fill="none"
+          />
         </svg>
       </div>
 
       <div className="container mx-auto px-4">
         <div className="mb-6">
-          <Link href="/blog" className="inline-flex items-center text-gray-600 hover:text-orange-500 transition-colors">
+          <Link
+            href="/blog"
+            className="inline-flex items-center text-gray-600 hover:text-orange-500 transition-colors"
+          >
             <ArrowLeft size={16} className="mr-2" />
             Back to Blogs
           </Link>
@@ -119,7 +182,12 @@ export default function BlogDetailPage({ params }: { params: { id: string } }) {
         >
           {/* Blog Header */}
           <div className="relative h-[400px] w-full">
-            <Image src={blog.image || "/placeholder.svg"} alt={blog.title} fill className="object-cover" />
+            <Image
+              src={blog.image || "/placeholder.svg"}
+              alt={blog.title}
+              fill
+              className="object-cover"
+            />
           </div>
 
           <div className="p-6 md:p-8">
@@ -135,9 +203,14 @@ export default function BlogDetailPage({ params }: { params: { id: string } }) {
             </div>
 
             <h1 className="text-3xl font-bold mb-3">{blog.title}</h1>
-            <h2 className="text-xl text-gray-700 mb-6">{blog.secondaryHeading}</h2>
+            <h2 className="text-xl text-gray-700 mb-6">
+              {blog.secondaryHeading}
+            </h2>
 
-            <div className="prose max-w-none mb-8" dangerouslySetInnerHTML={{ __html: blog.content }} />
+            <div
+              className="prose max-w-none mb-8"
+              dangerouslySetInnerHTML={{ __html: blog.content }}
+            />
 
             {/* Video Embed */}
             {blog.videoLink && (
@@ -174,13 +247,19 @@ export default function BlogDetailPage({ params }: { params: { id: string } }) {
               <Button
                 variant="outline"
                 size="sm"
-                className={`flex items-center gap-2 ${liked ? "text-blue-500" : ""}`}
+                className={`flex items-center gap-2 ${
+                  liked ? "text-blue-500" : ""
+                }`}
                 onClick={handleLike}
               >
                 <ThumbsUp size={16} />
                 <span>{likeCount}</span>
               </Button>
-              <Button variant="outline" size="sm" className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+              >
                 <Share2 size={16} />
                 <span>Share</span>
               </Button>
@@ -209,5 +288,5 @@ export default function BlogDetailPage({ params }: { params: { id: string } }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

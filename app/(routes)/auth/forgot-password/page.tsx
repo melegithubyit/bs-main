@@ -1,40 +1,43 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import Link from "next/link"
-import { ArrowLeft, Mail } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useState } from "react"
-import { useForgotPasswordMutation } from "@/redux/api/authApi"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import Link from "next/link";
+import { ArrowLeft, Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import { useForgotPasswordMutation } from "@/redux/api/authApi";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState("")
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState("")
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const [forgotPassword, { isLoading }] = useForgotPasswordMutation()
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    setSuccess("")
+    e.preventDefault();
+    setError("");
+    setSuccess("");
 
     try {
-      const result = await forgotPassword({ email }).unwrap()
+      const result = await forgotPassword({ email }).unwrap();
 
       if (result.status === "success") {
-        setSuccess("Password reset link has been sent to your email address.")
+        setSuccess("Password reset link has been sent to your email address.");
       } else {
-        setError("Failed to send reset link. Please try again.")
+        setError("Failed to send reset link. Please try again.");
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      setError(err.data?.message || "Failed to send reset link. Please try again.")
+      setError(
+        err.data?.message || "Failed to send reset link. Please try again."
+      );
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-gray-50">
@@ -53,7 +56,8 @@ export default function ForgotPassword() {
           </div>
           <h1 className="text-2xl font-bold">Forgot Password</h1>
           <p className="text-gray-500 mt-2">
-            Enter your email address and we will send you a link to reset your password
+            Enter your email address and we will send you a link to reset your
+            password
           </p>
         </div>
 
@@ -65,7 +69,9 @@ export default function ForgotPassword() {
 
         {success && (
           <Alert className="mb-6 bg-green-50 border-green-200">
-            <AlertDescription className="text-green-800">{success}</AlertDescription>
+            <AlertDescription className="text-green-800">
+              {success}
+            </AlertDescription>
           </Alert>
         )}
 
@@ -82,18 +88,25 @@ export default function ForgotPassword() {
             />
           </div>
 
-          <Button type="submit" className="w-full bg-orange-600 hover:bg-orange-700" disabled={isLoading}>
+          <Button
+            type="submit"
+            className="w-full bg-orange-600 hover:bg-orange-700"
+            disabled={isLoading}
+          >
             {isLoading ? "Sending..." : "Send Reset Link"}
           </Button>
 
           <div className="text-center text-sm">
             Remember your password?{" "}
-            <Link href="/auth/signin" className="text-orange-600 hover:underline font-medium">
+            <Link
+              href="/auth/signin"
+              className="text-orange-600 hover:underline font-medium"
+            >
               Back to sign in
             </Link>
           </div>
         </form>
       </div>
     </div>
-  )
+  );
 }
