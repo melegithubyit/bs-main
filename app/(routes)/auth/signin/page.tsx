@@ -1,48 +1,51 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import Link from "next/link"
-import Image from "next/image"
-import { ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
-import { useState } from "react"
-import { useLoginUserMutation } from "@/redux/api/authApi"
-import { useDispatch } from "react-redux"
-import { setCredentials } from "@/redux/authSlice"
-import { useRouter } from "next/navigation"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
+import { useLoginUserMutation } from "@/redux/api/authApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "@/redux/authSlice";
+import { useRouter } from "next/navigation";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import logo from "@/public/logo/logo.svg"
+
 
 export default function SignIn() {
-  const [email, setEmail] = useState("test@example.com")
-  const [password, setPassword] = useState("password123")
-  const [rememberMe, setRememberMe] = useState(false)
-  const [error, setError] = useState("")
+  const [email, setEmail] = useState("test@example.com");
+  const [password, setPassword] = useState("password123");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState("");
 
-  const [loginUser, { isLoading }] = useLoginUserMutation()
-  const dispatch = useDispatch()
-  const router = useRouter()
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
+    e.preventDefault();
+    setError("");
 
     try {
-      const result = await loginUser({ email, password }).unwrap()
+      const result = await loginUser({ email, password }).unwrap();
 
       if (result.status === "success" && result.data.accessToken) {
-        dispatch(setCredentials({ accessToken: result.data.accessToken }))
-        router.push("/")
+        dispatch(setCredentials({ accessToken: result.data.accessToken }));
+        router.push("/");
       } else {
-        setError("Login failed. Please check your credentials.")
+        setError("Login failed. Please check your credentials.");
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      setError(err.data?.message || "Login failed. Please try again.")
+      setError(err.data?.message || "Login failed. Please try again.");
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
@@ -84,7 +87,10 @@ export default function SignIn() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <Link href="/auth/forgot-password" className="text-xs text-orange-600 hover:underline">
+                <Link
+                  href="/auth/forgot-password"
+                  className="text-xs text-orange-600 hover:underline"
+                >
                   Forgot password?
                 </Link>
               </div>
@@ -109,13 +115,20 @@ export default function SignIn() {
               </Label>
             </div>
 
-            <Button type="submit" className="w-full bg-orange-600 hover:bg-orange-700" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="w-full bg-orange-600 hover:bg-orange-700"
+              disabled={isLoading}
+            >
               {isLoading ? "Signing in..." : "Sign in"}
             </Button>
 
             <div className="text-center text-sm">
-              Don't have an account?{" "}
-              <Link href="/auth/signup" className="text-orange-600 hover:underline font-medium">
+              Don&apos;t have an account?{" "}
+              <Link
+                href="/auth/signup"
+                className="text-orange-600 hover:underline font-medium"
+              >
                 Sign up
               </Link>
             </div>
@@ -128,20 +141,23 @@ export default function SignIn() {
         <div className="absolute inset-0 flex items-center justify-center p-12">
           <div className="max-w-md">
             <Image
-              src="/placeholder.svg?height=400&width=400"
+              src={logo}
               alt="Sigma Funding Solutions"
-              width={400}
-              height={400}
+              width={160}
+              height={160}
               className="mx-auto mb-8"
             />
-            <h2 className="text-2xl font-bold text-center mb-4">Sigma Funding Solutions</h2>
+            <h2 className="text-2xl font-bold text-center mb-4">
+              Sigma Funding Solutions
+            </h2>
             <p className="text-center text-gray-600">
-              Find the top funding solutions available for individuals, family or business. Join our platform to
-              discover opportunities and connect with investors.
+              Find the top funding solutions available for individuals, family
+              or business. Join our platform to discover opportunities and
+              connect with investors.
             </p>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,61 +1,66 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import Link from "next/link"
-import { ArrowLeft, Lock } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useState } from "react"
-import { useResetPasswordMutation } from "@/redux/api/authApi"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { useRouter, useSearchParams } from "next/navigation"
+import Link from "next/link";
+import { ArrowLeft, Lock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import { useResetPasswordMutation } from "@/redux/api/authApi";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function ResetPassword() {
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState("")
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const [resetPassword, { isLoading }] = useResetPasswordMutation()
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const token = searchParams.get("token")
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    setSuccess("")
+    e.preventDefault();
+    setError("");
+    setSuccess("");
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match")
-      return
+      setError("Passwords do not match");
+      return;
     }
 
     if (!token) {
-      setError("Reset token is missing")
-      return
+      setError("Reset token is missing");
+      return;
     }
 
     try {
       const result = await resetPassword({
         token,
         password,
-      }).unwrap()
+      }).unwrap();
 
       if (result.status === "success") {
-        setSuccess("Password has been reset successfully. Redirecting to login...")
+        setSuccess(
+          "Password has been reset successfully. Redirecting to login..."
+        );
         setTimeout(() => {
-          router.push("/auth/signin")
-        }, 2000)
+          router.push("/auth/signin");
+        }, 2000);
       } else {
-        setError("Failed to reset password. Please try again.")
+        setError("Failed to reset password. Please try again.");
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      setError(err.data?.message || "Failed to reset password. Please try again.")
+      setError(
+        err.data?.message || "Failed to reset password. Please try again."
+      );
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-gray-50">
@@ -73,7 +78,9 @@ export default function ResetPassword() {
             <Lock className="h-6 w-6 text-orange-600" />
           </div>
           <h1 className="text-2xl font-bold">Reset Password</h1>
-          <p className="text-gray-500 mt-2">Create a new password for your account</p>
+          <p className="text-gray-500 mt-2">
+            Create a new password for your account
+          </p>
         </div>
 
         {error && (
@@ -84,14 +91,17 @@ export default function ResetPassword() {
 
         {success && (
           <Alert className="mb-6 bg-green-50 border-green-200">
-            <AlertDescription className="text-green-800">{success}</AlertDescription>
+            <AlertDescription className="text-green-800">
+              {success}
+            </AlertDescription>
           </Alert>
         )}
 
         {!token && (
           <Alert variant="destructive" className="mb-6">
             <AlertDescription>
-              Invalid or missing reset token. Please request a new password reset link.
+              Invalid or missing reset token. Please request a new password
+              reset link.
             </AlertDescription>
           </Alert>
         )}
@@ -108,7 +118,9 @@ export default function ResetPassword() {
               required
               disabled={!token || isLoading}
             />
-            <p className="text-xs text-gray-500">Must be at least 8 characters long</p>
+            <p className="text-xs text-gray-500">
+              Must be at least 8 characters long
+            </p>
           </div>
 
           <div className="space-y-2">
@@ -124,17 +136,24 @@ export default function ResetPassword() {
             />
           </div>
 
-          <Button type="submit" className="w-full bg-orange-600 hover:bg-orange-700" disabled={!token || isLoading}>
+          <Button
+            type="submit"
+            className="w-full bg-orange-600 hover:bg-orange-700"
+            disabled={!token || isLoading}
+          >
             {isLoading ? "Resetting..." : "Reset Password"}
           </Button>
 
           <div className="text-center text-sm">
-            <Link href="/auth/signin" className="text-orange-600 hover:underline">
+            <Link
+              href="/auth/signin"
+              className="text-orange-600 hover:underline"
+            >
               Back to sign in
             </Link>
           </div>
         </form>
       </div>
     </div>
-  )
+  );
 }

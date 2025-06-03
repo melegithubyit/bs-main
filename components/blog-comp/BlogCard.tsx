@@ -1,34 +1,38 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
-import { Calendar, User } from "lucide-react"
-import { motion } from "framer-motion"
-import imgg from '@/public/collab.svg'
+import Image from "next/image";
+import Link from "next/link";
+import { Calendar, User } from "lucide-react";
+import { motion } from "framer-motion";
+import imgg from "@/public/collab.svg";
 
 interface BlogCardProps {
-  id: string
-  title: string
-  secondaryHeading: string
-  description: string
-  image: string
-  videoLink?: string
-  referenceLink?: string
-  author?: string
-  date?: string
-  delay?: number
+  id: string;
+  title: string;
+  secondaryHeading: string;
+  description: string;
+  image: string;
+  videoLink?: string;
+  referenceLink?: string;
+  author?: string;
+  date?: string;
+  delay?: number;
 }
 
 export default function BlogCard({
   id,
   title,
-  secondaryHeading,
+  // secondaryHeading,
   description,
-  image,
-  videoLink,
-  referenceLink,
+  // image,
+  // videoLink,
+  // referenceLink,
   author = "Admin",
-  date = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+  date = new Date().toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }),
   delay = 0,
 }: BlogCardProps) {
   return (
@@ -52,7 +56,9 @@ export default function BlogCard({
       </div>
       <div className="space-y-2">
         <Link href={`/blog/${id}`}>
-          <h3 className="font-bold text-lg group-hover:text-orange-500 transition-colors">{title}</h3>
+          <h3 className="font-bold text-lg group-hover:text-orange-500 transition-colors">
+            {title}
+          </h3>
         </Link>
         <div className="flex items-center text-xs text-gray-500 space-x-4">
           <div className="flex items-center">
@@ -75,5 +81,5 @@ export default function BlogCard({
         </div>
       </div>
     </motion.div>
-  )
+  );
 }
