@@ -1,19 +1,24 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import imgg from '@/public/collab.svg'
+import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import imgg from "@/public/collab.svg";
 
 interface FeaturedBlogProps {
-  id: string
-  title: string
-  secondaryHeading: string
-  description: string
-  image: string
+  id: string;
+  title: string;
+  secondaryHeading: string;
+  description: string;
+  image: string;
 }
 
-export default function FeaturedBlog({ id, title, secondaryHeading, description, image }: FeaturedBlogProps) {
+export default function FeaturedBlog({
+  id,
+  title,
+  secondaryHeading,
+  description,
+}: FeaturedBlogProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -37,5 +42,5 @@ export default function FeaturedBlog({ id, title, secondaryHeading, description,
         </div>
       </div>
     </motion.div>
-  )
+  );
 }

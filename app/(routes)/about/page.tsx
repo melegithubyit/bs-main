@@ -1,28 +1,82 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { motion } from "framer-motion"
-import { CheckCircle, Users, Target, Award } from "lucide-react"
-import imgg from '@/public/collab.svg'
-import imgg2 from '@/public/carrer.svg'
-
+import { motion } from "framer-motion";
+import { CheckCircle, Users, Target, Award } from "lucide-react";
+import imgg from "@/public/collab.svg";
+import imgg2 from "@/public/carrer.svg";
+import { default as NextImage, type ImageProps } from "next/image";
+const Image = NextImage as React.FC<ImageProps>;
 export default function AboutPage() {
   return (
     <div className="min-h-screen pt-40 pb-16 relative overflow-hidden">
       {/* Background patterns */}
       <div className="absolute -left-40 top-0 opacity-10">
-        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="200" cy="200" r="200" stroke="#FFA500" strokeWidth="0.5" fill="none" />
-          <circle cx="200" cy="200" r="180" stroke="#FFA500" strokeWidth="0.5" fill="none" />
-          <circle cx="200" cy="200" r="160" stroke="#FFA500" strokeWidth="0.5" fill="none" />
+        <svg
+          width="400"
+          height="400"
+          viewBox="0 0 400 400"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="200"
+            cy="200"
+            r="200"
+            stroke="#FFA500"
+            strokeWidth="0.5"
+            fill="none"
+          />
+          <circle
+            cx="200"
+            cy="200"
+            r="180"
+            stroke="#FFA500"
+            strokeWidth="0.5"
+            fill="none"
+          />
+          <circle
+            cx="200"
+            cy="200"
+            r="160"
+            stroke="#FFA500"
+            strokeWidth="0.5"
+            fill="none"
+          />
         </svg>
       </div>
 
       <div className="absolute -right-40 bottom-0 opacity-10">
-        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="200" cy="200" r="200" stroke="#3B82F6" strokeWidth="0.5" fill="none" />
-          <circle cx="200" cy="200" r="180" stroke="#3B82F6" strokeWidth="0.5" fill="none" />
-          <circle cx="200" cy="200" r="160" stroke="#3B82F6" strokeWidth="0.5" fill="none" />
+        <svg
+          width="400"
+          height="400"
+          viewBox="0 0 400 400"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="200"
+            cy="200"
+            r="200"
+            stroke="#3B82F6"
+            strokeWidth="0.5"
+            fill="none"
+          />
+          <circle
+            cx="200"
+            cy="200"
+            r="180"
+            stroke="#3B82F6"
+            strokeWidth="0.5"
+            fill="none"
+          />
+          <circle
+            cx="200"
+            cy="200"
+            r="160"
+            stroke="#3B82F6"
+            strokeWidth="0.5"
+            fill="none"
+          />
         </svg>
       </div>
 
@@ -37,16 +91,24 @@ export default function AboutPage() {
 
         {/* Hero Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
-            <h2 className="text-3xl font-bold mb-6">We're Changing How Funding Works</h2>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl font-bold mb-6">
+              We&apos;re Changing How Funding Works
+            </h2>
             <p className="text-gray-600 mb-6">
-              Sigma Funding Solutions was founded with a simple mission: to make funding accessible to everyone. We
-              believe that great ideas deserve support, regardless of where they come from.
+              Sigma Funding Solutions was founded with a simple mission: to make
+              funding accessible to everyone. We believe that great ideas
+              deserve support, regardless of where they come from.
             </p>
             <p className="text-gray-600 mb-6">
-              Our platform connects entrepreneurs, families, and businesses with the right funding solutions tailored to
-              their unique needs. With over 10 years of experience in the financial industry, we've helped thousands of
-              clients achieve their goals.
+              Our platform connects entrepreneurs, families, and businesses with
+              the right funding solutions tailored to their unique needs. With
+              over 10 years of experience in the financial industry, we&apos;ve
+              helped thousands of clients achieve their goals.
             </p>
             <div className="space-y-4">
               {[
@@ -57,6 +119,13 @@ export default function AboutPage() {
               ].map((item, index) => (
                 <div key={index} className="flex items-start gap-2">
                   <CheckCircle className="h-5 w-5 text-orange-500 mt-0.5 flex-shrink-0" />
+                  {/* {(
+                    CheckCircle as unknown as React.FC<
+                      React.SVGProps<SVGSVGElement>
+                    >
+                  )({
+                    className: "h-5 w-5 text-orange-500 mt-0.5 flex-shrink-0",
+                  })} */}
                   <p>{item}</p>
                 </div>
               ))}
@@ -92,7 +161,7 @@ export default function AboutPage() {
             {
               title: "Our Vision",
               description:
-                "To become the world's most trusted funding platform, known for our integrity, innovation, and commitment to client success.",
+                "To become the world&apos;s most trusted funding platform, known for our integrity, innovation, and commitment to client success.",
               icon: <Award className="h-10 w-10 text-orange-500" />,
             },
             {
@@ -121,8 +190,10 @@ export default function AboutPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Meet Our Team</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Our diverse team of experts is passionate about helping you succeed. With backgrounds in finance,
-              technology, and customer service, we bring a wealth of knowledge to every client interaction.
+              Our diverse team of experts is passionate about helping you
+              succeed. With backgrounds in finance, technology, and customer
+              service, we bring a wealth of knowledge to every client
+              interaction.
             </p>
           </div>
 
@@ -157,7 +228,12 @@ export default function AboutPage() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <div className="relative h-[300px]">
-                  <Image src={member.image || imgg} alt={member.name} fill className="object-cover" />
+                  <Image
+                    src={member.image || imgg}
+                    alt={member.name}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold">{member.name}</h3>
@@ -181,13 +257,18 @@ export default function AboutPage() {
             { value: "$250M+", label: "Funding Facilitated" },
             { value: "98%", label: "Client Satisfaction" },
           ].map((stat, index) => (
-            <div key={index} className="bg-orange-50 p-6 rounded-lg text-center">
-              <div className="text-3xl md:text-4xl font-bold text-orange-500 mb-2">{stat.value}</div>
+            <div
+              key={index}
+              className="bg-orange-50 p-6 rounded-lg text-center"
+            >
+              <div className="text-3xl md:text-4xl font-bold text-orange-500 mb-2">
+                {stat.value}
+              </div>
               <div className="text-gray-600">{stat.label}</div>
             </div>
           ))}
         </motion.div>
       </div>
     </div>
-  )
+  );
 }
