@@ -41,7 +41,7 @@ export default function ResetPassword() {
     try {
       const result = await resetPassword({
         token,
-        password,
+        newpassword: password,
       }).unwrap();
 
       if (result.status === "success") {

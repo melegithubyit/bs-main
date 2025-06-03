@@ -27,6 +27,7 @@ export interface ResetPasswordPayload{
     token: string;
 }
 
+
 export interface RefreshTokenPayload{
     accessToken: string;
 }
