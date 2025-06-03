@@ -7,7 +7,8 @@ import { ArrowLeft, MapPin, Phone, Mail, Briefcase, FileText, Download, External
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { motion } from "framer-motion"
-import { Candidate } from "@/types/Job"
+import { Candidate } from "@/types/jobApi"
+import placeholderimg from "@/public/person-placeholder.png"
 
 // Update the Candidate interface to include bank and bankAccount
 // interface Candidate {
@@ -59,7 +60,7 @@ const mockCandidates: Candidate[] = Array.from({ length: 50 }, (_, i) => ({
   ],
   CV: `https://storage.example.com/cv/cv-${i + 1}.pdf`,
   identification: `https://storage.example.com/id/id-${i + 1}.pdf`,
-  photo: `https://storage.example.com/photos/photo-${i + 1}.jpg`,
+  photo: placeholderimg,
   typeOfEmployment: ["fulltime", "parttime", "remote", "internship", "contract"][i % 5],
   videoLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
 }))
@@ -174,7 +175,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
               <div className="flex flex-col items-center text-center mb-6">
                 <div className="relative h-32 w-32 rounded-full overflow-hidden mb-4">
                   <Image
-                    src={candidate.photo || "/placeholder.svg?height=128&width=128"}
+                    src={placeholderimg}
                     alt={`${candidate.firstName} ${candidate.lastName}`}
                     fill
                     className="object-cover"

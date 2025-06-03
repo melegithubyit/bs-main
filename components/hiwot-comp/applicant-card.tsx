@@ -1,10 +1,11 @@
 "use client"
 
-import Image from "next/image"
+import Image, { StaticImageData } from "next/image"
 import { useRouter } from "next/navigation"
 import { MapPin, Calendar, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
+import placeholder from '@/public/hiwot-placeholder.png'
 
 export interface HiwotApplicant {
     id: string
@@ -23,7 +24,7 @@ export interface HiwotApplicant {
     location: string
     address: string
     nationalId: string
-    photo: string
+    photo: StaticImageData
     fundingProgress?: number
     supporters?: number
 }
@@ -68,7 +69,7 @@ export default function ApplicantCard({ applicant, index, layout }: ApplicantCar
                 <div className="flex items-center gap-4">
                     <div className="relative h-12 w-12 rounded-full overflow-hidden">
                         <Image
-                            src={applicant.photo || "/placeholder.svg?height=50&width=50"}
+                            src={placeholder}
                             alt={`${applicant.firstName} ${applicant.lastName}`}
                             fill
                             className="object-cover"
@@ -124,7 +125,7 @@ export default function ApplicantCard({ applicant, index, layout }: ApplicantCar
             <div className="flex items-center gap-3 mb-3">
                 <div className="relative h-12 w-12 rounded-full overflow-hidden">
                     <Image
-                        src={applicant.photo || "/placeholder.svg?height=50&width=50"}
+                        src={placeholder}
                         alt={`${applicant.firstName} ${applicant.lastName}`}
                         fill
                         className="object-cover"

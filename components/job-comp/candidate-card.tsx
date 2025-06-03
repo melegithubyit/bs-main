@@ -6,6 +6,7 @@ import { MapPin, Briefcase } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import { CandidateCardProps } from "@/types/Job"
+import placeholderimg from '@/public/person-placeholder.png'
 
 
 export default function CandidateCard({ candidate, index, layout }: CandidateCardProps) {
@@ -43,7 +44,7 @@ export default function CandidateCard({ candidate, index, layout }: CandidateCar
         <div className="flex items-center gap-4">
           <div className="relative h-12 w-12 rounded-full overflow-hidden">
             <Image
-              src={candidate.photo || "/placeholder.svg?height=50&width=50"}
+              src={placeholderimg}
               alt={`${candidate.firstName} ${candidate.lastName}`}
               fill
               className="object-cover"
@@ -89,7 +90,7 @@ export default function CandidateCard({ candidate, index, layout }: CandidateCar
       <div className="flex items-center gap-3 mb-3">
         <div className="relative h-12 w-12 rounded-full overflow-hidden">
           <Image
-            src={candidate.photo || "/placeholder.svg?height=50&width=50"}
+            src={placeholderimg}
             alt={`${candidate.firstName} ${candidate.lastName}`}
             fill
             className="object-cover"

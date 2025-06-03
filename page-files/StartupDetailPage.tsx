@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { motion } from "framer-motion"
 import type { StartupProject } from "@/components/startup-comp/project-card"
+import placeholderimg from '@/public/placeholder.png'
 
 // Mock data for projects
 const mockProjects: StartupProject[] = Array.from({ length: 50 }, (_, i) => ({
@@ -47,7 +48,7 @@ const mockProjects: StartupProject[] = Array.from({ length: 50 }, (_, i) => ({
   bankAccount: `100${i}${i}${i}${i}${i}${i}`,
   location: ["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5],
   address: `${i + 1} Main Street, ${["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5]}`,
-  companyLogo: `/placeholder.svg?height=128&width=128`,
+  companyLogo: placeholderimg,
   nationalId: `https://storage.example.com/id/id-${i + 1}.pdf`,
   videoLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   typeOfSupport: ["Funding", "Mentorship", "Technical", "Partnership", "Investment"][i % 5],
@@ -175,7 +176,7 @@ export default function StartupDetailPage({ params }: { params: { id: string } }
               <div className="flex flex-col items-center text-center mb-6">
                 <div className="relative h-24 w-24 rounded-md overflow-hidden mb-4">
                   <Image
-                    src={project.companyLogo || "/placeholder.svg?height=96&width=96"}
+                    src={placeholderimg}
                     alt={project.projectName}
                     fill
                     className="object-cover"

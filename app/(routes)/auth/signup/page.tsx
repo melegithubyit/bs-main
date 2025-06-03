@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useRegisterUserMutation } from "@/redux/api/authApi";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import logo from "@/public/logo/logo.svg"
 
 export default function SignUp() {
   const [firstName, setFirstName] = useState("John");
@@ -63,7 +64,7 @@ export default function SignUp() {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       {/* Left side - Form */}
-      <div className="w-full md:w-1/2 p-6 md:p-12 flex flex-col justify-center">
+      <div className="w-full md:w-1/2 p-6 md:p-12 flex flex-col justify-center mt-10">
         <div className="max-w-md mx-auto w-full">
           <Link
             href="/"
@@ -207,10 +208,10 @@ export default function SignUp() {
         <div className="absolute inset-0 flex items-center justify-center p-12">
           <div className="max-w-md">
             <Image
-              src="/placeholder.svg?height=400&width=400"
+              src={logo}
               alt="Sigma Funding Solutions"
-              width={400}
-              height={400}
+              width={160}
+              height={160}
               className="mx-auto mb-8"
             />
             <h2 className="text-2xl font-bold text-center mb-4">
