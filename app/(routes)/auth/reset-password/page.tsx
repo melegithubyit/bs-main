@@ -7,12 +7,12 @@ import { ArrowLeft, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useResetPasswordMutation } from "@/redux/api/authApi";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function ResetPassword() {
+function ResetPasswordInner() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -41,7 +41,7 @@ export default function ResetPassword() {
     try {
       const result = await resetPassword({
         token,
-        password,
+        newpassword: password,
       }).unwrap();
 
       if (result.status === "success") {
@@ -110,7 +110,7 @@ export default function ResetPassword() {
           <div className="space-y-2">
             <Label htmlFor="newPassword">New Password</Label>
             <Input
-              id="newPassword"
+              id="newpassword"
               type="password"
               placeholder="Enter your new password"
               value={password}
@@ -155,5 +155,12 @@ export default function ResetPassword() {
         </form>
       </div>
     </div>
+  );
+}
+export default function ResetPassword() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResetPasswordInner />
+    </Suspense>
   );
 }

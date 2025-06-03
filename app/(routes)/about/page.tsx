@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { CheckCircle, Users, Target, Award } from "lucide-react";
 import imgg from "@/public/collab.svg";
 import imgg2 from "@/public/carrer.svg";
-
+import { default as NextImage, type ImageProps } from "next/image";
+const Image = NextImage as React.FC<ImageProps>;
 export default function AboutPage() {
   return (
     <div className="min-h-screen pt-40 pb-16 relative overflow-hidden">
@@ -119,6 +119,13 @@ export default function AboutPage() {
               ].map((item, index) => (
                 <div key={index} className="flex items-start gap-2">
                   <CheckCircle className="h-5 w-5 text-orange-500 mt-0.5 flex-shrink-0" />
+                  {/* {(
+                    CheckCircle as unknown as React.FC<
+                      React.SVGProps<SVGSVGElement>
+                    >
+                  )({
+                    className: "h-5 w-5 text-orange-500 mt-0.5 flex-shrink-0",
+                  })} */}
                   <p>{item}</p>
                 </div>
               ))}

@@ -358,7 +358,7 @@ export default function StartupCreatePage() {
                       type="file"
                       className="hidden"
                       accept="image/*"
-                      onChange={(e) => handleFileChange(e, "logo")}
+                      onChange={(e) => handleFileChange(e, setLogoFile)}
                     />
                   </label>
                 </div>
@@ -630,7 +630,7 @@ export default function StartupCreatePage() {
                       type="file"
                       className="hidden"
                       accept=".pdf"
-                      onChange={(e) => handleFileChange(e, "currentState")}
+                      onChange={(e) => handleFileChange(e, setCurrentStateFile)}
                     />
                   </label>
                 </div>
