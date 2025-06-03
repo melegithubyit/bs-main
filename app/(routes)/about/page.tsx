@@ -161,7 +161,7 @@ export default function AboutPage() {
             {
               title: "Our Vision",
               description:
-                "To become the world's most trusted funding platform, known for our integrity, innovation, and commitment to client success.",
+                "To become the world&apos;s most trusted funding platform, known for our integrity, innovation, and commitment to client success.",
               icon: <Award className="h-10 w-10 text-orange-500" />,
             },
             {
