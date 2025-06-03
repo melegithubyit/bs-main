@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation"
 import { MapPin, Briefcase } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
-import { CandidateCardProps } from "@/types/Job"
+import { CandidateCardProps } from "@/types/jobApi"
 import placeholderimg from '@/public/person-placeholder.png'
+
 
 
 export default function CandidateCard({ candidate, index, layout }: CandidateCardProps) {

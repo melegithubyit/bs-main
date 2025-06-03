@@ -9,6 +9,7 @@ import SearchBar from "@/components/startup-comp/search-bar"
 import ProjectFilters from "@/components/startup-comp/project-filters"
 import ProjectList from "@/components/startup-comp/project-list"
 import type { StartupProject } from "@/components/startup-comp/project-card"
+import placeholderimg from "@/public/placeholder.png"
 
 // Mock data for projects
 const mockProjects: StartupProject[] = Array.from({ length: 50 }, (_, i) => ({
@@ -46,7 +47,7 @@ const mockProjects: StartupProject[] = Array.from({ length: 50 }, (_, i) => ({
   bankAccount: `100${i}${i}${i}${i}${i}${i}`,
   location: ["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5],
   address: `${i + 1} Main Street, ${["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5]}`,
-  companyLogo: `/placeholder.svg?height=50&width=50`,
+  companyLogo: placeholderimg,
   nationalId: `https://storage.example.com/id/id-${i + 1}.pdf`,
   videoLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   typeOfSupport: ["Funding", "Mentorship", "Technical", "Partnership", "Investment"][i % 5],
@@ -108,7 +109,7 @@ export default function StartupOverviewPage() {
   // State
   const [searchTerm, setSearchTerm] = useState("")
   const [location, setLocation] = useState("all")
-  const [projects, setProjects] = useState<StartupProject[]>(mockProjects)
+  const [projects, _] = useState<StartupProject[]>(mockProjects)
   const [filteredProjects, setFilteredProjects] = useState<StartupProject[]>(mockProjects)
   const [layout, setLayout] = useState<"list" | "grid">("list")
 

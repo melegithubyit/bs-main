@@ -32,3 +32,10 @@ export interface Candidate {
     typeOfEmployment: string;
     videoLink: string;
 }
+
+
+export interface CandidateCardProps {
+  candidate: Candidate;
+  index: number;
+  layout: "list" | "grid";
+}

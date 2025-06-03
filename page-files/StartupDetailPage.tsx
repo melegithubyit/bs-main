@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, MapPin, Phone, Mail, Calendar, FileText, Download, ExternalLink, Users } from "lucide-react"
+import { ArrowLeft, MapPin, Phone, Mail, Calendar, ExternalLink, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
@@ -71,7 +71,7 @@ const mockProjects: StartupProject[] = Array.from({ length: 50 }, (_, i) => ({
 export default function StartupDetailPage({ params }: { params: { id: string } }) {
   const [project, setProject] = useState<StartupProject | null>(null)
   const [loading, setLoading] = useState(true)
-  const [investmentAmount, setInvestmentAmount] = useState("10000")
+  // const [investmentAmount, setInvestmentAmount] = useState("10000")
 
   useEffect(() => {
     // Simulate API call to fetch project details

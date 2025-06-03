@@ -5,7 +5,7 @@ import CandidateCard from "./candidate-card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import Pagination from "../common-comp/pagination"
-import { Candidate } from "@/types/Job"
+import { Candidate } from "@/types/jobApi"
 
 interface CandidateListProps {
   candidates: Candidate[]

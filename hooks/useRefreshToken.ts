@@ -28,7 +28,9 @@ export const useRefreshToken = () => {
           refreshAttempted.current = true
 
           // Attempt to refresh the token
-          const result = await refreshToken({}).unwrap()
+          const result = await refreshToken({
+            accessToken: ""
+          }).unwrap()
 
           if (result.status === "success" && result.data.accessToken) {
             dispatch(setCredentials({ accessToken: result.data.accessToken }))

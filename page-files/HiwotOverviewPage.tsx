@@ -9,6 +9,7 @@ import SearchBar from "@/components/hiwot-comp/search-bar"
 import ApplicantFilters from "@/components/hiwot-comp/applicant-filters"
 import ApplicantList from "@/components/hiwot-comp/applicant-list"
 import type { HiwotApplicant } from "@/components/hiwot-comp/applicant-card"
+import placeholder from "@/public/hiwot-placeholder.png"
 
 // Mock data for applicants
 const mockApplicants: HiwotApplicant[] = Array.from({ length: 50 }, (_, i) => ({
@@ -39,7 +40,7 @@ const mockApplicants: HiwotApplicant[] = Array.from({ length: 50 }, (_, i) => ({
   location: ["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5],
   address: `${i + 1} Main Street, ${["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5]}`,
   nationalId: `https://storage.example.com/id/id-${i + 1}.pdf`,
-  photo: `/placeholder.svg?height=50&width=50`,
+  photo: placeholder,
   fundingProgress: Math.floor(Math.random() * 100),
   supporters: Math.floor(Math.random() * 100),
 }))
@@ -81,7 +82,7 @@ export default function HiwotOverviewPage() {
   // State
   const [searchTerm, setSearchTerm] = useState("")
   const [location, setLocation] = useState("all")
-  const [applicants, setApplicants] = useState<HiwotApplicant[]>(mockApplicants)
+  const [applicants, _] = useState<HiwotApplicant[]>(mockApplicants)
   const [filteredApplicants, setFilteredApplicants] = useState<HiwotApplicant[]>(mockApplicants)
   const [layout, setLayout] = useState<"list" | "grid">("list")
 

@@ -8,7 +8,8 @@ import { motion } from "framer-motion"
 import SearchBar from "@/components/job-comp/search-bar"
 import CandidateFilters from "@/components/job-comp/candidate-filters"
 import CandidateList from "@/components/job-comp/candidate-list"
-import { Candidate } from "@/types/Job"
+import { Candidate } from "@/types/jobApi"
+import placeholder from "@/public/person-placeholder.png"
 
 // Mock data for candidates
 const mockCandidates: Candidate[] = Array.from({ length: 50 }, (_, i) => ({
@@ -34,9 +35,11 @@ const mockCandidates: Candidate[] = Array.from({ length: 50 }, (_, i) => ({
   educationCertificates: [`certificate-${i + 1}-1.pdf`, `certificate-${i + 1}-2.pdf`, `certificate-${i + 1}-3.pdf`],
   CV: `cv-${i + 1}.pdf`,
   identification: `id-${i + 1}.pdf`,
-  photo: "/placeholder.svg?height=50&width=50",
+  photo: placeholder,
   typeOfEmployment: ["fulltime", "parttime", "remote", "internship", "contract"][i % 5],
   videoLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  bank: `Bank ${i % 3 + 1}`,
+  bankAccount: `1234567890${i % 10}`,
 }))
 
 // Filter options
@@ -78,7 +81,7 @@ export default function JobOverviewPage() {
   // State
   const [searchTerm, setSearchTerm] = useState("")
   const [location, setLocation] = useState("all")
-  const [candidates, setCandidates] = useState<Candidate[]>(mockCandidates)
+  const [candidates, _] = useState<Candidate[]>(mockCandidates)
   const [filteredCandidates, setFilteredCandidates] = useState<Candidate[]>(mockCandidates)
   const [layout, setLayout] = useState<"list" | "grid">("list")
 
