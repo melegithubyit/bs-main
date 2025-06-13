@@ -22,7 +22,11 @@ interface BlogCardProps {
 export default function BlogCard({
   id,
   title,
+  // secondaryHeading,
   description,
+  // image,
+  // videoLink,
+  // referenceLink,
   author = "Admin",
   date = new Date().toLocaleDateString("en-US", {
     month: "long",

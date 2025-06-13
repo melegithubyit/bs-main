@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux"
 import type { RootState } from "@/redux/store"
 import { logout } from "@/redux/authSlice"
 import { useLogoutMutation } from "@/redux/api/authApi"
+import logo from '@/public/logo/logo.svg'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -53,10 +54,10 @@ export default function Navbar() {
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Link href="/" className="flex items-center">
           <Image
-            src="/placeholder.svg?height=50&width=50"
+            src={logo}
             alt="Sigma Logo"
-            width={50}
-            height={50}
+            width={80}
+            height={80}
             className="transition-transform duration-300 hover:scale-105"
           />
         </Link>

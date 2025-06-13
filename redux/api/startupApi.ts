@@ -15,11 +15,11 @@ export const startupApi = createApi({
   tagTypes: [],
   endpoints: (builder) => ({
     // create a new startup
-    createStartup: builder.mutation<any, FormData>({
-      query: (formData) => ({
+    createStartup: builder.mutation<any, creatingStartupPayload>({
+      query: (startup) => ({
         url: "/startup",
         method: "POST",
-        body: formData,
+        body: startup,
       }),
     }),
 

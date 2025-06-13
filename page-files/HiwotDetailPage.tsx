@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
 import { motion } from "framer-motion"
 import type { HiwotApplicant } from "@/components/hiwot-comp/applicant-card"
+import placeholderimg from "@/public/hiwot-placeholder.png"
 
 // Mock data for applicants
 const mockApplicants: HiwotApplicant[] = Array.from({ length: 50 }, (_, i) => ({
@@ -39,7 +40,7 @@ const mockApplicants: HiwotApplicant[] = Array.from({ length: 50 }, (_, i) => ({
   location: ["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5],
   address: `${i + 1} Main Street, ${["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5]}`,
   nationalId: `https://storage.example.com/id/id-${i + 1}.pdf`,
-  photo: `/placeholder.svg?height=128&width=128`,
+  photo: placeholderimg,
   fundingProgress: Math.floor(Math.random() * 100),
   supporters: Math.floor(Math.random() * 100),
 }))
@@ -149,7 +150,7 @@ export default function HiwotDetailPage({ params }: { params: { id: string } }) 
               <div className="flex flex-col items-center text-center mb-6">
                 <div className="relative h-32 w-32 rounded-full overflow-hidden mb-4">
                   <Image
-                    src={applicant.photo || "/placeholder.svg?height=128&width=128"}
+                    src={placeholderimg}
                     alt={`${applicant.firstName} ${applicant.lastName}`}
                     fill
                     className="object-cover"

@@ -1,11 +1,13 @@
 "use client";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useRouter } from "next/navigation";
 import { MapPin, Calendar, Briefcase, BarChart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
+import placeholderimg from '@/public/placeholder.png';
+
 
 export interface StartupProject {
   id: string;
@@ -20,7 +22,7 @@ export interface StartupProject {
   bankAccount: string;
   location: string;
   address: string;
-  companyLogo: string;
+  companyLogo: StaticImageData;
   nationalId: string;
   videoLink: string;
   typeOfSupport: string;
@@ -75,10 +77,10 @@ export default function ProjectCard({
         <div className="flex items-center gap-4">
           <div className="relative h-12 w-12 rounded-md overflow-hidden">
             <Image
-              src={project.companyLogo || "/placeholder.svg?height=50&width=50"}
+              src={placeholderimg}
               alt={project.projectName}
               fill
-              className="object-cover"
+              className="object-cover rounded-full w-16 h-16"
             />
           </div>
           <div>
@@ -135,7 +137,7 @@ export default function ProjectCard({
       <div className="flex items-center gap-3 mb-3">
         <div className="relative h-12 w-12 rounded-md overflow-hidden">
           <Image
-            src={project.companyLogo || "/placeholder.svg?height=50&width=50"}
+            src={placeholderimg}
             alt={project.projectName}
             fill
             className="object-cover"

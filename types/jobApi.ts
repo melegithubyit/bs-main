@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface creatingTalentPayload {
     firstName: string;
     lastName: string;
@@ -8,4 +10,32 @@ export interface creatingTalentPayload {
     experience: number;
     resume: File | null; 
     coverLetter: File | null; 
+}
+
+
+export interface Candidate {
+    id: string;
+    firstName: string;
+    lastName: string;
+    department: string;
+    field: string;
+    phoneNumber: string;
+    email: string;
+    location: string;
+    address: string;
+    bank: string;
+    bankAccount: string;
+    educationCertificates: string[];
+    CV: string;
+    identification: string;
+    photo: StaticImageData;
+    typeOfEmployment: string;
+    videoLink: string;
+}
+
+
+export interface CandidateCardProps {
+  candidate: Candidate;
+  index: number;
+  layout: "list" | "grid";
 }

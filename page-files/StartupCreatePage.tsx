@@ -17,13 +17,13 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useCreateStartupMutation } from "@/redux/api/startupApi";
+// import { useCreateStartupMutation } from "@/redux/api/startupApi";
 import { useRouter } from "next/navigation";
 
 export default function StartupCreatePage() {
   const { toast } = useToast();
   const router = useRouter();
-  const [createStartup, { isLoading }] = useCreateStartupMutation();
+  // const [createStartup, { isLoading }] = useCreateStartupMutation();
 
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [pitchDeckFile, setPitchDeckFile] = useState<File | null>(null);
@@ -62,9 +62,9 @@ export default function StartupCreatePage() {
     agreeTerms: false,
   });
 
-  const [logoName, setLogoName] = useState("");
-  const [pitchDeckName, setPitchDeckName] = useState("");
-  const [currentStateName, setCurrentStateName] = useState("");
+  // const [logoName, _] = useState("");
+  // const [_, _] = useState("");
+  // const [currentStateName, _] = useState("");
   const [characterCount, setCharacterCount] = useState(0);
 
   const handleInputChange = (
@@ -160,7 +160,7 @@ export default function StartupCreatePage() {
         formDataToSend.append("currentState", currentStateFile);
 
       // Call the API
-      await createStartup(formDataToSend).unwrap();
+      // await createStartup(formDataToSend).unwrap();
 
       toast({
         title: "Startup submitted!",
@@ -362,11 +362,11 @@ export default function StartupCreatePage() {
                     />
                   </label>
                 </div>
-                {logoName && (
+                {/* {logoName && (
                   <div className="mt-2 text-sm text-gray-600">
                     Selected file: {logoName}
                   </div>
-                )}
+                )} */}
               </div>
             </div>
 
@@ -634,11 +634,11 @@ export default function StartupCreatePage() {
                     />
                   </label>
                 </div>
-                {currentStateName && (
+                {/* {currentStateName && (
                   <div className="mt-2 text-sm text-gray-600">
                     Selected file: {currentStateName}
                   </div>
-                )}
+                )} */}
               </div>
             </div>
 
@@ -668,9 +668,10 @@ export default function StartupCreatePage() {
               <Button
                 type="submit"
                 className="bg-orange-500 hover:bg-orange-600 text-white"
-                disabled={isLoading}
+                // disabled={isLoading}
               >
-                {isLoading ? "Submitting..." : "Submit Startup"}
+                {/* {isLoading ? "Submitting..." : "Submit Startup"} */}
+                Submit Startup
               </Button>
             </div>
           </form>
