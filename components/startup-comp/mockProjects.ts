@@ -67,6 +67,8 @@ const mockProjects: StartupProject[] = Array.from({ length: 50 }, (_, i) => ({
   fundingProgress: Math.floor(Math.random() * 100),
   supporters: Math.floor(Math.random() * 100),
   category: ["Technology", "Non-Technology"][i % 10],
+  backers: 10 + Math.floor(Math.random() * 190),
+  daysLeft: 1 + Math.floor(Math.random() * 30),
 }));
 
 export type { StartupProject };

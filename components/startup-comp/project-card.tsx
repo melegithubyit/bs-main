@@ -28,6 +28,8 @@ export interface StartupProject {
   fundingProgress?: number;
   supporters?: number;
   category?: string;
+  backers?: number;
+  daysLeft?: number;
 }
 
 interface ProjectCardProps {

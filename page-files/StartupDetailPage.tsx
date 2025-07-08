@@ -17,6 +17,10 @@ import {
   HeartHandshake,
   MessageSquare,
   Lock,
+  Facebook,
+  Youtube,
+  Instagram,
+  Twitter,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -124,344 +128,168 @@ export default function StartupDetailPage() {
   }
 
   return (
-    <div className="min-h-screen pt-0 pb-16 relative overflow-hidden">
-      {/* Background patterns */}
-      {/* <div className="absolute -left-40 top-0 opacity-10">
-        <svg
-          width="400"
-          height="400"
-          viewBox="0 0 400 400"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="200"
-            cy="200"
-            r="200"
-            stroke="#FFA500"
-            strokeWidth="0.5"
-            fill="none"
-          />
-          <circle
-            cx="200"
-            cy="200"
-            r="180"
-            stroke="#FFA500"
-            strokeWidth="0.5"
-            fill="none"
-          />
-          <circle
-            cx="200"
-            cy="200"
-            r="160"
-            stroke="#FFA500"
-            strokeWidth="0.5"
-            fill="none"
-          />
-        </svg>
-      </div>
-
-      <div className="absolute -right-40 bottom-0 opacity-10">
-        <svg
-          width="400"
-          height="400"
-          viewBox="0 0 400 400"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="200"
-            cy="200"
-            r="200"
-            stroke="#3B82F6"
-            strokeWidth="0.5"
-            fill="none"
-          />
-          <circle
-            cx="200"
-            cy="200"
-            r="180"
-            stroke="#3B82F6"
-            strokeWidth="0.5"
-            fill="none"
-          />
-          <circle
-            cx="200"
-            cy="200"
-            r="160"
-            stroke="#3B82F6"
-            strokeWidth="0.5"
-            fill="none"
-          />
-        </svg>
-      </div> */}
-
+    <div className="min-h-screen pt-0 pb-16 relative overflow-hidden bg-gradient-to-b from-purple-50 to-white">
       <div className="container mx-auto px-4">
-        <div className="mb-6">
+        {/* Back to Projects button at the top left */}
+        <div className="mb-6 flex items-center">
           <Button
-            className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 "
+            className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2"
             onClick={handleBack}
           >
             <ArrowLeft size={16} className="mr-2" />
             Back to Projects
           </Button>
         </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Project Information */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="lg:col-span-1"
-          >
-            <div className="bg-white rounded-lg shadow-sm p-6 mb-6 ">
-              <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-                <Banknote className="text-purple-500" size={20} />
-                Funding Progress
-              </h2>
-              <div className="mb-4">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm text-gray-600">
-                    ETB {project.goalFund.toLocaleString()} goal
-                  </span>
-                  <span className="text-sm font-medium">
-                    {project.fundingProgress}% Funded
-                  </span>
-                </div>
-                <Progress value={project.fundingProgress} className="h-3" />
-              </div>
-              <div className="grid grid-cols-3 gap-4 mb-4">
-                <Button className="bg-purple-600 hover:bg-purple-700 h-fit w-fit">
-                  Support Project
-                </Button>
-              </div>
-              <p className="text-gray-600 text-sm">
-                This project is seeking {project.typeOfSupport.toLowerCase()}{" "}
-                support to help scale operations. Your support can help make a
-                significant impact in the {project.category?.toLowerCase()}{" "}
-                sector.
-              </p>
-              <div className="space-y-4 pt-4">
-                <div className="flex items-start gap-3">
-                  <Users className="h-5 w-5 text-gray-500 mt-0.5" />
-                  <div>
-                    <p className="font-medium">Project Owner</p>
-                    <p className="text-gray-600">{project.projectOwner}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <MapPin className="h-5 w-5 text-gray-500 mt-0.5" />
-                  <div>
-                    <p className="font-medium">Location</p>
-                    <p className="text-gray-600">{project.location}</p>
-                    <p className="text-sm text-gray-500">{project.address}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Phone className="h-5 w-5 text-gray-500 mt-0.5" />
-                  <div>
-                    <p className="font-medium">Phone</p>
-                    <p className="text-gray-600">{project.phoneNumber}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Mail className="h-5 w-5 text-gray-500 mt-0.5" />
-                  <div>
-                    <p className="font-medium">Email</p>
-                    <p className="text-gray-600">{project.email}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Calendar className="h-5 w-5 text-gray-500 mt-0.5" />
-                  <div>
-                    <p className="font-medium">Post Duration</p>
-                    <p className="text-gray-600">{project.postDuration} days</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-6 pt-6 border-t">
-                <Button className="w-full bg-purple-500 hover:bg-purple-600 text-white">
-                  Contact Project Owner
-                </Button>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:col-span-2 space-y-6"
-          >
-            {/* Project Header */}
-            <div className="bg-white rounded-xl shadow-sm p-6 pt-0">
-              <div className="flex flex-col md:flex-row gap-6">
-                <div className="relative h-32 w-32 rounded-lg overflow-hidden flex-shrink-0">
-                  <Image
-                    src={placeholderimg}
-                    alt={project.projectName}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <h1 className="text-2xl font-bold">
-                      {project.projectName}
-                    </h1>
-                    <Badge
-                      className={getSupportTypeColor(project.typeOfSupport)}
-                    >
-                      {project.typeOfSupport}
-                    </Badge>
-                  </div>
-                  <p className="text-gray-600 mb-4">
-                    {project.projectDescription}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <Badge variant="outline" className="text-sm">
-                      {project.category}
-                    </Badge>
-                    <Badge variant="outline" className="text-sm">
-                      {project.location}
-                    </Badge>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Project Video */}
-            <div className="bg-white rounded-xl shadow-sm p-6 pt-2">
-              <div className="relative pt-[56.25%] bg-gray-100 rounded-lg overflow-hidden mb-4">
+        {/* Project Header: Logo, Name, Description */}
+        <div className="flex flex-col items-center text-center mb-10">
+          <div className="relative h-24 w-24 rounded-full overflow-hidden mb-4 border-4 border-purple-100 shadow">
+            <Image
+              src={project.companyLogo}
+              alt={project.projectName}
+              fill
+              className="object-cover"
+            />
+          </div>
+          <h1 className="text-3xl font-bold mb-2">{project.projectName}</h1>
+          <p className="text-gray-600 text-lg max-w-2xl mb-2">{project.projectDescription}</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+          {/* Left: Project Video or Image */}
+          <div className="bg-white rounded-xl shadow-sm p-6 flex flex-col items-center justify-center">
+            <div className="w-full aspect-video bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
+              {project.videoLink ? (
                 <iframe
                   src={project.videoLink.replace("watch?v=", "embed/")}
-                  className="absolute top-0 left-0 w-full h-full"
+                  className="w-full h-full min-h-[300px]"
                   allowFullScreen
                 />
-              </div>
-              <Button variant="outline" className="w-full">
-                Watch on YouTube
-              </Button>
-            </div>
-
-            {/* Project Details */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-                Project Details
-              </h2>
-
-              <div className="space-y-6">
-                <div>
-                  <h3 className="font-medium mb-2">Full Description</h3>
-                  <p className="text-gray-600">
-                    {project.projectDescription} Our team is dedicated to
-                    creating innovative solutions that address real-world
-                    problems in the {project.category?.toLowerCase()} sector.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-medium mb-2">Goals & Objectives</h3>
-                  <ul className="list-disc pl-5 space-y-2 text-gray-600">
-                    {[
-                      "Develop and launch core product within 6 months",
-                      "Acquire 1,000+ users in first year",
-                      "Establish key partnerships",
-                      "Create sustainable revenue streams",
-                      "Make positive community impact",
-                    ].map((goal, i) => (
-                      <li key={i}>{goal}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* Call to Action */}
-            <div className="ml-4">
-              <Button className="bg-purple-600 hover:bg-purple-700 ">
-                Support This Project
-              </Button>
-            </div>
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-                <MessageSquare className="text-purple-500" size={20} />
-                Community Discussion
-              </h2>
-
-              {true ? (
-                <div className="mb-6">
-                  <Textarea
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    placeholder="Share your thoughts about this project..."
-                    className="mb-3"
-                  />
-                  <Button
-                    onClick={handleAddComment}
-                    className="bg-purple-600 hover:bg-purple-700"
-                  >
-                    Post Comment
-                  </Button>
-                </div>
               ) : (
-                <div className="bg-purple-50 p-4 rounded-lg mb-6 flex items-center gap-3">
-                  <Lock className="text-purple-500" size={18} />
-                  <p className="text-purple-700">
-                    Only backers can post comments. Support this project to join
-                    the discussion.
-                  </p>
-                </div>
+                <Image
+                  src={project.companyLogo}
+                  alt={project.projectName}
+                  width={480}
+                  height={320}
+                  className="object-cover w-full h-full"
+                />
               )}
+            </div>
+          </div>
 
-              {/* Show comments if any exist */}
-              <div className="space-y-6">
-                {comments.length > 0 ? (
-                  comments.map((comment) => (
-                    <div key={comment.id} className="flex gap-4">
-                      <div className="flex-shrink-0">
-                        {comment.avatar ? (
-                          <img
-                            src={comment.avatar}
-                            alt={comment.author}
-                            className="h-10 w-10 rounded-full"
-                          />
-                        ) : (
-                          <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                            {comment.author.charAt(0)}
-                          </div>
-                        )}
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <p className="font-medium">{comment.author}</p>
-                          {comment.isBacker && (
-                            <Badge variant="outline" className="text-xs">
-                              Backer
-                            </Badge>
-                          )}
-                          <span className="text-sm text-gray-500">
-                            {comment.date}
-                          </span>
-                        </div>
-                        <p className="text-gray-600 mt-1">{comment.content}</p>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-gray-500 text-center py-4">
-                    No comments yet. Be the first to share your thoughts!
-                  </p>
+          {/* Right: Funding Info Card */}
+          <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col gap-6">
+            <div>
+              <div className="flex flex-wrap gap-2 mb-4">
+                <Badge className="bg-purple-100 text-purple-700 font-semibold text-xs px-3 py-1 rounded-full shadow-sm">
+                  {project.typeOfSupport}
+                </Badge>
+                {project.category && (
+                  <Badge variant="outline" className="border-purple-200 text-purple-600">
+                    {project.category}
+                  </Badge>
                 )}
+                <Badge variant="outline" className="border-gray-200 text-gray-600">
+                  {project.location}
+                </Badge>
               </div>
             </div>
-          </motion.div>
+            <div>
+              <div className="flex justify-between items-center mb-1">
+                <span className="text-sm text-gray-600">ETB {project.goalFund.toLocaleString()} goal</span>
+                <span className="text-sm font-medium">{project.fundingProgress || 0}% Funded</span>
+              </div>
+              <Progress value={project.fundingProgress || 0} className="h-3" />
+            </div>
+            <div className="flex items-center gap-8 text-lg font-semibold mb-4">
+              <div className="flex flex-col items-center">
+                <span className="text-2xl text-purple-700">{project.backers ?? 0}</span>
+                <span className="text-xs text-gray-500">Backers</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <span className="text-2xl text-purple-700">{project.daysLeft ?? 0}</span>
+                <span className="text-xs text-gray-500">Days To Go</span>
+              </div>
+            </div>
+            <Button className="bg-purple-600 hover:bg-purple-700 text-lg py-4 font-bold mb-4">
+              Support This Project
+            </Button>
+            {/* Social Media Icons */}
+            <div className="flex gap-4 justify-center mt-2">
+              <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors">
+                <Facebook size={28} />
+              </a>
+              <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors">
+                <Youtube size={28} />
+              </a>
+              <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors">
+                <Instagram size={28} />
+              </a>
+              <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors">
+                <Twitter size={28} />
+              </a>
+            </div>
+          </div>
+        </div>
+        {/* Comments Section */}
+        <div className="max-w-2xl mx-auto mt-12 bg-white rounded-xl shadow-sm p-6">
+          <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <MessageSquare className="text-purple-500" size={20} />
+            Community Discussion
+          </h2>
+          {/* Comments List */}
+          <div className="space-y-6 mb-6">
+            {comments.length > 0 ? (
+              comments.map((comment) => (
+                <div key={comment.id} className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    {comment.avatar ? (
+                      <img
+                        src={comment.avatar}
+                        alt={comment.author}
+                        className="h-10 w-10 rounded-full"
+                      />
+                    ) : (
+                      <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                        {comment.author.charAt(0)}
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="font-medium">{comment.author}</p>
+                      {comment.isBacker && (
+                        <Badge variant="outline" className="text-xs">
+                          Backer
+                        </Badge>
+                      )}
+                      <span className="text-sm text-gray-500">
+                        {comment.date}
+                      </span>
+                    </div>
+                    <p className="text-gray-600 mt-1">{comment.content}</p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500 text-center py-4">
+                No comments yet. Be the first to share your thoughts!
+              </p>
+            )}
+          </div>
+          {/* Add Comment Box (now below comments) */}
+          <div className="mb-6">
+            <Textarea
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Share your thoughts about this project..."
+              className="mb-3"
+            />
+            <Button
+              onClick={handleAddComment}
+              className="bg-purple-600 hover:bg-purple-700"
+            >
+              Post Comment
+            </Button>
+          </div>
         </div>
       </div>
     </div>

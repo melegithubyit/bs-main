@@ -169,14 +169,7 @@ export default function Navbar() {
         </button>
       </div>
       <nav className="hidden md:flex items-center space-x-8 py-4 justify-center border-b-2 border-gray-200 ">
-        {pathname !== "/" && (
-          <Link
-            href="/startup"
-            className="text-sm font-medium hover:text-primary transition-colors"
-          >
-            Start Up
-          </Link>
-        )}
+      
         <Link
           href="/hiwot"
           className="text-sm font-medium hover:text-primary transition-colors"
