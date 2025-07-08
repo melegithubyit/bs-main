@@ -18,7 +18,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { motion } from "framer-motion";
 import { Candidate } from "@/types/jobApi";
 import placeholderimg from "@/public/person-placeholder.png";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
+import { mockTalents, JobTalent } from "@/components/job-comp/mockTalents";
 
 // Update the Candidate interface to include bank and bankAccount
 // interface Candidate {
@@ -100,47 +101,21 @@ const mockCandidates: Candidate[] = Array.from({ length: 50 }, (_, i) => ({
   videoLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
 }));
 
-export default function JobDetailPage({ params }: { params: { id: string } }) {
-  const [candidate, setCandidate] = useState<Candidate | null>(null);
-  const [loading, setLoading] = useState(true);
+export default function JobDetailPage() {
+  const params = useParams();
+  const id = typeof params.id === 'string' ? params.id : Array.isArray(params.id) ? params.id[0] : undefined;
+  const [talent, setTalent] = useState<JobTalent | null>(null);
   const router = useRouter();
 
   const handleBack = () => {
     router.back();
   };
   useEffect(() => {
-    // Simulate API call to fetch candidate details
-    const fetchCandidate = async () => {
-      setLoading(true);
-      try {
-        // In a real app, you would fetch from an API
-        // Check for both ID formats (with or without 'candidate-' prefix)
-        const foundCandidate = mockCandidates.find(
-          (c) => c.id === params.id || `candidate-${c.id}` === params.id
-        );
+    const found = mockTalents.find((t) => t.id === id);
+    setTalent(found || null);
+  }, [id]);
 
-        if (foundCandidate) {
-          setCandidate(foundCandidate);
-        }
-      } catch (error) {
-        console.error("Error fetching candidate:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCandidate();
-  }, [params.id]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen pt-24 pb-16 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
-      </div>
-    );
-  }
-
-  if (!candidate) {
+  if (!talent) {
     return (
       <div className="min-h-screen pt-24 pb-16 flex items-center justify-center">
         <div className="text-center">
@@ -271,22 +246,17 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
               <div className="flex flex-col items-center text-center mb-6">
                 <div className="relative h-32 w-32 rounded-full overflow-hidden mb-4">
                   <Image
-                    src={placeholderimg}
-                    alt={`${candidate.firstName} ${candidate.lastName}`}
+                    src={talent.photo}
+                    alt={talent.name}
                     fill
                     className="object-cover"
                   />
                 </div>
-                <h1 className="text-2xl font-bold">{`${candidate.firstName} ${candidate.lastName}`}</h1>
-                <p className="text-gray-600">{candidate.field}</p>
+                <h1 className="text-2xl font-bold">{talent.name}</h1>
                 <div className="mt-2">
-                  <span
-                    className={`inline-flex items-center text-xs px-3 py-1 rounded-full ${getEmploymentTypeColor(
-                      candidate.typeOfEmployment
-                    )}`}
-                  >
+                  <span className="inline-flex items-center text-xs px-3 py-1 rounded-full text-purple-500 bg-purple-50">
                     <Briefcase size={12} className="mr-1" />
-                    {candidate.typeOfEmployment}
+                    {talent.experience}
                   </span>
                 </div>
               </div>
@@ -296,8 +266,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
                   <MapPin className="h-5 w-5 text-gray-500 mt-0.5" />
                   <div>
                     <p className="font-medium">Location</p>
-                    <p className="text-gray-600">{candidate.location}</p>
-                    <p className="text-sm text-gray-500">{candidate.address}</p>
+                    <p className="text-gray-600">{talent.location}</p>
                   </div>
                 </div>
 
@@ -305,7 +274,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
                   <Phone className="h-5 w-5 text-gray-500 mt-0.5" />
                   <div>
                     <p className="font-medium">Phone</p>
-                    <p className="text-gray-600">{candidate.phoneNumber}</p>
+                    <p className="text-gray-600">{talent.phone}</p>
                   </div>
                 </div>
 
@@ -313,15 +282,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
                   <Mail className="h-5 w-5 text-gray-500 mt-0.5" />
                   <div>
                     <p className="font-medium">Email</p>
-                    <p className="text-gray-600">{candidate.email}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Briefcase className="h-5 w-5 text-gray-500 mt-0.5" />
-                  <div>
-                    <p className="font-medium">Department</p>
-                    <p className="text-gray-600">{candidate.department}</p>
+                    <p className="text-gray-600">{talent.email}</p>
                   </div>
                 </div>
               </div>
@@ -342,190 +303,25 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
             className="lg:col-span-2"
           >
             <div className="bg-white rounded-lg shadow-sm p-6 mb-6 pt-0">
-              <Tabs defaultValue="profile">
-                <TabsList className="mb-6">
-                  <TabsTrigger value="profile">Profile</TabsTrigger>
-                  <TabsTrigger value="video">Video</TabsTrigger>
-                  <TabsTrigger value="documents">Documents</TabsTrigger>
-                </TabsList>
-
-                {/* Replace the TabsContent for profile with a simpler version that only shows available information */}
-                <TabsContent value="profile" className="space-y-6">
-                  <div>
-                    <h2 className="text-xl font-bold mb-4">
-                      About {candidate.firstName}
-                    </h2>
-                    <p className="text-gray-600">
-                      {candidate.firstName} {candidate.lastName} is a
-                      professional in the field of {candidate.field} with the{" "}
-                      {candidate.department} department. {candidate.firstName}{" "}
-                      is available for
-                      {candidate.typeOfEmployment === "fulltime"
-                        ? " full-time "
-                        : candidate.typeOfEmployment === "parttime"
-                        ? " part-time "
-                        : candidate.typeOfEmployment === "remote"
-                        ? " remote "
-                        : candidate.typeOfEmployment === "internship"
-                        ? " internship "
-                        : " contract "}
-                      opportunities in {candidate.location}.
-                    </p>
-                  </div>
-
-                  <div>
-                    <h2 className="text-xl font-bold mb-4">
-                      Documents & Certificates
-                    </h2>
-                    <div className="space-y-4">
-                      <div className="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
-                        <div className="flex items-center">
-                          <FileText className="h-5 w-5 text-purple-500 mr-3" />
-                          <span>Curriculum Vitae (CV)</span>
-                        </div>
-                        <a
-                          href={candidate.CV}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                        >
-                          <Download className="h-4 w-4 mr-2" />
-                          View
-                        </a>
-                      </div>
-
-                      <div className="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
-                        <div className="flex items-center">
-                          <FileText className="h-5 w-5 text-purple-500 mr-3" />
-                          <span>Identification Document</span>
-                        </div>
-                        <a
-                          href={candidate.identification}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                        >
-                          <Download className="h-4 w-4 mr-2" />
-                          View
-                        </a>
-                      </div>
-
-                      {candidate.educationCertificates.map((cert, index) => (
-                        <div
-                          key={index}
-                          className="bg-gray-50 p-4 rounded-lg flex items-center justify-between"
-                        >
-                          <div className="flex items-center">
-                            <FileText className="h-5 w-5 text-purple-500 mr-3" />
-                            <span>Certificate {index + 1}</span>
-                          </div>
-                          <a
-                            href={cert}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                          >
-                            <Download className="h-4 w-4 mr-2" />
-                            View
-                          </a>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="video">
-                  <div className="space-y-6">
-                    <h2 className="text-xl font-bold mb-4">
-                      Introduction Video
-                    </h2>
-                    <div className="relative pt-[56.25%] bg-gray-100 rounded-lg overflow-hidden">
-                      <iframe
-                        src={candidate.videoLink.replace("watch?v=", "embed/")}
-                        className="absolute top-0 left-0 w-full h-full"
-                        title="Candidate Introduction"
-                        allowFullScreen
-                      ></iframe>
-                    </div>
-                    <div className="flex justify-end">
-                      <Button
-                        variant="outline"
-                        className="flex items-center gap-2"
-                      >
-                        <ExternalLink size={16} />
-                        <span>Open in YouTube</span>
-                      </Button>
-                    </div>
-                  </div>
-                </TabsContent>
-
-                {/* Replace the TabsContent for documents to handle links properly */}
-                <TabsContent value="documents">
-                  <div className="space-y-6">
-                    <h2 className="text-xl font-bold mb-4">CV</h2>
-                    <div className="bg-gray-50 p-6 rounded-lg flex items-center justify-between">
-                      <div className="flex items-center">
-                        <FileText className="h-5 w-5 text-purple-500 mr-3" />
-                        <span>Curriculum Vitae (CV)</span>
-                      </div>
-                      <a
-                        href={candidate.CV}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-500 hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                      >
-                        <Download className="h-4 w-4 mr-2" />
-                        View CV
-                      </a>
-                    </div>
-
-                    <h2 className="text-xl font-bold mb-4">
-                      Identification Document
-                    </h2>
-                    <div className="bg-gray-50 p-6 rounded-lg flex items-center justify-between">
-                      <div className="flex items-center">
-                        <FileText className="h-5 w-5 text-purple-500 mr-3" />
-                        <span>Identification Document</span>
-                      </div>
-                      <a
-                        href={candidate.identification}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-500 hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                      >
-                        <Download className="h-4 w-4 mr-2" />
-                        View ID
-                      </a>
-                    </div>
-
-                    <h2 className="text-xl font-bold mb-4">
-                      Education Certificates
-                    </h2>
-                    <div className="space-y-4">
-                      {candidate.educationCertificates.map((cert, index) => (
-                        <div
-                          key={index}
-                          className="bg-gray-50 p-4 rounded-lg flex items-center justify-between"
-                        >
-                          <div className="flex items-center">
-                            <FileText className="h-5 w-5 text-purple-500 mr-3" />
-                            <span>Certificate {index + 1}</span>
-                          </div>
-                          <a
-                            href={cert}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                          >
-                            <Download className="h-4 w-4 mr-2" />
-                            View
-                          </a>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </TabsContent>
-              </Tabs>
+              <h2 className="text-xl font-bold mb-4">About {talent.name}</h2>
+              <p className="text-gray-600 mb-4">{talent.bio}</p>
+              <div className="mb-4">
+                <h3 className="font-semibold mb-2">Skills</h3>
+                <ul className="flex flex-wrap gap-2">
+                  {talent.skills.map((skill, idx) => (
+                    <li
+                      key={idx}
+                      className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs"
+                    >
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-semibold mb-2">Experience</h3>
+                <p>{talent.experience}</p>
+              </div>
             </div>
           </motion.div>
         </div>

@@ -20,85 +20,21 @@ import { Progress } from "@/components/ui/progress";
 import { motion } from "framer-motion";
 import type { HiwotApplicant } from "@/components/hiwot-comp/applicant-card";
 import placeholderimg from "@/public/hiwot-placeholder.png";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
+import { mockApplicants } from "@/components/hiwot-comp/mockApplicants";
 
-// Mock data for applicants
-const mockApplicants: HiwotApplicant[] = Array.from({ length: 50 }, (_, i) => ({
-  id: `applicant-${i + 1}`,
-  firstName: ["Sarah", "Meron", "Hiwot", "Tigist", "Bethel"][i % 5],
-  lastName: ["Tadesse", "Abebe", "Kebede", "Haile", "Tesfaye"][i % 5],
-  description: [
-    "Needs support for cancer treatment",
-    "Requires surgery for heart condition",
-    "Seeking help for chronic kidney disease",
-    "Needs assistance for diabetes treatment",
-    "Requires support for physical therapy after accident",
-  ][i % 5],
-  phoneNumber: `+251 9${i % 10}${i % 10} ${i % 10}${i % 10}${i % 10} ${i % 10}${
-    i % 10
-  }${i % 10}${i % 10}`,
-  email: `${["sarah", "meron", "hiwot", "tigist", "bethel"][i % 5]}.${
-    ["tadesse", "abebe", "kebede", "haile", "tesfaye"][i % 5]
-  }@example.com`,
-  postDuration: ["30", "60", "90", "120", "180"][i % 5],
-  dateOfBirth: new Date(1980 + (i % 30), i % 12, (i % 28) + 1)
-    .toISOString()
-    .split("T")[0],
-  videoLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  medicalDocuments: [
-    `https://storage.example.com/medical/document-${i + 1}-1.pdf`,
-    `https://storage.example.com/medical/document-${i + 1}-2.pdf`,
-    `https://storage.example.com/medical/document-${i + 1}-3.pdf`,
-  ],
-  goalFund: `${(50000 + i * 10000).toString()}`,
-  bank: [
-    "Commercial Bank of Ethiopia",
-    "Dashen Bank",
-    "Awash Bank",
-    "Bank of Abyssinia",
-    "Zemen Bank",
-  ][i % 5],
-  bankAccount: `100${i}${i}${i}${i}${i}${i}`,
-  location: ["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][
-    i % 5
-  ],
-  address: `${i + 1} Main Street, ${
-    ["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5]
-  }`,
-  nationalId: `https://storage.example.com/id/id-${i + 1}.pdf`,
-  photo: placeholderimg,
-  fundingProgress: Math.floor(Math.random() * 100),
-  supporters: Math.floor(Math.random() * 100),
-}));
-
-export default function HiwotDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function HiwotDetailPage() {
+  const params = useParams();
+  const id = typeof params.id === 'string' ? params.id : Array.isArray(params.id) ? params.id[0] : undefined;
   const [applicant, setApplicant] = useState<HiwotApplicant | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate API call to fetch applicant details
-    const fetchApplicant = async () => {
-      setLoading(true);
-      try {
-        // In a real app, you would fetch from an API
-        const foundApplicant = mockApplicants.find((c) => c.id === params.id);
-
-        if (foundApplicant) {
-          setApplicant(foundApplicant);
-        }
-      } catch (error) {
-        console.error("Error fetching applicant:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchApplicant();
-  }, [params.id]);
+    setLoading(true);
+    const found = mockApplicants.find((a) => a.id === id);
+    setApplicant(found || null);
+    setLoading(false);
+  }, [id]);
 
   const handleBack = () => {
     router.push("/hiwot/overview");

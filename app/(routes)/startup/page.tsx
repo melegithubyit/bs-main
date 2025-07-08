@@ -13,14 +13,14 @@ export default function StartupCoverPage() {
     {
       title: "Do you want to invest?",
       icon: <Search className="w-8 h-8" />,
-      description: "Discover and support innovative projects",
+     
       steps: [
         "Browse vetted startups",
         "Connect with founders",
         "Fund promising ideas",
       ],
       cta: "Explore Startups",
-      href: "/auth/signin",
+      href: "/startup/projects",
     },
     {
       title: "Do you have a startup?",
@@ -32,7 +32,7 @@ export default function StartupCoverPage() {
         "Raise capital",
       ],
       cta: "Post Project",
-      href: "/auth/signin",
+      href: "/startup/add",
     },
   ];
 

@@ -11,10 +11,10 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import Pagination from "../common-comp/pagination";
-import { Candidate } from "@/types/jobApi";
+import { JobTalent } from "./mockTalents";
 
 interface CandidateListProps {
-  candidates: Candidate[];
+  candidates: JobTalent[];
   layout: "list" | "grid";
   onLayoutChange: (layout: "list" | "grid") => void;
 }

@@ -5,14 +5,16 @@ import { useRouter } from "next/navigation";
 import { MapPin, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { CandidateCardProps } from "@/types/jobApi";
+import { JobTalent } from "./mockTalents";
 import placeholderimg from "@/public/person-placeholder.png";
 
-export default function CandidateCard({
-  candidate,
-  index,
-  layout,
-}: CandidateCardProps) {
+type CandidateCardProps = {
+  candidate: JobTalent;
+  index: number;
+  layout: "list" | "grid";
+};
+
+export default function CandidateCard({ candidate, index, layout }: CandidateCardProps) {
   const router = useRouter();
 
   const handleSeeMore = () => {
@@ -48,15 +50,15 @@ export default function CandidateCard({
           <div className="relative h-12 w-12 rounded-full overflow-hidden">
             <Image
               src={placeholderimg}
-              alt={`${candidate.firstName} ${candidate.lastName}`}
+              alt={`${candidate.name}`}
               fill
               className="object-cover"
             />
           </div>
           <div>
-            <h3 className="font-medium">{`${candidate.firstName} ${candidate.lastName}`}</h3>
+            <h3 className="font-medium">{`${candidate.name}`}</h3>
             <p className="text-sm text-gray-500">
-              {candidate.department} - {candidate.field}
+              {candidate.skills}
             </p>
             <div className="flex items-center text-xs text-gray-500 mt-1">
               <MapPin size={12} className="mr-1" />
@@ -65,11 +67,11 @@ export default function CandidateCard({
             <div className="flex flex-wrap gap-2 mt-2">
               <span
                 className={`text-xs px-2 py-1 rounded-full flex items-center ${getEmploymentTypeColor(
-                  candidate.typeOfEmployment
+                  candidate.experience
                 )}`}
               >
                 <Briefcase size={10} className="mr-1" />
-                {candidate.typeOfEmployment}
+                {candidate.experience}
               </span>
             </div>
           </div>
@@ -96,28 +98,27 @@ export default function CandidateCard({
         <div className="relative h-12 w-12 rounded-full overflow-hidden">
           <Image
             src={placeholderimg}
-            alt={`${candidate.firstName} ${candidate.lastName}`}
+            alt={`${candidate.name}`}
             fill
             className="object-cover"
           />
         </div>
         <div>
-          <h3 className="font-medium">{`${candidate.firstName} ${candidate.lastName}`}</h3>
+          <h3 className="font-medium">{`${candidate.name}`}</h3>
           <p className="text-xs text-gray-500">{candidate.location}</p>
         </div>
       </div>
       <div className="mb-3">
-        <p className="text-sm font-medium">{candidate.department}</p>
-        <p className="text-sm text-gray-600">{candidate.field}</p>
+        <p className="text-sm font-medium">{candidate.skills}</p>
       </div>
       <div className="flex flex-wrap gap-2 mb-4">
         <span
           className={`text-xs px-2 py-1 rounded-full flex items-center ${getEmploymentTypeColor(
-            candidate.typeOfEmployment
+            candidate.experience
           )}`}
         >
           <Briefcase size={10} className="mr-1" />
-          {candidate.typeOfEmployment}
+          {candidate.experience}
         </span>
       </div>
       <Button

@@ -25,98 +25,16 @@ import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import type { StartupProject } from "@/components/startup-comp/project-card";
 import placeholderimg from "@/public/placeholder.png";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
-// Mock data for projects
-const mockProjects: StartupProject[] = Array.from({ length: 50 }, (_, i) => ({
-  id: `project-${i + 1}`,
-  projectName: [
-    "EcoTech Solutions",
-    "FinHub",
-    "MedConnect",
-    "AgriSmart",
-    "EduTech Innovations",
-    "CleanEnergy",
-    "SmartMobility",
-    "FoodTech",
-    "RetailTech",
-    "AIServices",
-  ][i % 10],
-  projectDescription: [
-    "Sustainable technology solutions for environmental challenges",
-    "Innovative financial technology platform for small businesses",
-    "Connecting patients with healthcare providers through technology",
-    "Smart agricultural solutions for improved crop yields",
-    "Educational technology for accessible learning",
-    "Renewable energy solutions for homes and businesses",
-    "Smart transportation solutions for urban areas",
-    "Innovative food technology for sustainable nutrition",
-    "Technology solutions for modern retail experiences",
-    "AI-powered services for business optimization",
-  ][i % 10],
-  projectOwner: [
-    "Abebe Kebede",
-    "Tigist Haile",
-    "Dawit Tadesse",
-    "Hiwot Tesfaye",
-    "Yonas Bekele",
-  ][i % 5],
-  email: `contact@${
-    ["ecotech", "finhub", "medconnect", "agrismart", "edutech"][i % 5]
-  }.com`,
-  phoneNumber: `+251 9${i % 10}${i % 10} ${i % 10}${i % 10}${i % 10} ${i % 10}${
-    i % 10
-  }${i % 10}${i % 10}`,
-  postDuration: 30 + (i % 5) * 30,
-  goalFund: 100000 + (i % 10) * 50000,
-  bank: [
-    "Commercial Bank of Ethiopia",
-    "Dashen Bank",
-    "Awash Bank",
-    "Bank of Abyssinia",
-    "Zemen Bank",
-  ][i % 5],
-  bankAccount: `100${i}${i}${i}${i}${i}${i}`,
-  location: ["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][
-    i % 5
-  ],
-  address: `${i + 1} Main Street, ${
-    ["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5]
-  }`,
-  companyLogo: placeholderimg,
-  nationalId: `https://storage.example.com/id/id-${i + 1}.pdf`,
-  videoLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  typeOfSupport: [
-    "Funding",
-    "Mentorship",
-    "Technical",
-    "Partnership",
-    "Investment",
-  ][i % 5],
-  fundingProgress: Math.floor(Math.random() * 100),
-  supporters: Math.floor(Math.random() * 100),
-  category: [
-    "Technology",
-    "Finance",
-    "Healthcare",
-    "Agriculture",
-    "Education",
-    "Energy",
-    "Transportation",
-    "Food",
-    "Retail",
-    "AI",
-  ][i % 10],
-}));
+import { mockProjects } from "@/components/startup-comp/mockProjects";
 
-export default function StartupDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function StartupDetailPage() {
+  const params = useParams();
+  const id = typeof params.id === 'string' ? params.id : Array.isArray(params.id) ? params.id[0] : undefined;
   const [project, setProject] = useState<StartupProject | null>(null);
   const [loading, setLoading] = useState(true);
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<any[]>([]);
   const [newComment, setNewComment] = useState("");
   const router = useRouter();
 
@@ -139,8 +57,11 @@ export default function StartupDetailPage({
     const fetchProject = async () => {
       setLoading(true);
       try {
+        // Debug log
+        console.log('id:', id);
+        console.log('mockProjects ids:', mockProjects.map(p => p.id));
         // In a real app, you would fetch from an API
-        const foundProject = mockProjects.find((p) => p.id === params.id);
+        const foundProject = mockProjects.find((p) => p.id === id);
 
         if (foundProject) {
           setProject(foundProject);
@@ -153,7 +74,7 @@ export default function StartupDetailPage({
     };
 
     fetchProject();
-  }, [params.id]);
+  }, [id]);
 
   // Get support type badge color
   const getSupportTypeColor = (type: string) => {

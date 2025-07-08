@@ -13,62 +13,9 @@ import {
 import { motion } from "framer-motion";
 import SearchBar from "@/components/job-comp/search-bar";
 import CandidateFilters from "@/components/job-comp/candidate-filters";
+import { mockTalents, JobTalent } from "@/components/job-comp/mockTalents";
+import { useRouter } from "next/navigation";
 import CandidateList from "@/components/job-comp/candidate-list";
-import { Candidate } from "@/types/jobApi";
-import placeholder from "@/public/person-placeholder.png";
-
-// Mock data for candidates
-const mockCandidates: Candidate[] = Array.from({ length: 50 }, (_, i) => ({
-  id: `candidate-${i + 1}`,
-  firstName: ["Sarah", "Meron", "Hiwot", "Tigist", "Bethel"][i % 5],
-  lastName: ["Tadesse", "Abebe", "Kebede", "Haile", "Tesfaye"][i % 5],
-  department: [
-    "Engineering",
-    "Design",
-    "Marketing",
-    "Finance",
-    "Human Resources",
-  ][i % 5],
-  field: [
-    "Software Development",
-    "UX/UI Design",
-    "Digital Marketing",
-    "Accounting",
-    "Recruitment",
-    "Data Science",
-    "Project Management",
-  ][i % 7],
-  phoneNumber: `+251 9${i % 10}${i % 10} ${i % 10}${i % 10}${i % 10} ${i % 10}${
-    i % 10
-  }${i % 10}${i % 10}`,
-  email: `${["sarah", "meron", "hiwot", "tigist", "bethel"][i % 5]}.${
-    ["tadesse", "abebe", "kebede", "haile", "tesfaye"][i % 5]
-  }@example.com`,
-  location: ["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][
-    i % 5
-  ],
-  address: `${i + 1} Main Street, ${
-    ["Addis Ababa", "Dire Dawa", "Bahir Dar", "Hawassa", "Mekelle"][i % 5]
-  }`,
-  educationCertificates: [
-    `certificate-${i + 1}-1.pdf`,
-    `certificate-${i + 1}-2.pdf`,
-    `certificate-${i + 1}-3.pdf`,
-  ],
-  CV: `cv-${i + 1}.pdf`,
-  identification: `id-${i + 1}.pdf`,
-  photo: placeholder,
-  typeOfEmployment: [
-    "fulltime",
-    "parttime",
-    "remote",
-    "internship",
-    "contract",
-  ][i % 5],
-  videoLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  bank: `Bank ${(i % 3) + 1}`,
-  bankAccount: `1234567890${i % 10}`,
-}));
 
 // Filter options
 const employmentTypes = [
@@ -109,15 +56,12 @@ export default function JobOverviewPage() {
   // State
   const [searchTerm, setSearchTerm] = useState("");
   const [location, setLocation] = useState("all");
-  const [candidates, _] = useState<Candidate[]>(mockCandidates);
-  const [filteredCandidates, setFilteredCandidates] =
-    useState<Candidate[]>(mockCandidates);
+  const [candidates, _] = useState<JobTalent[]>(mockTalents);
+  const [filteredCandidates, setFilteredCandidates] = useState<JobTalent[]>(mockTalents);
   const [layout, setLayout] = useState<"list" | "grid">("list");
 
   // Filter states
-  const [selectedEmploymentTypes, setSelectedEmploymentTypes] = useState<
-    string[]
-  >([]);
+  const [selectedEmploymentTypes, setSelectedEmploymentTypes] = useState<string[]>([]);
   const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
@@ -127,9 +71,7 @@ export default function JobOverviewPage() {
     if (checked) {
       setSelectedEmploymentTypes([...selectedEmploymentTypes, id]);
     } else {
-      setSelectedEmploymentTypes(
-        selectedEmploymentTypes.filter((type) => type !== id)
-      );
+      setSelectedEmploymentTypes(selectedEmploymentTypes.filter((type) => type !== id));
     }
   };
 
@@ -160,67 +102,21 @@ export default function JobOverviewPage() {
   // Apply filters
   const applyFilters = () => {
     let results = [...candidates];
-
-    // Apply search term filter
     if (searchTerm) {
       const searchTermLower = searchTerm.toLowerCase();
       results = results.filter(
         (candidate) =>
-          `${candidate.firstName} ${candidate.lastName}`
-            .toLowerCase()
-            .includes(searchTermLower) ||
-          candidate.department.toLowerCase().includes(searchTermLower) ||
-          candidate.field.toLowerCase().includes(searchTermLower)
+          candidate.name.toLowerCase().includes(searchTermLower) ||
+          candidate.skills.some((skill) => skill.toLowerCase().includes(searchTermLower)) ||
+          candidate.location.toLowerCase().includes(searchTermLower)
       );
     }
-
-    // Apply location filter
     if (location && location !== "all") {
       results = results.filter((candidate) => {
-        const locationId = candidate.location
-          .toLowerCase()
-          .replace(/\s+/g, "-");
+        const locationId = candidate.location.toLowerCase().replace(/\s+/g, "-");
         return locationId === location;
       });
     }
-
-    // Apply employment type filter
-    if (selectedEmploymentTypes.length > 0) {
-      results = results.filter((candidate) =>
-        selectedEmploymentTypes.includes(
-          candidate.typeOfEmployment.toLowerCase()
-        )
-      );
-    }
-
-    // Apply department filter
-    if (selectedDepartments.length > 0) {
-      results = results.filter((candidate) => {
-        const departmentId = candidate.department
-          .toLowerCase()
-          .replace(/\s+/g, "-");
-        return selectedDepartments.some((dept) => dept === departmentId);
-      });
-    }
-
-    // Apply field filter
-    if (selectedFields.length > 0) {
-      results = results.filter((candidate) => {
-        const fieldId = candidate.field.toLowerCase().replace(/\s+/g, "-");
-        return selectedFields.some((field) => field === fieldId);
-      });
-    }
-
-    // Apply location filter from checkboxes
-    if (selectedLocations.length > 0) {
-      results = results.filter((candidate) => {
-        const locationId = candidate.location
-          .toLowerCase()
-          .replace(/\s+/g, "-");
-        return selectedLocations.includes(locationId);
-      });
-    }
-
     setFilteredCandidates(results);
   };
 
@@ -239,6 +135,8 @@ export default function JobOverviewPage() {
   useEffect(() => {
     applyFilters();
   }, [searchTerm, location]);
+
+  const router = useRouter();
 
   return (
     <div className="min-h-screen pt-0 pb-16 relative overflow-hidden">

@@ -19,6 +19,8 @@ import { useLogoutMutation } from "@/redux/api/authApi";
 import logo from "@/public/logo/logo.svg";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { usePathname } from "next/navigation";
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -28,6 +30,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const [logoutUser] = useLogoutMutation();
   const [searchQuery, setSearchQuery] = useState("");
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,7 +76,7 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-2xl mx-auto ">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-2xl mx-auto pl-60 ">
           <div className="relative w-full">
             <Search
               className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -166,12 +169,14 @@ export default function Navbar() {
         </button>
       </div>
       <nav className="hidden md:flex items-center space-x-8 py-4 justify-center border-b-2 border-gray-200 ">
-        <Link
-          href="/startup"
-          className="text-sm font-medium hover:text-primary transition-colors"
-        >
-          Start Up
-        </Link>
+        {pathname !== "/" && (
+          <Link
+            href="/startup"
+            className="text-sm font-medium hover:text-primary transition-colors"
+          >
+            Start Up
+          </Link>
+        )}
         <Link
           href="/hiwot"
           className="text-sm font-medium hover:text-primary transition-colors"
@@ -208,13 +213,15 @@ export default function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md py-4 px-4 animate-in slide-in-from-top duration-300">
           <nav className="flex flex-col space-y-4">
-            <Link
-              href="/startup"
-              className="text-sm font-medium hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Start Up
-            </Link>
+            {pathname !== "/" && (
+              <Link
+                href="/startup"
+                className="text-sm font-medium hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Start Up
+              </Link>
+            )}
             <Link
               href="/hiwot"
               className="text-sm font-medium hover:text-primary transition-colors"
