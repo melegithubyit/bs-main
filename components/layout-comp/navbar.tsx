@@ -16,7 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { logout } from "@/redux/authSlice";
 import { useLogoutMutation } from "@/redux/api/authApi";
-import logo from "@/public/logo/logo.svg";
+import logo from "@/public/logo/logo.png";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -68,8 +68,8 @@ export default function Navbar() {
           <Image
             src={logo}
             alt="Sigma Logo"
-            width={80}
-            height={80}
+            width={120}
+            height={120}
             className="transition-transform duration-300 hover:scale-105"
           />
         </Link>
