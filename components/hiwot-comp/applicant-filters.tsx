@@ -100,7 +100,7 @@ export default function ApplicantFilters({
       <div className="flex flex-col gap-3 mt-6">
         <Button
           onClick={onApplyFilters}
-          className="bg-purple-500 hover:bg-purple-600 text-white"
+          className="bg-blue-500 hover:bg-blue-600 text-white"
         >
           Apply Filters
         </Button>

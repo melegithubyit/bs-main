@@ -145,9 +145,9 @@ export default function FeedbackPage() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-0.5 w-12 bg-purple-500"></div>
+            <div className="h-0.5 w-12 bg-blue-500"></div>
             <h1 className="text-3xl md:text-4xl font-bold">Feedback</h1>
-            <div className="h-0.5 w-12 bg-purple-500"></div>
+            <div className="h-0.5 w-12 bg-blue-500"></div>
           </div>
 
           <motion.div
@@ -236,7 +236,7 @@ export default function FeedbackPage() {
                 step={1}
                 value={[rating]}
                 onValueChange={(value) => setRating(value[0])}
-                className="py-4 [&>span:first-child]:bg-purple-500 [&>span:last-child]:bg-purple-500 [&>span:last-child]:ring-purple-300"
+                className="py-4 [&>span:first-child]:bg-blue-500 [&>span:last-child]:bg-blue-500 [&>span:last-child]:ring-blue-300"
               />
             </div>
 
@@ -256,7 +256,7 @@ export default function FeedbackPage() {
             <div className="flex justify-center pt-4">
               <Button
                 type="submit"
-                className="bg-purple-500 hover:bg-purple-600 text-white px-12  h-fit"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-12  h-fit"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Submitting..." : "Submit"}

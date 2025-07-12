@@ -103,7 +103,12 @@ const mockCandidates: Candidate[] = Array.from({ length: 50 }, (_, i) => ({
 
 export default function JobDetailPage() {
   const params = useParams();
-  const id = typeof params.id === 'string' ? params.id : Array.isArray(params.id) ? params.id[0] : undefined;
+  const id =
+    typeof params.id === "string"
+      ? params.id
+      : Array.isArray(params.id)
+      ? params.id[0]
+      : undefined;
   const [talent, setTalent] = useState<JobTalent | null>(null);
   const router = useRouter();
 
@@ -124,7 +129,7 @@ export default function JobDetailPage() {
             The candidate you are looking for does not exist.
           </p>
           <Button
-            className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 "
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 "
             onClick={handleBack}
           >
             <ArrowLeft size={16} className="mr-2" />
@@ -142,9 +147,9 @@ export default function JobDetailPage() {
       case "parttime":
         return "text-blue-500 bg-blue-50";
       case "remote":
-        return "text-purple-500 bg-purple-50";
+        return "text-blue-500 bg-blue-50";
       case "internship":
-        return "text-purple-500 bg-purple-50";
+        return "text-blue-500 bg-blue-50";
       case "contract":
         return "text-gray-500 bg-gray-50";
       default:
@@ -227,7 +232,7 @@ export default function JobDetailPage() {
       <div className="container mx-auto px-4">
         <div className="mb-6">
           <Button
-            className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 "
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 "
             onClick={handleBack}
           >
             <ArrowLeft size={16} className="mr-2" />
@@ -254,7 +259,7 @@ export default function JobDetailPage() {
                 </div>
                 <h1 className="text-2xl font-bold">{talent.name}</h1>
                 <div className="mt-2">
-                  <span className="inline-flex items-center text-xs px-3 py-1 rounded-full text-purple-500 bg-purple-50">
+                  <span className="inline-flex items-center text-xs px-3 py-1 rounded-full text-blue-500 bg-blue-50">
                     <Briefcase size={12} className="mr-1" />
                     {talent.experience}
                   </span>
@@ -288,7 +293,7 @@ export default function JobDetailPage() {
               </div>
 
               <div className="mt-6 pt-6 border-t">
-                <Button className="w-full bg-purple-500 hover:bg-purple-600 text-white">
+                <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white">
                   Contact Candidate
                 </Button>
               </div>
@@ -311,7 +316,7 @@ export default function JobDetailPage() {
                   {talent.skills.map((skill, idx) => (
                     <li
                       key={idx}
-                      className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs"
+                      className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs"
                     >
                       {skill}
                     </li>

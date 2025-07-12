@@ -70,10 +70,10 @@ export default function TestimonialCarousel() {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-purple-50 relative overflow-hidden">
+    <section className="py-16 bg-gradient-to-b from-white to-blue-50 relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden opacity-10">
-        <div className="absolute -left-40 -top-40 w-80 h-60 rounded-full bg-purple-200 blur-3xl"></div>
+        <div className="absolute -left-40 -top-40 w-80 h-60 rounded-full bg-blue-200 blur-3xl"></div>
         <div className="absolute -right-40 -bottom-40 w-80 h-60 rounded-full bg-blue-200 blur-3xl"></div>
       </div>
 
@@ -84,7 +84,7 @@ export default function TestimonialCarousel() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <p className="text-purple-600 max-w-2xl mx-auto">Testimonials</p>
+          <p className="text-blue-600 max-w-2xl mx-auto">Testimonials</p>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             What Our Clients Say
           </h2>
@@ -95,10 +95,10 @@ export default function TestimonialCarousel() {
           {/* Left Arrow */}
           <button
             onClick={prevTestimonial}
-            className="absolute -left-2 md:left-8 top-1/2 -translate-y-1/2  md:bg-white p-3 rounded-full md:shadow-lg hover:bg-purple-50 transition-colors z-30"
+            className="absolute -left-2 md:left-8 top-1/2 -translate-y-1/2  md:bg-white p-3 rounded-full md:shadow-lg hover:bg-blue-50 transition-colors z-30"
             aria-label="Previous testimonial"
           >
-            <ChevronLeft className="w-6 h-6 text-purple-600" />
+            <ChevronLeft className="w-6 h-6 text-blue-600" />
           </button>
 
           {/* Cards */}
@@ -152,10 +152,10 @@ export default function TestimonialCarousel() {
           {/* Right Arrow */}
           <button
             onClick={nextTestimonial}
-            className="absolute -right-2 md:right-8 top-1/2 -translate-y-1/2 md:bg-white p-3 rounded-full md:shadow-lg hover:bg-purple-50 transition-colors z-20"
+            className="absolute -right-2 md:right-8 top-1/2 -translate-y-1/2 md:bg-white p-3 rounded-full md:shadow-lg hover:bg-blue-50 transition-colors z-20"
             aria-label="Next testimonial"
           >
-            <ChevronRight className="w-6 h-6 text-purple-600" />
+            <ChevronRight className="w-6 h-6 text-blue-600" />
           </button>
         </div>
 
@@ -166,7 +166,7 @@ export default function TestimonialCarousel() {
               key={index}
               onClick={() => setCurrentIndex(index)}
               className={`w-3 h-3 rounded-full transition-all ${
-                index === currentIndex ? "bg-purple-600 w-6" : "bg-gray-300"
+                index === currentIndex ? "bg-blue-600 w-6" : "bg-gray-300"
               }`}
               aria-label={`Go to testimonial ${index + 1}`}
             />
@@ -187,13 +187,13 @@ function TestimonialCard({
   return (
     <motion.div
       className={`bg-white p-6 md:p-8 rounded-xl shadow-md border ${
-        isActive ? "border-purple-300" : "border-gray-200"
+        isActive ? "border-blue-300" : "border-gray-200"
       } h-full flex flex-col`}
       whileHover={isActive ? { y: -5 } : {}}
     >
       <Quote
         className={`w-6 h-6 mb-4 rotate-180 ${
-          isActive ? "text-purple-500" : "text-gray-400"
+          isActive ? "text-blue-500" : "text-gray-400"
         }`}
       />
       <p

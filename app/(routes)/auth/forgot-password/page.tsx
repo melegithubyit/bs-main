@@ -51,8 +51,8 @@ export default function ForgotPassword() {
         </Link>
 
         <div className="text-center mb-8">
-          <div className="mx-auto w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4">
-            <Mail className="h-6 w-6 text-purple-600" />
+          <div className="mx-auto w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+            <Mail className="h-6 w-6 text-blue-600" />
           </div>
           <h1 className="text-2xl font-bold">Forgot Password</h1>
           <p className="text-gray-500 mt-2">
@@ -90,7 +90,7 @@ export default function ForgotPassword() {
 
           <Button
             type="submit"
-            className="w-full bg-purple-600 hover:bg-purple-700"
+            className="w-full bg-blue-600 hover:bg-blue-700"
             disabled={isLoading}
           >
             {isLoading ? "Sending..." : "Send Reset Link"}
@@ -100,7 +100,7 @@ export default function ForgotPassword() {
             Remember your password?{" "}
             <Link
               href="/auth/signin"
-              className="text-purple-600 hover:underline font-medium"
+              className="text-blue-600 hover:underline font-medium"
             >
               Back to sign in
             </Link>

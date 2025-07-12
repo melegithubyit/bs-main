@@ -13,7 +13,7 @@ export default function StartupCoverPage() {
     {
       title: "Do you want to invest?",
       icon: <Search className="w-8 h-8" />,
-     
+
       steps: [
         "Browse vetted startups",
         "Connect with founders",
@@ -37,15 +37,15 @@ export default function StartupCoverPage() {
   ];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50 ">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-50 ">
       <div className="container max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="text-purple-600">Startup</span> Funding Platform
+          <h1 className="text-4xl  font-bold mb-4">
+            <span className="text-blue-600">Startup</span> Funding Platform
           </h1>
           <p className="text-xl text-gray-600">
             Choose your path to innovation
@@ -67,7 +67,7 @@ export default function StartupCoverPage() {
               >
                 {/* Front Side */}
                 <div className="absolute inset-0 bg-white rounded-xl shadow-md p-8 flex flex-col items-center justify-center backface-hidden border-2 border-gray-100">
-                  <div className="text-purple-500 mb-4">{path.icon}</div>
+                  <div className="text-blue-500 mb-4">{path.icon}</div>
                   <h2 className="text-center text-3xl font-bold mb-2 text-wrap">
                     {path.title}
                   </h2>
@@ -77,12 +77,12 @@ export default function StartupCoverPage() {
                 </div>
 
                 {/* Back Side */}
-                <div className="absolute inset-0 bg-white rounded-xl shadow-md p-8 flex flex-col items-center justify-center backface-hidden rotate-y-180 border-2 border-purple-100">
+                <div className="absolute inset-0 bg-white rounded-xl shadow-md p-8 flex flex-col items-center justify-center backface-hidden rotate-y-180 border-2 border-blue-100">
                   <h3 className="text-xl font-semibold mb-4">How it works</h3>
                   <ul className="space-y-3 mb-6 text-center">
                     {path.steps.map((step, i) => (
                       <li key={i} className="flex items-center gap-2">
-                        <span className="text-purple-500">✓</span> {step}
+                        <span className="text-blue-500">✓</span> {step}
                       </li>
                     ))}
                   </ul>

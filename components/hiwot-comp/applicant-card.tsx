@@ -101,7 +101,7 @@ export default function ApplicantCard({
               <div className="flex items-center gap-2">
                 <div className="h-1.5 w-24 bg-gray-200 rounded-full">
                   <div
-                    className="h-1.5 bg-purple-500 rounded-full"
+                    className="h-1.5 bg-blue-500 rounded-full"
                     style={{ width: `${applicant.fundingProgress || 0}%` }}
                   ></div>
                 </div>
@@ -117,7 +117,7 @@ export default function ApplicantCard({
         </div>
         <Button
           variant="outline"
-          className="text-purple-500 border-purple-500 hover:bg-purple-50 w-full sm:w-auto"
+          className="text-blue-500 border-blue-500 hover:bg-blue-50 w-full sm:w-auto"
           onClick={handleSeeMore}
         >
           See More
@@ -167,12 +167,12 @@ export default function ApplicantCard({
         </div>
         <div className="h-1.5 w-full bg-gray-200 rounded-full">
           <div
-            className="h-1.5 bg-purple-500 rounded-full"
+            className="h-1.5 bg-blue-500 rounded-full"
             style={{ width: `${applicant.fundingProgress || 0}%` }}
           ></div>
         </div>
         <div className="flex items-center gap-1 mt-2">
-          <Heart size={14} className="text-purple-500" />
+          <Heart size={14} className="text-blue-500" />
           <span className="text-xs text-gray-500">
             {applicant.supporters || 0} supporters
           </span>
@@ -180,7 +180,7 @@ export default function ApplicantCard({
       </div>
       <Button
         variant="outline"
-        className="text-purple-500 border-purple-500 hover:bg-purple-50 mt-auto"
+        className="text-blue-500 border-blue-500 hover:bg-blue-50 mt-auto"
         onClick={handleSeeMore}
       >
         See More

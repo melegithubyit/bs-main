@@ -36,7 +36,8 @@ export default function StartupOverviewPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [location, setLocation] = useState("all");
   const [projects, _] = useState<StartupProject[]>(mockProjects);
-  const [filteredProjects, setFilteredProjects] = useState<StartupProject[]>(mockProjects);
+  const [filteredProjects, setFilteredProjects] =
+    useState<StartupProject[]>(mockProjects);
   const [layout, setLayout] = useState<"list" | "grid">("list");
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -171,9 +172,8 @@ export default function StartupOverviewPage() {
           className="mb-8"
         >
           <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center">
-            Discover{" "}
-            <span className="text-purple-500">Innovative Startups</span> to
-            Support
+            Discover <span className="text-blue-500">Innovative Startups</span>{" "}
+            to Support
           </h1>
           <p className="text-gray-600 text-center py-4">
             Find and support promising startup projects across various

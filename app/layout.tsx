@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <StoreProvider store={store}>
           <Navbar />
-          <main className="pt-40">{children}</main>
+          <main className="pt-20">{children}</main>
           <Footer />
         </StoreProvider>
       </body>

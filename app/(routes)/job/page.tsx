@@ -9,7 +9,7 @@ export default function JobsCoverPage() {
   const paths = [
     {
       title: "I'm Hiring",
-      icon: <Briefcase className="w-8 h-8 text-purple-500" />,
+      icon: <Briefcase className="w-8 h-8 text-blue-500" />,
       description: "Find skilled professionals for your projects",
       features: [
         "Browse verified candidates",
@@ -22,7 +22,7 @@ export default function JobsCoverPage() {
     },
     {
       title: "I'm a Freelancer",
-      icon: <User className="w-8 h-8 text-purple-500" />,
+      icon: <User className="w-8 h-8 text-blue-500" />,
       description: "Find work that matches your skills",
       features: [
         "Create your professional profile",
@@ -37,24 +37,24 @@ export default function JobsCoverPage() {
 
   const benefits = [
     {
-      icon: <CheckCircle className="w-6 h-6 text-purple-500" />,
+      icon: <CheckCircle className="w-6 h-6 text-blue-500" />,
       title: "Verified Profiles",
       description: "All candidates are thoroughly vetted",
     },
     {
-      icon: <Search className="w-6 h-6 text-purple-500" />,
+      icon: <Search className="w-6 h-6 text-blue-500" />,
       title: "Smart Matching",
       description: "Find the perfect fit quickly",
     },
     {
-      icon: <FileText className="w-6 h-6 text-purple-500" />,
+      icon: <FileText className="w-6 h-6 text-blue-500" />,
       title: "Secure Contracts",
       description: "Protected agreements for both parties",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white pt-0">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white pt-0">
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 pt-10 text-center">
         <motion.div
@@ -62,17 +62,13 @@ export default function JobsCoverPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="mx-auto bg-purple-100 text-purple-600 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+          <div className="mx-auto bg-blue-100 text-blue-600 w-16 h-16 rounded-full flex items-center justify-center mb-6">
             <Briefcase className="w-8 h-8" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="text-purple-600">Talent Connect</span>: Where
+          <h1 className="text-4xl font-bold">
+            <span className="text-blue-600">Talent Connect</span>: Where
             Opportunities Meet Skills
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
-            The platform connecting businesses with top female talent in
-            Ethiopia
-          </p>
         </motion.div>
       </section>
 
@@ -89,9 +85,7 @@ export default function JobsCoverPage() {
               className="bg-white p-8 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
             >
               <div className="flex justify-center mb-4">
-                <div className="p-4 bg-purple-100 rounded-full">
-                  {path.icon}
-                </div>
+                <div className="p-4 bg-blue-100 rounded-full">{path.icon}</div>
               </div>
               <h2 className="text-2xl font-bold mb-2 text-center">
                 {path.title}
@@ -103,7 +97,7 @@ export default function JobsCoverPage() {
               <ul className="space-y-3 mb-8">
                 {path.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-purple-500 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
                     <span>{feature}</span>
                   </li>
                 ))}
@@ -116,8 +110,6 @@ export default function JobsCoverPage() {
           ))}
         </div>
       </section>
-
-      
     </div>
   );
 }

@@ -57,9 +57,9 @@ export default function ProjectCard({
       case "mentorship":
         return "bg-blue-100 text-blue-800";
       case "technical":
-        return "bg-purple-100 text-purple-800";
+        return "bg-blue-100 text-blue-800";
       case "partnership":
-        return "bg-purple-100 text-purple-800";
+        return "bg-blue-100 text-blue-800";
       case "investment":
         return "bg-teal-100 text-teal-800";
       default:
@@ -111,14 +111,14 @@ export default function ProjectCard({
         </div>
         <div className="flex flex-col items-end gap-2 w-full sm:w-auto">
           <div className="flex items-center gap-2 text-sm">
-            <BarChart size={14} className="text-purple-500" />
+            <BarChart size={14} className="text-blue-500" />
             <span className="font-medium">
               ETB {project.goalFund.toLocaleString()}
             </span>
           </div>
           <Button
             variant="outline"
-            className="text-purple-500 border-purple-500 hover:bg-purple-50 w-full sm:w-auto"
+            className="text-blue-500 border-blue-500 hover:bg-blue-50 w-full sm:w-auto"
             onClick={handleSeeMore}
           >
             See More
@@ -171,12 +171,12 @@ export default function ProjectCard({
         </div>
         <div className="h-1.5 w-full bg-gray-200 rounded-full">
           <div
-            className="h-1.5 bg-purple-500 rounded-full"
+            className="h-1.5 bg-blue-500 rounded-full"
             style={{ width: `${project.fundingProgress || 0}%` }}
           ></div>
         </div>
         <div className="flex items-center gap-1 mt-2">
-          <Briefcase size={14} className="text-purple-500" />
+          <Briefcase size={14} className="text-blue-500" />
           <span className="text-xs text-gray-500">{project.typeOfSupport}</span>
         </div>
       </div>
@@ -186,7 +186,7 @@ export default function ProjectCard({
         </Badge>
         <Button
           variant="outline"
-          className="text-purple-500 border-purple-500 hover:bg-purple-50 w-full"
+          className="text-blue-500 border-blue-500 hover:bg-blue-50 w-full"
           onClick={handleSeeMore}
         >
           See More

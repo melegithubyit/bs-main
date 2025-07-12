@@ -57,11 +57,14 @@ export default function JobOverviewPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [location, setLocation] = useState("all");
   const [candidates, _] = useState<JobTalent[]>(mockTalents);
-  const [filteredCandidates, setFilteredCandidates] = useState<JobTalent[]>(mockTalents);
+  const [filteredCandidates, setFilteredCandidates] =
+    useState<JobTalent[]>(mockTalents);
   const [layout, setLayout] = useState<"list" | "grid">("list");
 
   // Filter states
-  const [selectedEmploymentTypes, setSelectedEmploymentTypes] = useState<string[]>([]);
+  const [selectedEmploymentTypes, setSelectedEmploymentTypes] = useState<
+    string[]
+  >([]);
   const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
@@ -71,7 +74,9 @@ export default function JobOverviewPage() {
     if (checked) {
       setSelectedEmploymentTypes([...selectedEmploymentTypes, id]);
     } else {
-      setSelectedEmploymentTypes(selectedEmploymentTypes.filter((type) => type !== id));
+      setSelectedEmploymentTypes(
+        selectedEmploymentTypes.filter((type) => type !== id)
+      );
     }
   };
 
@@ -107,13 +112,17 @@ export default function JobOverviewPage() {
       results = results.filter(
         (candidate) =>
           candidate.name.toLowerCase().includes(searchTermLower) ||
-          candidate.skills.some((skill) => skill.toLowerCase().includes(searchTermLower)) ||
+          candidate.skills.some((skill) =>
+            skill.toLowerCase().includes(searchTermLower)
+          ) ||
           candidate.location.toLowerCase().includes(searchTermLower)
       );
     }
     if (location && location !== "all") {
       results = results.filter((candidate) => {
-        const locationId = candidate.location.toLowerCase().replace(/\s+/g, "-");
+        const locationId = candidate.location
+          .toLowerCase()
+          .replace(/\s+/g, "-");
         return locationId === location;
       });
     }
@@ -220,7 +229,7 @@ export default function JobOverviewPage() {
         >
           <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center">
             Find the right{" "}
-            <span className="text-purple-500">Female Candidates</span> for your
+            <span className="text-blue-500">Female Candidates</span> for your
             project
           </h1>
           <p className="text-gray-600 text-center py-6">

@@ -658,7 +658,7 @@ export default function StartupCreatePage() {
               >
                 By clicking this you are confirming that you have read,
                 understand, and agree with the{" "}
-                <Link href="/terms" className="text-purple-500 hover:underline">
+                <Link href="/terms" className="text-blue-500 hover:underline">
                   Terms and Conditions
                 </Link>
               </Label>
@@ -668,7 +668,7 @@ export default function StartupCreatePage() {
             <div className="pt-4">
               <Button
                 type="submit"
-                className="bg-purple-500 hover:bg-purple-600 text-white"
+                className="bg-blue-500 hover:bg-blue-600 text-white"
                 // disabled={isLoading}
               >
                 {/* {isLoading ? "Submitting..." : "Submit Startup"} */}

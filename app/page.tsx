@@ -1,6 +1,6 @@
 import HomeCard from "@/components/startup-comp/Home-card";
 import FeaturedStartups from "@/components/startup-comp/FeaturedStartups";
-import ProcessSteps from "@/components/landing-comp/process-steps";
+// import ProcessSteps from "@/components/landing-comp/process-steps";
 import HiwotFundCTA from "@/components/landing-comp/hiwot-fund-cta";
 import AboutUsSection from "@/components/landing-comp/aboutus-section";
 import { BlogSection } from "@/components/landing-comp/blog-section";
@@ -14,7 +14,7 @@ export default function Home() {
     <div className="">
       <HomeCard />
       <FeaturedStartups />
-      <ProcessSteps />
+      {/* <ProcessSteps /> */}
       <HiwotFundCTA />
       <AboutUsSection />
       <CareersSection />

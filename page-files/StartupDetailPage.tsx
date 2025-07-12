@@ -9,12 +9,8 @@ import {
   Phone,
   Mail,
   Calendar,
+  Heart,
   ExternalLink,
-  Users,
-  Banknote,
-  Target,
-  FileText,
-  HeartHandshake,
   MessageSquare,
   Lock,
   Facebook,
@@ -35,7 +31,12 @@ import { mockProjects } from "@/components/startup-comp/mockProjects";
 
 export default function StartupDetailPage() {
   const params = useParams();
-  const id = typeof params.id === 'string' ? params.id : Array.isArray(params.id) ? params.id[0] : undefined;
+  const id =
+    typeof params.id === "string"
+      ? params.id
+      : Array.isArray(params.id)
+      ? params.id[0]
+      : undefined;
   const [project, setProject] = useState<StartupProject | null>(null);
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState<any[]>([]);
@@ -62,8 +63,11 @@ export default function StartupDetailPage() {
       setLoading(true);
       try {
         // Debug log
-        console.log('id:', id);
-        console.log('mockProjects ids:', mockProjects.map(p => p.id));
+        console.log("id:", id);
+        console.log(
+          "mockProjects ids:",
+          mockProjects.map((p) => p.id)
+        );
         // In a real app, you would fetch from an API
         const foundProject = mockProjects.find((p) => p.id === id);
 
@@ -88,9 +92,9 @@ export default function StartupDetailPage() {
       case "mentorship":
         return "bg-blue-100 text-blue-800";
       case "technical":
-        return "bg-purple-100 text-purple-800";
+        return "bg-blue-100 text-blue-800";
       case "partnership":
-        return "bg-purple-100 text-purple-800";
+        return "bg-blue-100 text-blue-800";
       case "investment":
         return "bg-teal-100 text-teal-800";
       default:
@@ -101,7 +105,7 @@ export default function StartupDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen pt-0 pb-16 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
@@ -117,7 +121,7 @@ export default function StartupDetailPage() {
             The project you are looking for does not exist.
           </p>
           <Button
-            className="bg-purple-500 hover:bg-purple-600 text-white"
+            className="bg-blue-500 hover:bg-blue-600 text-white"
             onClick={handleBack}
           >
             Back to Projects
@@ -128,12 +132,12 @@ export default function StartupDetailPage() {
   }
 
   return (
-    <div className="min-h-screen pt-0 pb-16 relative overflow-hidden bg-gradient-to-b from-purple-50 to-white">
+    <div className="min-h-screen pt-0 pb-16 relative overflow-hidden bg-gradient-to-b from-blue-50 to-white">
       <div className="container mx-auto px-4">
         {/* Back to Projects button at the top left */}
         <div className="mb-6 flex items-center">
           <Button
-            className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2"
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2"
             onClick={handleBack}
           >
             <ArrowLeft size={16} className="mr-2" />
@@ -142,7 +146,7 @@ export default function StartupDetailPage() {
         </div>
         {/* Project Header: Logo, Name, Description */}
         <div className="flex flex-col items-center text-center mb-10">
-          <div className="relative h-24 w-24 rounded-full overflow-hidden mb-4 border-4 border-purple-100 shadow">
+          <div className="relative h-24 w-24 rounded-full overflow-hidden mb-4 border-4 border-blue-100 shadow">
             <Image
               src={project.companyLogo}
               alt={project.projectName}
@@ -151,7 +155,9 @@ export default function StartupDetailPage() {
             />
           </div>
           <h1 className="text-3xl font-bold mb-2">{project.projectName}</h1>
-          <p className="text-gray-600 text-lg max-w-2xl mb-2">{project.projectDescription}</p>
+          <p className="text-gray-600 text-lg max-w-2xl mb-2">
+            {project.projectDescription}
+          </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
           {/* Left: Project Video or Image */}
@@ -179,60 +185,79 @@ export default function StartupDetailPage() {
           <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col gap-6">
             <div>
               <div className="flex flex-wrap gap-2 mb-4">
-                <Badge className="bg-purple-100 text-purple-700 font-semibold text-xs px-3 py-1 rounded-full shadow-sm">
+                <Badge className="bg-blue-100 text-blue-700 font-semibold text-xs px-3 py-1 rounded-full shadow-sm">
                   {project.typeOfSupport}
                 </Badge>
                 {project.category && (
-                  <Badge variant="outline" className="border-purple-200 text-purple-600">
+                  <Badge
+                    variant="outline"
+                    className="border-blue-200 text-blue-600"
+                  >
                     {project.category}
                   </Badge>
                 )}
-                <Badge variant="outline" className="border-gray-200 text-gray-600">
+                <Badge
+                  variant="outline"
+                  className="border-gray-200 text-gray-600"
+                >
                   {project.location}
                 </Badge>
               </div>
             </div>
             <div>
               <div className="flex justify-between items-center mb-1">
-                <span className="text-sm text-gray-600">ETB {project.goalFund.toLocaleString()} goal</span>
-                <span className="text-sm font-medium">{project.fundingProgress || 0}% Funded</span>
+                <span className="text-sm text-gray-600">
+                  ETB {project.goalFund.toLocaleString()} goal
+                </span>
+                <span className="text-sm font-medium">
+                  {project.fundingProgress || 0}% Funded
+                </span>
               </div>
               <Progress value={project.fundingProgress || 0} className="h-3" />
             </div>
             <div className="flex items-center gap-8 text-lg font-semibold mb-4">
               <div className="flex flex-col items-center">
-                <span className="text-2xl text-purple-700">{project.backers ?? 0}</span>
+                <span className="text-2xl text-blue-700">
+                  {project.backers ?? 0}
+                </span>
                 <span className="text-xs text-gray-500">Backers</span>
               </div>
               <div className="flex flex-col items-center">
-                <span className="text-2xl text-purple-700">{project.daysLeft ?? 0}</span>
+                <span className="text-2xl text-blue-700">
+                  {project.daysLeft ?? 0}
+                </span>
                 <span className="text-xs text-gray-500">Days To Go</span>
               </div>
             </div>
-            <Button className="bg-purple-600 hover:bg-purple-700 text-lg py-4 font-bold mb-4">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-lg py-4 font-bold mb-4">
               Support This Project
             </Button>
-            {/* Social Media Icons */}
-            <div className="flex gap-4 justify-center mt-2">
-              <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors">
-                <Facebook size={28} />
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors">
-                <Youtube size={28} />
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors">
-                <Instagram size={28} />
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors">
-                <Twitter size={28} />
-              </a>
+            {/* Share and Like Buttons */}
+            <div className="flex gap-4 items-center justify-between mt-2 w-full">
+              <Button
+                variant="ghost"
+                aria-label="Like"
+                className="flex items-center gap-2 text-red-500 hover:bg-red-100 transition"
+              >
+                <Heart size={22} /> Like
+              </Button>
+              <Button
+                variant="outline"
+                className="flex items-center gap-2"
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                }}
+              >
+                <ExternalLink size={20} />
+                Share Link
+              </Button>
             </div>
           </div>
         </div>
         {/* Comments Section */}
         <div className="max-w-2xl mx-auto mt-12 bg-white rounded-xl shadow-sm p-6">
           <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <MessageSquare className="text-purple-500" size={20} />
+            <MessageSquare className="text-blue-500" size={20} />
             Community Discussion
           </h2>
           {/* Comments List */}
@@ -285,7 +310,7 @@ export default function StartupDetailPage() {
             />
             <Button
               onClick={handleAddComment}
-              className="bg-purple-600 hover:bg-purple-700"
+              className="bg-blue-600 hover:bg-blue-700"
             >
               Post Comment
             </Button>

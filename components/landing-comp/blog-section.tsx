@@ -2,16 +2,18 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-const mockBlogPosts = [
+const features = [
   {
-    title: "Aenean eleifend ante maecenas",
-    excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    tag: "Trends",
+    title: "Hiwot Fund",
+    excerpt: "Get funding ",
+    tag: "Funding",
+    href: "/hiwot",
   },
   {
-    title: "Integer Maecenas Eget Viverra",
-    excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    tag: "Guide",
+    title: "Job Applications",
+    excerpt: "Find your next opportunity or post a job.",
+    tag: "Careers",
+    href: "/job",
   },
 ];
 
@@ -26,15 +28,12 @@ export function BlogSection() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Latest Insights
+            Explore More Features
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Stay updated with expert advice and industry trends.
-          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
-          {mockBlogPosts.map((post, index) => (
+          {features.map((post, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -42,16 +41,19 @@ export function BlogSection() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group cursor-pointer"
             >
-              <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 hover:border-purple-300 transition-all h-full">
-                <span className="inline-block bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm mb-3">
+              <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 hover:border-blue-300 transition-all h-full">
+                <span className="inline-block bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm mb-3">
                   {post.tag}
                 </span>
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-purple-500 transition-colors">
+                <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-500 transition-colors">
                   {post.title}
                 </h3>
                 <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                <span className="text-purple-500 font-medium inline-flex items-center gap-1">
-                  Read more
+                <Link
+                  href={post.href}
+                  className="text-blue-500 font-medium inline-flex items-center gap-1"
+                >
+                  Explore now
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -63,18 +65,10 @@ export function BlogSection() {
                   >
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
-                </span>
+                </Link>
               </div>
             </motion.div>
           ))}
-        </div>
-
-        <div className="text-center">
-          <Link href="/blog">
-            <button className="bg-white text-purple-500 hover:bg-purple-50 border border-purple-300 px-6 py-3 rounded-lg transition-all">
-              View All Articles →
-            </button>
-          </Link>
         </div>
       </div>
     </section>

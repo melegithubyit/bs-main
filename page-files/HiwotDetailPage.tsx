@@ -25,7 +25,12 @@ import { mockApplicants } from "@/components/hiwot-comp/mockApplicants";
 
 export default function HiwotDetailPage() {
   const params = useParams();
-  const id = typeof params.id === 'string' ? params.id : Array.isArray(params.id) ? params.id[0] : undefined;
+  const id =
+    typeof params.id === "string"
+      ? params.id
+      : Array.isArray(params.id)
+      ? params.id[0]
+      : undefined;
   const [applicant, setApplicant] = useState<HiwotApplicant | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -59,7 +64,7 @@ export default function HiwotDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen pt-0 pb-16 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
@@ -74,7 +79,7 @@ export default function HiwotDetailPage() {
           </p>
           <Button
             onClick={handleBack}
-            className="bg-purple-500 hover:bg-purple-600 text-white"
+            className="bg-blue-500 hover:bg-blue-600 text-white"
           >
             <Link href="/hiwot">Back to Applicants</Link>
           </Button>
@@ -161,7 +166,7 @@ export default function HiwotDetailPage() {
       <div className="container mx-auto px-4">
         <div className="mb-6 m-3">
           <Button
-            className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 "
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 "
             onClick={handleBack}
           >
             <ArrowLeft size={16} className="mr-2" />
@@ -190,7 +195,7 @@ export default function HiwotDetailPage() {
                 <h1 className="text-2xl font-bold">{`${applicant.firstName} ${applicant.lastName}`}</h1>
                 <p className="text-gray-600">{applicant.description}</p>
                 <div className="mt-2">
-                  <span className="inline-flex items-center text-xs px-3 py-1 rounded-full bg-purple-100 text-purple-800">
+                  <span className="inline-flex items-center text-xs px-3 py-1 rounded-full bg-blue-100 text-blue-800">
                     <Calendar size={12} className="mr-1" />
                     {age} years old
                   </span>
@@ -225,7 +230,7 @@ export default function HiwotDetailPage() {
               </div>
 
               <div className="mt-6 pt-6 border-t">
-                <Button className="w-full bg-purple-500 hover:bg-purple-600 text-white">
+                <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white">
                   Contact Applicant
                 </Button>
               </div>
@@ -283,7 +288,7 @@ export default function HiwotDetailPage() {
                       </div>
                     </div>
 
-                    <div className="bg-purple-50 p-4 rounded-lg">
+                    <div className="bg-blue-50 p-4 rounded-lg">
                       <h3 className="font-medium mb-2"> Condition</h3>
                       <p className="text-gray-600">
                         {applicant.description} The treatment requires
@@ -308,14 +313,14 @@ export default function HiwotDetailPage() {
                           className="bg-gray-50 p-4 rounded-lg flex items-center justify-between"
                         >
                           <div className="flex items-center">
-                            <FileText className="h-5 w-5 text-purple-500 mr-3" />
+                            <FileText className="h-5 w-5 text-blue-500 mr-3" />
                             <span>Medical Document {index + 1}</span>
                           </div>
                           <a
                             href={doc}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                            className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                           >
                             <Download className="h-4 w-4 mr-2" />
                             View
@@ -326,14 +331,14 @@ export default function HiwotDetailPage() {
 
                     <div className="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
                       <div className="flex items-center">
-                        <FileText className="h-5 w-5 text-purple-500 mr-3" />
+                        <FileText className="h-5 w-5 text-blue-500 mr-3" />
                         <span>National ID</span>
                       </div>
                       <a
                         href={applicant.nationalId}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                        className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                       >
                         <Download className="h-4 w-4 mr-2" />
                         View
@@ -386,7 +391,7 @@ export default function HiwotDetailPage() {
                 </div>
               </div>
 
-              <Button className="w-full bg-purple-500 hover:bg-purple-600 text-white">
+              <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white">
                 Support Now
               </Button>
               <Button

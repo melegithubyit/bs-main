@@ -60,7 +60,7 @@ export default function BlogPage() {
   }, []);
 
   return (
-    <div className="min-h-screen pt-44 pb-16 relative overflow-hidden">
+    <div className="min-h-screen pt-10 pb-16 relative overflow-hidden">
       {/* Background patterns */}
       <div className="absolute -left-40 top-0 opacity-10">
         <svg
@@ -134,9 +134,9 @@ export default function BlogPage() {
 
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-center gap-4 mb-8">
-          <div className="h-0.5 w-12 bg-purple-500"></div>
+          <div className="h-0.5 w-12 bg-blue-500"></div>
           <h1 className="text-3xl md:text-4xl font-bold">Blog</h1>
-          <div className="h-0.5 w-12 bg-purple-500"></div>
+          <div className="h-0.5 w-12 bg-blue-500"></div>
         </div>
 
         {/* Featured Blog */}

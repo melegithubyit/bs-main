@@ -129,9 +129,9 @@ export default function ContactusPage() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-0.5 w-12 bg-purple-500"></div>
+            <div className="h-0.5 w-12 bg-blue-500"></div>
             <h1 className="text-3xl md:text-4xl font-bold">Contact us</h1>
-            <div className="h-0.5 w-12 bg-purple-500"></div>
+            <div className="h-0.5 w-12 bg-blue-500"></div>
           </div>
         </div>
 
@@ -143,7 +143,7 @@ export default function ContactusPage() {
             className="space-y-6"
           >
             <div>
-              <h2 className="text-2xl font-bold text-purple-500 mb-2">
+              <h2 className="text-2xl font-bold text-blue-500 mb-2">
                 Get in touch
               </h2>
               <p className="text-gray-600">
@@ -162,7 +162,7 @@ export default function ContactusPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="border-purple-200 focus:border-purple-500"
+                  className="border-blue-200 focus:border-blue-500"
                 />
               </div>
 
@@ -177,7 +177,7 @@ export default function ContactusPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="border-purple-200 focus:border-purple-500"
+                  className="border-blue-200 focus:border-blue-500"
                 />
               </div>
 
@@ -192,13 +192,13 @@ export default function ContactusPage() {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   required
-                  className="border-purple-200 focus:border-purple-500"
+                  className="border-blue-200 focus:border-blue-500"
                 />
               </div>
 
               <Button
                 type="submit"
-                className="bg-purple-500 hover:bg-purple-600 text-white w-full sm:w-auto px-12"
+                className="bg-blue-500 hover:bg-blue-600 text-white w-full sm:w-auto px-12"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Submitting..." : "Submit"}
@@ -223,7 +223,7 @@ export default function ContactusPage() {
 
             <div className="space-y-4">
               <div className="flex items-start gap-4">
-                <div className="bg-purple-100 p-2 rounded-full text-purple-500">
+                <div className="bg-blue-100 p-2 rounded-full text-blue-500">
                   <MapPin className="h-5 w-5" />
                 </div>
                 <div>
@@ -232,7 +232,7 @@ export default function ContactusPage() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="bg-purple-100 p-2 rounded-full text-purple-500">
+                <div className="bg-blue-100 p-2 rounded-full text-blue-500">
                   <Phone className="h-5 w-5" />
                 </div>
                 <div>
@@ -241,7 +241,7 @@ export default function ContactusPage() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="bg-purple-100 p-2 rounded-full text-purple-500">
+                <div className="bg-blue-100 p-2 rounded-full text-blue-500">
                   <Mail className="h-5 w-5" />
                 </div>
                 <div>
