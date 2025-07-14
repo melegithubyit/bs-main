@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { mockProjects, StartupProject } from "./mockProjects";
-import placeholderimg from "@/public/placeholder.png";
+import { mockProjects } from "./mockProjects";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -88,7 +87,7 @@ export default function FeaturedStartups() {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {pagedRecommendations.map((project) => (
-                <div className="relative group">
+                <div className="relative group" key={project.id}>
                   <div className="bg-white rounded-xl shadow-md border border-gray-200 h-full transition-all duration-100">
                     <div className="relative w-full h-32 md:h-28">
                       <Image

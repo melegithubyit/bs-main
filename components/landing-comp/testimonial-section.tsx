@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
@@ -39,6 +39,13 @@ const testimonials = [
   },
 ];
 
+type Testimonial = {
+  id: number;
+  name: string;
+  role: string;
+  content: string;
+  rating: number;
+};
 export default function TestimonialCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -181,7 +188,7 @@ function TestimonialCard({
   testimonial,
   isActive,
 }: {
-  testimonial: any;
+  testimonial: Testimonial;
   isActive: boolean;
 }) {
   return (

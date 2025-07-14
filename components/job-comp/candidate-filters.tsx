@@ -29,15 +29,8 @@ interface CandidateFiltersProps {
 }
 
 export default function CandidateFilters({
-  employmentTypes,
-  departments,
   fields,
-  selectedEmploymentTypes,
-  selectedDepartments,
   selectedFields,
-  selectedLocations,
-  onEmploymentTypeChange,
-  onDepartmentChange,
   onFieldChange,
   onApplyFilters,
   onClearFilters,

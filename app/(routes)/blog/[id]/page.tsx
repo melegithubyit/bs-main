@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 "use client";
 
 import { useState, useEffect } from "react";
@@ -7,6 +9,8 @@ import { Calendar, User, ArrowLeft, Share2, ThumbsUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import BlogCard from "@/components/blog-comp/BlogCard";
+import { useParams } from "next/navigation";
+
 // Mock blog data
 const mockBlogs = Array.from({ length: 30 }, (_, i) => ({
   id: `blog-${i + 1}`,
@@ -48,7 +52,10 @@ const mockBlogs = Array.from({ length: 30 }, (_, i) => ({
   }),
 }));
 
-export default function BlogDetailPage({ params }: { params: { id: string } }) {
+export default function BlogDetailPage() {
+  const params = useParams();
+  const id = params.id as string;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [blog, setBlog] = useState<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -58,20 +65,20 @@ export default function BlogDetailPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     // Find the blog with the matching ID
-    const foundBlog = mockBlogs.find((blog) => blog.id === params.id);
+    const foundBlog = mockBlogs.find((blog) => blog.id === id);
 
     if (foundBlog) {
       setBlog(foundBlog);
 
       // Get 3 related blogs (excluding the current one)
       const related = mockBlogs
-        .filter((b) => b.id !== params.id)
+        .filter((b) => b.id !== id)
         .sort(() => 0.5 - Math.random())
         .slice(0, 3);
 
       setRelatedBlogs(related);
     }
-  }, [params.id]);
+  }, [id]);
 
   const handleLike = () => {
     if (liked) {

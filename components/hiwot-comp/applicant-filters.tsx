@@ -27,13 +27,9 @@ interface ApplicantFiltersProps {
 }
 
 export default function ApplicantFilters({
-  fundingRanges,
-  medicalConditions,
   ageRanges,
   selectedAgeRanges,
-  selectedLocations,
   onAgeRangeChange,
-  onLocationChange,
   onApplyFilters,
   onClearFilters,
 }: ApplicantFiltersProps) {
