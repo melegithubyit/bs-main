@@ -1,103 +1,80 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 "use client";
 
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Search, Upload, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import {
+  Lightbulb,
+  UserPlus,
+  Send,
+  TrendingUp,
+  CheckCircle,
+} from "lucide-react";
 
-export default function StartupCoverPage() {
-  const [flippedIndex, setFlippedIndex] = useState<number | null>(null);
+const steps = [
+  {
+    icon: <Lightbulb className="h-10 w-10 text-blue-500 mb-4" />,
+    title: "1. Create Your Project Profile",
+    description:
+      "Sign up and set up your startup profile. Tell us about your team, your vision, and what makes your project unique.",
+  },
+  {
+    icon: <Send className="h-10 w-10 text-blue-500 mb-4" />,
+    title: "2. Post Your Project",
+    description:
+      "Share your project details, goals, and funding needs. Add images, videos, and a compelling story to attract supporters.",
+  },
+  {
+    icon: <TrendingUp className="h-10 w-10 text-blue-500 mb-4" />,
+    title: "3. Raise Capital",
+    description:
+      "Launch your campaign and start raising funds from the Bole Starter community. Engage with backers and keep them updated.",
+  },
+  {
+    icon: <CheckCircle className="h-10 w-10 text-blue-500 mb-4" />,
+    title: "4. Grow Your Startup",
+    description:
+      "Use the capital you’ve raised to build your business. Share your progress and celebrate your milestones with your supporters.",
+  },
+];
 
-  const paths = [
-    {
-      title: "Do you want to invest?",
-      icon: <Search className="w-8 h-8" />,
-
-      steps: [
-        "Browse vetted startups",
-        "Connect with founders",
-        "Fund promising ideas",
-      ],
-      cta: "Explore Startups",
-      href: "/startup/projects",
-    },
-    {
-      title: "Do you have a startup?",
-      icon: <Upload className="w-8 h-8" />,
-      description: "Get funding for your venture",
-      steps: [
-        "Create your project profile",
-        "Post your project",
-        "Raise capital",
-      ],
-      cta: "Post Project",
-      href: "/startup/add",
-    },
-  ];
-
+export default function HowItWorksPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-50 ">
-      <div className="container max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 py-16 px-4">
+      <div className="max-w-3xl mx-auto text-center mb-12">
+        <h1 className="text-4xl font-bold mb-4 text-blue-700">
+          How Our Startup Platform Works
+        </h1>
+        <p className="text-gray-600 text-lg">
+          New to Bole Starter? Here’s how you can launch your startup and get
+          support from our community.
+        </p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        {steps.map((step, idx) => (
+          <div
+            key={idx}
+            className="bg-white rounded-xl shadow-md p-8 flex flex-col items-center text-center hover:shadow-lg transition"
+          >
+            {step.icon}
+            <h2 className="text-xl font-semibold mb-2 text-blue-700">
+              {step.title}
+            </h2>
+            <p className="text-gray-600">{step.description}</p>
+          </div>
+        ))}
+      </div>
+      <div className="max-w-2xl mx-auto mt-16 text-center">
+        <h2 className="text-2xl font-bold text-blue-700 mb-2">
+          Ready to get started?
+        </h2>
+        <p className="text-gray-700 mb-6">
+          Join Bole Starter today and turn your vision into reality!
+        </p>
+        {/* Replace href with your actual signup or start page */}
+        <a
+          href="/startup/add"
+          className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-full shadow transition"
         >
-          <h1 className="text-4xl  font-bold mb-4">
-            <span className="text-blue-600">Startup</span> Funding Platform
-          </h1>
-          <p className="text-xl text-gray-600">
-            Choose your path to innovation
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {paths.map((path, index) => (
-            <div
-              key={index}
-              className="relative h-96 perspective-1000"
-              onMouseEnter={() => setFlippedIndex(index)}
-              onMouseLeave={() => setFlippedIndex(null)}
-            >
-              <div
-                className={`relative w-full h-full transition-transform duration-500 preserve-3d ${
-                  flippedIndex === index ? "rotate-y-180" : ""
-                }`}
-              >
-                {/* Front Side */}
-                <div className="absolute inset-0 bg-white rounded-xl shadow-md p-8 flex flex-col items-center justify-center backface-hidden border-2 border-gray-100">
-                  <div className="text-blue-500 mb-4">{path.icon}</div>
-                  <h2 className="text-center text-3xl font-bold mb-2 text-wrap">
-                    {path.title}
-                  </h2>
-                  <p className="text-gray-600 mb-6 text-center">
-                    {path.description}
-                  </p>
-                </div>
-
-                {/* Back Side */}
-                <div className="absolute inset-0 bg-white rounded-xl shadow-md p-8 flex flex-col items-center justify-center backface-hidden rotate-y-180 border-2 border-blue-100">
-                  <h3 className="text-xl font-semibold mb-4">How it works</h3>
-                  <ul className="space-y-3 mb-6 text-center">
-                    {path.steps.map((step, i) => (
-                      <li key={i} className="flex items-center gap-2">
-                        <span className="text-blue-500">✓</span> {step}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link href={path.href}>
-                    <Button className="gap-2">
-                      {path.cta} <ArrowRight className="w-4 h-4" />
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+          Launch Your Startup
+        </a>
       </div>
     </div>
   );

@@ -23,13 +23,13 @@ export default function HomeCard() {
 
           {/* Modern Button Group */}
           <div className="flex flex-wrap gap-3">
-            <Button
+            {/* <Button
               asChild
               variant="ghost"
               className="bg-white/10 text-white hover:bg-white/20 hover:text-white backdrop-blur-sm border border-white/20"
             >
               <Link href="/startup/projects">Back Startups</Link>
-            </Button>
+            </Button> */}
             <Button
               asChild
               variant="ghost"
@@ -42,7 +42,7 @@ export default function HomeCard() {
               variant="ghost"
               className="bg-white/10 text-white hover:bg-white/20 hover:text-white backdrop-blur-sm border border-white/20"
             >
-              <Link href="/about">About Us</Link>
+              <Link href="/startup">About Us</Link>
             </Button>
           </div>
         </div>
