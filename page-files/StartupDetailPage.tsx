@@ -62,13 +62,6 @@ export default function StartupDetailPage() {
     const fetchProject = async () => {
       setLoading(true);
       try {
-        // Debug log
-        console.log("id:", id);
-        console.log(
-          "mockProjects ids:",
-          mockProjects.map((p) => p.id)
-        );
-        // In a real app, you would fetch from an API
         const foundProject = mockProjects.find((p) => p.id === id);
 
         if (foundProject) {

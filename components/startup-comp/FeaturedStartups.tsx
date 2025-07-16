@@ -156,7 +156,7 @@ export default function FeaturedStartups() {
             </div>
 
             {/* Additional Projects Row (2 projects) */}
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {additionalProjects.map((project) => (
                 <div className="relative group" key={project.id}>
                   <div className="bg-white rounded-xl shadow-md border border-gray-200 h-full transition-all duration-100">
@@ -432,7 +432,7 @@ export default function FeaturedStartups() {
             View all
           </Button>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {mockProjects.slice(0, 4).map((project) => (
             <div
               key={`trending-${project.id}`}
