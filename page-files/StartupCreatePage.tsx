@@ -18,6 +18,7 @@ import Link from "next/link";
 import { Upload, ChevronRight, ChevronDown, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { current } from "@reduxjs/toolkit";
 
 export default function StartupCreatePage() {
   const { toast } = useToast();
@@ -47,6 +48,7 @@ export default function StartupCreatePage() {
     fundingGoal: "",
     campaignDuration: "30",
     industry: "",
+    currentStateFile: null as File | null,
   });
 
   const [logoFile, setLogoFile] = useState<File | null>(null);
@@ -135,7 +137,9 @@ export default function StartupCreatePage() {
     return (
       <div className="min-h-screen pt-24 pb-16 flex items-center justify-center">
         <div className="bg-white rounded-xl shadow-md p-8 max-w-md w-full">
-          <h1 className="text-2xl font-bold mb-4 text-center">Get Started</h1>
+          <h1 className="text-xl font-bold mb-4 text-center">
+            Enter Your Email to Begin
+          </h1>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -626,6 +630,41 @@ export default function StartupCreatePage() {
                     Brief Description of Your Project*
                   </Label>
                   <Textarea id="teamDescription" rows={4} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="currentState" className="text-sm font-medium">
+                    Upload Your Document
+                  </Label>
+                  <div className="border rounded-md p-4">
+                    <div className="flex items-center justify-center w-full">
+                      <label
+                        htmlFor="currentState"
+                        className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+                      >
+                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                          <Upload className="w-8 h-8 mb-2 text-gray-500" />
+                          <p className="mb-2 text-sm text-gray-500">
+                            <span className="font-semibold">
+                              Click to upload
+                            </span>{" "}
+                            or drag and drop
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            PDF files only (MAX. 5MB)
+                          </p>
+                        </div>
+                        <input
+                          id="currentState"
+                          type="file"
+                          className="hidden"
+                          accept=".pdf"
+                          onChange={(e) =>
+                            handleFileChange(e, setCurrentStateFile)
+                          }
+                        />
+                      </label>
+                    </div>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="fundingGoal">

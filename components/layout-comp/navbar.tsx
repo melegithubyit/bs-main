@@ -31,6 +31,7 @@ export default function Navbar() {
   const [logoutUser] = useLogoutMutation();
   const [searchQuery, setSearchQuery] = useState("");
   const pathname = usePathname();
+  const [selectedLang, setSelectedLand] = useState("EN");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -94,14 +95,25 @@ export default function Navbar() {
         <div className="hidden md:flex items-center space-x-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <Globe className="h-5 w-5" />
+              <Button
+                variant="ghost"
+                size="sm"
+                className="rounded-md px-3 font-semibold flex items-center gap-2"
+              >
+                <Globe className="h-4 w-4" />
+                {selectedLang}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>English</DropdownMenuItem>
-              <DropdownMenuItem>Amharic</DropdownMenuItem>
-              <DropdownMenuItem>French</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setSelectedLand("EN")}>
+                EN
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setSelectedLand("AM")}>
+                AM
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setSelectedLand("FR")}>
+                FR
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
