@@ -19,9 +19,11 @@ import { Upload, ChevronRight, ChevronDown, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { current } from "@reduxjs/toolkit";
+import TermsModal from "@/components/common-comp/Terms";
 
 export default function StartupCreatePage() {
   const { toast } = useToast();
+  const [showTerms, setShowTerms] = useState(false);
   const router = useRouter();
   const [creationType, setCreationType] = useState<"self" | "team" | null>(
     null
@@ -538,12 +540,17 @@ export default function StartupCreatePage() {
                   <Checkbox id="terms" required />
                   <Label htmlFor="terms" className="text-sm">
                     I agree to the{" "}
-                    <Link
-                      href="/terms"
+                    <button
+                      type="button"
                       className="text-blue-600 hover:underline"
+                      onClick={() => setShowTerms(true)}
                     >
                       Terms and Conditions
-                    </Link>
+                    </button>
+                    <TermsModal
+                      open={showTerms}
+                      onClose={() => setShowTerms(false)}
+                    />
                   </Label>
                 </div>
 
@@ -757,12 +764,17 @@ export default function StartupCreatePage() {
                   <Checkbox id="teamTerms" required />
                   <Label htmlFor="teamTerms" className="text-sm">
                     I agree to the{" "}
-                    <Link
-                      href="/terms"
+                    <button
+                      type="button"
                       className="text-blue-600 hover:underline"
+                      onClick={() => setShowTerms(true)}
                     >
                       Terms and Conditions
-                    </Link>
+                    </button>
+                    <TermsModal
+                      open={showTerms}
+                      onClose={() => setShowTerms(false)}
+                    />
                   </Label>
                 </div>
                 <div className="flex justify-end pt-6">
