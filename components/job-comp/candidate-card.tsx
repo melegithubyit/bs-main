@@ -1,38 +1,46 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { MapPin, Briefcase } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
-import { CandidateCardProps } from "@/types/jobApi"
-import placeholderimg from '@/public/person-placeholder.png'
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { MapPin, Briefcase } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { JobTalent } from "./mockTalents";
+import placeholderimg from "@/public/person-placeholder.png";
 
+type CandidateCardProps = {
+  candidate: JobTalent;
+  index: number;
+  layout: "list" | "grid";
+};
 
-
-export default function CandidateCard({ candidate, index, layout }: CandidateCardProps) {
-  const router = useRouter()
+export default function CandidateCard({
+  candidate,
+  index,
+  layout,
+}: CandidateCardProps) {
+  const router = useRouter();
 
   const handleSeeMore = () => {
-    router.push(`/job/detail/${candidate.id}`)
-  }
+    router.push(`/job/detail/${candidate.id}`);
+  };
 
   const getEmploymentTypeColor = (type: string) => {
     switch (type.toLowerCase()) {
       case "fulltime":
-        return "text-green-500 bg-green-50"
+        return "text-green-500 bg-green-50";
       case "parttime":
-        return "text-blue-500 bg-blue-50"
+        return "text-blue-500 bg-blue-50";
       case "remote":
-        return "text-purple-500 bg-purple-50"
+        return "text-blue-500 bg-blue-50";
       case "internship":
-        return "text-orange-500 bg-orange-50"
+        return "text-blue-500 bg-blue-50";
       case "contract":
-        return "text-gray-500 bg-gray-50"
+        return "text-gray-500 bg-gray-50";
       default:
-        return "text-gray-500 bg-gray-50"
+        return "text-gray-500 bg-gray-50";
     }
-  }
+  };
 
   if (layout === "list") {
     return (
@@ -46,39 +54,39 @@ export default function CandidateCard({ candidate, index, layout }: CandidateCar
           <div className="relative h-12 w-12 rounded-full overflow-hidden">
             <Image
               src={placeholderimg}
-              alt={`${candidate.firstName} ${candidate.lastName}`}
+              alt={`${candidate.name}`}
               fill
               className="object-cover"
             />
           </div>
           <div>
-            <h3 className="font-medium">{`${candidate.firstName} ${candidate.lastName}`}</h3>
-            <p className="text-sm text-gray-500">
-              {candidate.department} - {candidate.field}
-            </p>
+            <h3 className="font-medium">{`${candidate.name}`}</h3>
+            <p className="text-sm text-gray-500">{candidate.skills}</p>
             <div className="flex items-center text-xs text-gray-500 mt-1">
               <MapPin size={12} className="mr-1" />
               <span>{candidate.location}</span>
             </div>
             <div className="flex flex-wrap gap-2 mt-2">
               <span
-                className={`text-xs px-2 py-1 rounded-full flex items-center ${getEmploymentTypeColor(candidate.typeOfEmployment)}`}
+                className={`text-xs px-2 py-1 rounded-full flex items-center ${getEmploymentTypeColor(
+                  candidate.experience
+                )}`}
               >
                 <Briefcase size={10} className="mr-1" />
-                {candidate.typeOfEmployment}
+                {candidate.experience}
               </span>
             </div>
           </div>
         </div>
         <Button
           variant="outline"
-          className="text-orange-500 border-orange-500 hover:bg-orange-50 w-full sm:w-auto"
+          className="text-blue-500 border-blue-500 hover:bg-blue-50 w-full sm:w-auto"
           onClick={handleSeeMore}
         >
           See More
         </Button>
       </motion.div>
-    )
+    );
   }
 
   return (
@@ -92,35 +100,36 @@ export default function CandidateCard({ candidate, index, layout }: CandidateCar
         <div className="relative h-12 w-12 rounded-full overflow-hidden">
           <Image
             src={placeholderimg}
-            alt={`${candidate.firstName} ${candidate.lastName}`}
+            alt={`${candidate.name}`}
             fill
             className="object-cover"
           />
         </div>
         <div>
-          <h3 className="font-medium">{`${candidate.firstName} ${candidate.lastName}`}</h3>
+          <h3 className="font-medium">{`${candidate.name}`}</h3>
           <p className="text-xs text-gray-500">{candidate.location}</p>
         </div>
       </div>
       <div className="mb-3">
-        <p className="text-sm font-medium">{candidate.department}</p>
-        <p className="text-sm text-gray-600">{candidate.field}</p>
+        <p className="text-sm font-medium">{candidate.skills}</p>
       </div>
       <div className="flex flex-wrap gap-2 mb-4">
         <span
-          className={`text-xs px-2 py-1 rounded-full flex items-center ${getEmploymentTypeColor(candidate.typeOfEmployment)}`}
+          className={`text-xs px-2 py-1 rounded-full flex items-center ${getEmploymentTypeColor(
+            candidate.experience
+          )}`}
         >
           <Briefcase size={10} className="mr-1" />
-          {candidate.typeOfEmployment}
+          {candidate.experience}
         </span>
       </div>
       <Button
         variant="outline"
-        className="text-orange-500 border-orange-500 hover:bg-orange-50 mt-auto"
+        className="text-blue-500 border-blue-500 hover:bg-blue-50 mt-auto"
         onClick={handleSeeMore}
       >
         See More
       </Button>
     </motion.div>
-  )
+  );
 }

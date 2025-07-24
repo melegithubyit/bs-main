@@ -55,35 +55,22 @@ export default function Footer() {
               <h2 className="text-2xl font-bold">Bole Starter</h2>
             </Link>
             <p className="text-sm text-gray-400">
-              &quot;Lorem ipsum dolor sit amet, consectetur adipiscing
-              elit.&quot;
+              &quot;Turning visions into reality.&quot;
             </p>
             <div className="flex space-x-4 pt-4">
-              <Link
-                href="#"
-                className="hover:text-orange-400 transition-colors"
-              >
+              <Link href="#" className="hover:text-blue-400 transition-colors">
                 <Twitter className="h-5 w-5" />
                 <span className="sr-only">Twitter</span>
               </Link>
-              <Link
-                href="#"
-                className="hover:text-orange-400 transition-colors"
-              >
+              <Link href="#" className="hover:text-blue-400 transition-colors">
                 <Facebook className="h-5 w-5" />
                 <span className="sr-only">Facebook</span>
               </Link>
-              <Link
-                href="#"
-                className="hover:text-orange-400 transition-colors"
-              >
+              <Link href="#" className="hover:text-blue-400 transition-colors">
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
               </Link>
-              <Link
-                href="#"
-                className="hover:text-orange-400 transition-colors"
-              >
+              <Link href="#" className="hover:text-blue-400 transition-colors">
                 <Youtube className="h-5 w-5" />
                 <span className="sr-only">YouTube</span>
               </Link>
@@ -93,6 +80,14 @@ export default function Footer() {
           <div>
             <h3 className="font-medium mb-4">About Us</h3>
             <ul className="space-y-2">
+              <li>
+                <Link
+                  href="/about"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
+                  About Us
+                </Link>
+              </li>
               <li>
                 <Link
                   href="/mission"
@@ -153,8 +148,8 @@ export default function Footer() {
           <div>
             <h3 className="font-medium mb-4">Contact Us</h3>
             <ul className="space-y-2">
-              <li className="text-sm text-gray-400">info@bole-starter.com</li>
-              <li className="text-sm text-gray-400">+251 91 111 1111</li>
+              <li className="text-sm text-gray-400">info@bolestarter.com</li>
+              <li className="text-sm text-gray-400">+251-911-266-116</li>
             </ul>
           </div>
         </div>

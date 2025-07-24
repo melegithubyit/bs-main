@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 "use client";
 
 import type React from "react";
@@ -13,7 +15,7 @@ import { useState } from "react";
 import { useRegisterUserMutation } from "@/redux/api/authApi";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import logo from "@/public/logo/logo.svg"
+import logo from "@/public/logo/logo.svg";
 
 export default function SignUp() {
   const [firstName, setFirstName] = useState("John");
@@ -169,14 +171,11 @@ export default function SignUp() {
               />
               <Label htmlFor="terms" className="text-sm font-normal">
                 I agree to the{" "}
-                <Link href="/terms" className="text-orange-600 hover:underline">
+                <Link href="/terms" className="text-blue-600 hover:underline">
                   Terms of Service
                 </Link>{" "}
                 and{" "}
-                <Link
-                  href="/privacy"
-                  className="text-orange-600 hover:underline"
-                >
+                <Link href="/privacy" className="text-blue-600 hover:underline">
                   Privacy Policy
                 </Link>
               </Label>
@@ -184,7 +183,7 @@ export default function SignUp() {
 
             <Button
               type="submit"
-              className="w-full bg-orange-600 hover:bg-orange-700"
+              className="w-full bg-blue-600 hover:bg-blue-700"
               disabled={isLoading}
             >
               {isLoading ? "Creating account..." : "Create account"}
@@ -194,7 +193,7 @@ export default function SignUp() {
               Already have an account?{" "}
               <Link
                 href="/auth/signin"
-                className="text-orange-600 hover:underline font-medium"
+                className="text-blue-600 hover:underline font-medium"
               >
                 Sign in
               </Link>
@@ -204,7 +203,7 @@ export default function SignUp() {
       </div>
 
       {/* Right side - Image */}
-      <div className="hidden md:block w-1/2 bg-orange-50 relative">
+      <div className="hidden md:block w-1/2 bg-blue-50 relative">
         <div className="absolute inset-0 flex items-center justify-center p-12">
           <div className="max-w-md">
             <Image

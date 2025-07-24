@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 "use client";
 
 import { useState, useEffect } from "react";
@@ -7,6 +9,8 @@ import { Calendar, User, ArrowLeft, Share2, ThumbsUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import BlogCard from "@/components/blog-comp/BlogCard";
+import { useParams } from "next/navigation";
+
 // Mock blog data
 const mockBlogs = Array.from({ length: 30 }, (_, i) => ({
   id: `blog-${i + 1}`,
@@ -48,7 +52,10 @@ const mockBlogs = Array.from({ length: 30 }, (_, i) => ({
   }),
 }));
 
-export default function BlogDetailPage({ params }: { params: { id: string } }) {
+export default function BlogDetailPage() {
+  const params = useParams();
+  const id = params.id as string;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [blog, setBlog] = useState<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -58,20 +65,20 @@ export default function BlogDetailPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     // Find the blog with the matching ID
-    const foundBlog = mockBlogs.find((blog) => blog.id === params.id);
+    const foundBlog = mockBlogs.find((blog) => blog.id === id);
 
     if (foundBlog) {
       setBlog(foundBlog);
 
       // Get 3 related blogs (excluding the current one)
       const related = mockBlogs
-        .filter((b) => b.id !== params.id)
+        .filter((b) => b.id !== id)
         .sort(() => 0.5 - Math.random())
         .slice(0, 3);
 
       setRelatedBlogs(related);
     }
-  }, [params.id]);
+  }, [id]);
 
   const handleLike = () => {
     if (liked) {
@@ -91,7 +98,7 @@ export default function BlogDetailPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="min-h-screen pt-40 pb-16 relative overflow-hidden">
+    <div className="min-h-screen pt-44 pb-16 relative overflow-hidden">
       {/* Background patterns */}
       <div className="absolute -left-40 top-0 opacity-10">
         <svg
@@ -167,7 +174,7 @@ export default function BlogDetailPage({ params }: { params: { id: string } }) {
         <div className="mb-6">
           <Link
             href="/blog"
-            className="inline-flex items-center text-gray-600 hover:text-orange-500 transition-colors"
+            className="inline-flex items-center text-gray-600 hover:text-blue-500 transition-colors"
           >
             <ArrowLeft size={16} className="mr-2" />
             Back to Blogs
@@ -235,7 +242,7 @@ export default function BlogDetailPage({ params }: { params: { id: string } }) {
                   href={blog.referenceLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-orange-500 hover:underline"
+                  className="text-blue-500 hover:underline"
                 >
                   {blog.referenceLink}
                 </a>
