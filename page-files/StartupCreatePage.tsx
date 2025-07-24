@@ -14,11 +14,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { motion } from "framer-motion";
-import Link from "next/link";
+// import Link from "next/link";
 import { Upload, ChevronRight, ChevronDown, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { current } from "@reduxjs/toolkit";
+// import { current } from "@reduxjs/toolkit";
 import TermsModal from "@/components/common-comp/Terms";
 
 export default function StartupCreatePage() {
@@ -109,6 +109,10 @@ export default function StartupCreatePage() {
 
   // Funding ranges for selection
   const fundingRanges = [
+    "10,000 - 20,000 ETB",
+    "20,000 - 30,000 ETB",
+    "30,000 - 40,000 ETB",
+    "40,000 - 50,000 ETB",
     "50,000 - 100,000 ETB",
     "100,000 - 300,000 ETB",
     "300,000 - 500,000 ETB",
@@ -120,13 +124,7 @@ export default function StartupCreatePage() {
   // Industry options
   const industries = [
     "Technology",
-    "Energy",
-    "Healthcare",
-    "Agriculture",
-    "Manufacturing",
-    "Education",
-    "Finance",
-    "Other",
+    "Non Technology"
   ];
 
   const fundraisercost = [
@@ -137,29 +135,27 @@ export default function StartupCreatePage() {
   if (startStep === 0) {
     // Step 0: Ask for email
     return (
-      <div className="min-h-screen pt-24 pb-16 flex items-center justify-center">
-        <div className="bg-white rounded-xl shadow-md p-8 max-w-md w-full">
-          <h1 className="text-xl font-bold mb-4 text-center">
-            Enter Your Email to Begin
-          </h1>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-white py-24 px-4">
+        <div className="bg-white rounded-2xl shadow-lg p-10 max-w-lg w-full border border-gray-100">
+          <h1 className="text-2xl font-bold mb-6 text-center text-blue-700">Enter Your Email to Begin</h1>
           <form
             onSubmit={(e) => {
               e.preventDefault();
               if (startEmail) setStartStep(1);
             }}
-            className="space-y-6"
+            className="space-y-8"
           >
             <Input
               type="email"
               placeholder="Email Address"
-              className="w-full"
+              className="w-full h-12 text-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
               value={startEmail}
               onChange={(e) => setStartEmail(e.target.value)}
               required
             />
             <Button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700"
+              className="w-full h-12 text-lg bg-blue-600 hover:bg-blue-700 rounded-lg shadow"
             >
               Get Started
             </Button>
@@ -172,30 +168,30 @@ export default function StartupCreatePage() {
   if (startStep === 1) {
     // Step 1: Choose flow
     return (
-      <div className="min-h-screen pt-24 pb-16 relative">
-        <div className="container mx-auto px-4 max-w-4xl">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white py-24 px-4 flex items-center justify-center">
+        <div className="container mx-auto px-6 max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
-            <h1 className="text-3xl font-bold mb-2">Create Your Project</h1>
-            <p className="text-gray-600">
-              Choose how you'd like to proceed with your project creation
+            <h1 className="text-4xl font-extrabold mb-4 text-blue-700">Create Your Project</h1>
+            <p className="text-lg text-gray-600">
+              Choose how you&apos;d like to proceed with your project creation
             </p>
           </motion.div>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-10">
             {/* Self-Direct Option */}
             <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200"
+              whileHover={{ scale: 1.03 }}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 transition-all duration-200"
             >
-              <div className="p-6">
-                <div className="flex items-center mb-4">
-                  <div className="p-3 rounded-full bg-blue-100 mr-4">
+              <div className="p-8">
+                <div className="flex items-center mb-6">
+                  <div className="p-4 rounded-full bg-blue-100 mr-4">
                     <svg
-                      className="w-6 h-6 text-blue-600"
+                      className="w-7 h-7 text-blue-600"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -209,11 +205,11 @@ export default function StartupCreatePage() {
                       />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-semibold">Self Direct</h3>
+                  <h3 className="text-2xl font-semibold text-blue-700">Self Direct</h3>
                 </div>
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-600 mb-8 text-base">
                   I would like to use BoleStarter to host my fundraise to
-                  collect backer commitment from BoleStarter's networks
+                  collect backer commitment from BoleStarter&apos;s networks
                 </p>
 
                 <Button
@@ -221,7 +217,7 @@ export default function StartupCreatePage() {
                     setCreationType("self");
                     setStartStep(2);
                   }}
-                  className="w-full bg-blue-600 hover:bg-blue-700"
+                  className="w-full h-12 text-lg bg-blue-600 hover:bg-blue-700 rounded-lg shadow"
                 >
                   GET STARTED
                 </Button>
@@ -230,14 +226,14 @@ export default function StartupCreatePage() {
 
             {/* BoleStarter Team Option */}
             <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200"
+              whileHover={{ scale: 1.03 }}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 transition-all duration-200"
             >
-              <div className="p-6">
-                <div className="flex items-center mb-4">
-                  <div className="p-3 rounded-full bg-blue-100 mr-4">
+              <div className="p-8">
+                <div className="flex items-center mb-6">
+                  <div className="p-4 rounded-full bg-blue-100 mr-4">
                     <svg
-                      className="w-6 h-6 text-blue-600"
+                      className="w-7 h-7 text-blue-600"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -251,10 +247,10 @@ export default function StartupCreatePage() {
                       />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-semibold">BoleStarter Team</h3>
+                  <h3 className="text-2xl font-semibold text-blue-700">BoleStarter Team</h3>
                 </div>
-                <p className="text-gray-600 mb-6">
-                  I'd like the BoleStarter team to create my pitch deck,
+                <p className="text-gray-600 mb-8 text-base">
+                  I&apos;d like the BoleStarter team to create my pitch deck,
                   research prospective investors that may be interested, and
                   support my project more
                 </p>
@@ -264,7 +260,7 @@ export default function StartupCreatePage() {
                     setCreationType("team");
                     setStartStep(2);
                   }}
-                  className="w-full bg-blue-600 hover:bg-blue-700"
+                  className="w-full h-12 text-lg bg-blue-600 hover:bg-blue-700 rounded-lg shadow"
                 >
                   GET STARTED
                 </Button>
@@ -278,10 +274,10 @@ export default function StartupCreatePage() {
 
   if (creationType === "self") {
     return (
-      <div className="min-h-screen pt-24 pb-16 relative">
-        <div className="container mx-auto px-4 max-w-3xl">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white py-24 px-4 flex items-center justify-center">
+        <div className="container mx-auto px-6 max-w-3xl">
           {/* Navigation */}
-          <div className="flex items-center mb-8">
+          <div className="flex items-center mb-10">
             <Button
               variant="ghost"
               onClick={() => {
@@ -293,17 +289,17 @@ export default function StartupCreatePage() {
               <ArrowLeft className="w-5 h-5 mr-2" /> Back
             </Button>
             <div className="flex-1">
-              <h1 className="text-2xl font-bold">Create Your Project</h1>
-              <div className="flex mt-2">
+              <h1 className="text-3xl font-extrabold text-blue-700">Create Your Project</h1>
+              <div className="flex mt-3">
                 <div
                   className={`flex items-center ${
                     currentStep === 0
-                      ? "text-blue-600 font-medium"
+                      ? "text-blue-600 font-semibold"
                       : "text-gray-500"
                   }`}
                 >
                   <div
-                    className={`w-6 h-6 rounded-full flex items-center justify-center mr-2 ${
+                    className={`w-7 h-7 rounded-full flex items-center justify-center mr-2 ${
                       currentStep === 0
                         ? "bg-blue-600 text-white"
                         : "bg-gray-200"
@@ -311,7 +307,7 @@ export default function StartupCreatePage() {
                   >
                     1
                   </div>
-                  <span>User Information</span>
+                  <span className="text-base">User Information</span>
                 </div>
                 <div className="mx-4 flex items-center text-gray-400">
                   <ChevronRight className="w-5 h-5" />
@@ -319,12 +315,12 @@ export default function StartupCreatePage() {
                 <div
                   className={`flex items-center ${
                     currentStep === 1
-                      ? "text-blue-600 font-medium"
+                      ? "text-blue-600 font-semibold"
                       : "text-gray-500"
                   }`}
                 >
                   <div
-                    className={`w-6 h-6 rounded-full flex items-center justify-center mr-2 ${
+                    className={`w-7 h-7 rounded-full flex items-center justify-center mr-2 ${
                       currentStep === 1
                         ? "bg-blue-600 text-white"
                         : "bg-gray-200"
@@ -332,7 +328,7 @@ export default function StartupCreatePage() {
                   >
                     2
                   </div>
-                  <span>Company Information</span>
+                  <span className="text-base">Company Information</span>
                 </div>
               </div>
             </div>
@@ -342,12 +338,12 @@ export default function StartupCreatePage() {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="bg-white rounded-xl shadow-sm p-6"
+              className="bg-white rounded-2xl shadow-lg p-10 border border-gray-100"
             >
-              <h2 className="text-xl font-bold mb-6">User Information</h2>
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
+              <h2 className="text-2xl font-bold mb-8 text-blue-700">User Information</h2>
+              <form className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-3">
                     <Label htmlFor="firstName">First Name*</Label>
                     <Input
                       id="firstName"
@@ -355,9 +351,10 @@ export default function StartupCreatePage() {
                       value={userFormData.firstName}
                       onChange={handleUserInputChange}
                       required
+                      className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                     />
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <Label htmlFor="lastName">Last Name*</Label>
                     <Input
                       id="lastName"
@@ -365,12 +362,13 @@ export default function StartupCreatePage() {
                       value={userFormData.lastName}
                       onChange={handleUserInputChange}
                       required
+                      className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-3">
                     <Label htmlFor="email">Email Address*</Label>
                     <Input
                       id="email"
@@ -379,9 +377,10 @@ export default function StartupCreatePage() {
                       value={userFormData.email}
                       onChange={handleUserInputChange}
                       required
+                      className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                     />
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <Label htmlFor="phone">Phone*</Label>
                     <Input
                       id="phone"
@@ -390,11 +389,12 @@ export default function StartupCreatePage() {
                       value={userFormData.phone}
                       onChange={handleUserInputChange}
                       required
+                      className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Label htmlFor="linkedIn">LinkedIn Profile URL</Label>
                   <Input
                     id="linkedIn"
@@ -403,14 +403,15 @@ export default function StartupCreatePage() {
                     value={userFormData.linkedIn}
                     onChange={handleUserInputChange}
                     placeholder="https://www.linkedin.com/in/your-profile"
+                    className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                   />
                 </div>
 
-                <div className="flex justify-end pt-4">
+                <div className="flex justify-end pt-6">
                   <Button
                     type="button"
                     onClick={() => setCurrentStep(1)}
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="h-11 text-lg bg-blue-600 hover:bg-blue-700 rounded-lg shadow"
                   >
                     Continue <ChevronRight className="w-4 h-4 ml-2" />
                   </Button>
@@ -421,11 +422,11 @@ export default function StartupCreatePage() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="bg-white rounded-xl shadow-sm p-6"
+              className="bg-white rounded-2xl shadow-lg p-10 border border-gray-100"
             >
-              <h2 className="text-xl font-bold mb-6">Company Information</h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
+              <h2 className="text-2xl font-bold mb-8 text-blue-700">Company Information</h2>
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="space-y-3">
                   <Label htmlFor="companyName">Company or Product Name*</Label>
                   <Input
                     id="companyName"
@@ -434,10 +435,11 @@ export default function StartupCreatePage() {
                     onChange={handleCompanyInputChange}
                     placeholder="Example: Ethio Power Bank"
                     required
+                    className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Label htmlFor="companyOverview">
                     Quick Pitch / Company Overview*
                   </Label>
@@ -449,12 +451,13 @@ export default function StartupCreatePage() {
                     placeholder="Example: Solar Charger Power Bank"
                     rows={3}
                     required
+                    className="text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="industry">Industry*</Label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <Label htmlFor="industry">Category*</Label>
                     <Select
                       value={companyFormData.industry}
                       onValueChange={(value) =>
@@ -473,7 +476,7 @@ export default function StartupCreatePage() {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <Label htmlFor="fundingGoal">Funding Goal*</Label>
                     <Select
                       value={companyFormData.fundingGoal}
@@ -495,7 +498,7 @@ export default function StartupCreatePage() {
                   </div>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Label htmlFor="campaignDuration">
                     Campaign Duration (max 90 days)*
                   </Label>
@@ -508,37 +511,101 @@ export default function StartupCreatePage() {
                     value={companyFormData.campaignDuration}
                     onChange={handleCompanyInputChange}
                     required
+                    className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label>Upload Your Video Pitch (max 3min)</Label>
-                  <div className="border-2 border-dashed rounded-lg p-6 text-center">
-                    <Upload className="w-10 h-10 mx-auto text-gray-400 mb-2" />
-                    <p className="text-sm text-gray-600">
-                      Drag and drop your video file here, or click to browse
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">
-                      Supported formats: MP4, MOV (Max 50MB)
-                    </p>
-                    <Input
-                      type="file"
-                      className="hidden"
-                      id="videoUpload"
-                      accept="video/mp4,video/quicktime"
-                    />
-                    <Label
-                      htmlFor="videoUpload"
-                      className="inline-block mt-3 px-4 py-2 bg-blue-50 text-blue-600 rounded-md text-sm font-medium cursor-pointer hover:bg-blue-100"
-                    >
-                      Select File
-                    </Label>
+                <div className="space-y-3">
+                  <Label htmlFor="videoLink">Video Pitch Link (max 3min)</Label>
+                  <Input
+                    id="videoLink"
+                    name="videoLink"
+                    type="url"
+                    placeholder="Paste your video link here (YouTube, Vimeo, etc.)"
+                    className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                    required
+                  />
+                  <p className="text-xs text-gray-500 mt-2">Supported: YouTube, Vimeo, Google Drive, etc.</p>
+                </div>
+
+                {/* Banking Information Section */}
+                <div className="space-y-3 pt-4">
+                  <h3 className="text-lg font-semibold text-blue-700 mb-2">Banking Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <Label htmlFor="bankName">Bank Name*</Label>
+                      <Select
+                        name="bankName"
+                        required
+                        onValueChange={(value) => handleSelectChange("bankName", value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your bank" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Commercial Bank of Ethiopia">Commercial Bank of Ethiopia</SelectItem>
+                          <SelectItem value="Awash Bank">Awash Bank</SelectItem>
+                          <SelectItem value="Dashen Bank">Dashen Bank</SelectItem>
+                          <SelectItem value="Abyssinia Bank">Abyssinia Bank</SelectItem>
+                          <SelectItem value="Cooperative Bank of Oromia">Cooperative Bank of Oromia</SelectItem>
+                          <SelectItem value="Nib International Bank">Nib International Bank</SelectItem>
+                          <SelectItem value="United Bank">United Bank</SelectItem>
+                          <SelectItem value="Wegagen Bank">Wegagen Bank</SelectItem>
+                          <SelectItem value="Oromia International Bank">Oromia International Bank</SelectItem>
+                          <SelectItem value="Berhan Bank">Berhan Bank</SelectItem>
+                          <SelectItem value="Lion International Bank">Lion International Bank</SelectItem>
+                          <SelectItem value="Zemen Bank">Zemen Bank</SelectItem>
+                          <SelectItem value="Enat Bank">Enat Bank</SelectItem>
+                          <SelectItem value="Addis International Bank">Addis International Bank</SelectItem>
+                          <SelectItem value="Bunna International Bank">Bunna International Bank</SelectItem>
+                          <SelectItem value="Abay Bank">Abay Bank</SelectItem>
+                          <SelectItem value="Debub Global Bank">Debub Global Bank</SelectItem>
+                          <SelectItem value="Amhara Bank">Amhara Bank</SelectItem>
+                          <SelectItem value="Hijra Bank">Hijra Bank</SelectItem>
+                          <SelectItem value="Goh Betoch Bank">Goh Betoch Bank</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-3">
+                      <Label htmlFor="accountName">Account Name*</Label>
+                      <Input
+                        id="accountName"
+                        name="accountName"
+                        type="text"
+                        placeholder="e.g. John Doe"
+                        className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <Label htmlFor="accountNumber">Account Number*</Label>
+                      <Input
+                        id="accountNumber"
+                        name="accountNumber"
+                        type="text"
+                        placeholder="e.g. 1234567890"
+                        className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <Label htmlFor="iban">IBAN/SWIFT (optional)</Label>
+                      <Input
+                        id="iban"
+                        name="iban"
+                        type="text"
+                        placeholder="e.g. SWIFT/IBAN code"
+                        className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-2">
+                <div className="flex items-start space-x-3">
                   <Checkbox id="terms" required />
-                  <Label htmlFor="terms" className="text-sm">
+                  <Label htmlFor="terms" className="text-base">
                     I agree to the{" "}
                     <button
                       type="button"
@@ -554,17 +621,18 @@ export default function StartupCreatePage() {
                   </Label>
                 </div>
 
-                <div className="flex justify-between pt-4">
+                <div className="flex justify-between pt-6">
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setCurrentStep(0)}
+                    className="py-2 text-md rounded-lg"
                   >
                     <ArrowLeft className="w-4 h-4 mr-2" /> Back
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="py-2 text-md bg-blue-600 hover:bg-blue-700 rounded-lg shadow"
                   >
                     Create Project
                   </Button>
@@ -579,8 +647,8 @@ export default function StartupCreatePage() {
 
   if (creationType === "team") {
     return (
-      <div className="min-h-screen pt-24 pb-16 relative">
-        <div className="container mx-auto px-4 max-w-3xl">
+      <div className="min-h-screen pt-24 pb-16 relative bg-gradient-to-r from-blue-50 to-white">
+        <div className="container mx-auto px-4 max-w-4xl">
           <div className="flex items-center mb-8">
             <Button
               variant="ghost"
@@ -600,169 +668,217 @@ export default function StartupCreatePage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-xl shadow-sm p-6"
+              className="bg-white rounded-2xl shadow-lg p-10 border border-gray-100"
             >
-              <h2 className="text-xl font-bold mb-6">Your Information</h2>
+              <h2 className="text-2xl font-bold mb-8 text-blue-700">Your Information</h2>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
                   setTeamStep(1);
                 }}
-                className="space-y-6"
+                className="space-y-8"
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-3">
                     <Label htmlFor="teamFirstName">First Name*</Label>
-                    <Input id="teamFirstName" required />
+                    <Input id="teamFirstName" name="teamFirstName" required className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <Label htmlFor="teamLastName">Last Name*</Label>
-                    <Input id="teamLastName" required />
+                    <Input id="teamLastName" name="teamLastName" required className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
                   </div>
-                  <div className="space-y-2">
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-3">
                     <Label htmlFor="teamEmail">Email Address*</Label>
-                    <Input id="teamEmail" type="email" required />
+                    <Input id="teamEmail" name="teamEmail" type="email" required className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <Label htmlFor="teamPhone">Phone*</Label>
-                    <Input id="teamPhone" type="tel" required />
+                    <Input id="teamPhone" name="teamPhone" type="tel" required className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
                   </div>
                 </div>
-                <div className="space-y-2 mt-4">
+                <div className="space-y-3 pt-2">
                   <Label htmlFor="teamCompany">Company Name*</Label>
-                  <Input id="teamCompany" required />
+                  <Input id="teamCompany" name="teamCompany" required className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
                 </div>
-                <div className="space-y-2 mt-4">
-                  <Label htmlFor="teamDescription">
-                    Brief Description of Your Project*
-                  </Label>
-                  <Textarea id="teamDescription" rows={4} required />
+                <div className="space-y-3 pt-2">
+                  <Label htmlFor="teamDescription">Brief Description of Your Project*</Label>
+                  <Textarea id="teamDescription" name="teamDescription" rows={4} required className="text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="currentState" className="text-sm font-medium">
-                    Upload Your Document
-                  </Label>
+                <div className="space-y-3 pt-2">
+                  <Label htmlFor="currentState" className="text-sm font-medium">Upload Your Document</Label>
                   <div className="border rounded-md p-4">
                     <div className="flex items-center justify-center w-full">
                       <label
                         htmlFor="currentState"
-                        className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+                        className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer bg-blue-50 hover:bg-blue-100"
                       >
                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
                           <Upload className="w-8 h-8 mb-2 text-gray-500" />
                           <p className="mb-2 text-sm text-gray-500">
-                            <span className="font-semibold">
-                              Click to upload
-                            </span>{" "}
-                            or drag and drop
+                            <span className="font-semibold">Click to upload</span> or drag and drop
                           </p>
-                          <p className="text-xs text-gray-500">
-                            PDF files only (MAX. 5MB)
-                          </p>
+                          <p className="text-xs text-gray-500">PDF files only (MAX. 5MB)</p>
                         </div>
                         <input
                           id="currentState"
                           type="file"
                           className="hidden"
                           accept=".pdf"
-                          onChange={(e) =>
-                            handleFileChange(e, setCurrentStateFile)
-                          }
+                          onChange={(e) => handleFileChange(e, setCurrentStateFile)}
                         />
                       </label>
                     </div>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="fundingGoal">
-                    My company is registered in:{" "}
-                  </Label>
-                  <Select
-                    value={companyFormData.registeredIn}
-                    onValueChange={(value) =>
-                      handleSelectChange("registeredIn", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {companies.map((range) => (
-                        <SelectItem key={range} value={range}>
-                          {range}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
+                  <div className="space-y-3">
+                    <Label htmlFor="registeredIn">My company is registered in:</Label>
+                    <Select
+                      value={companyFormData.registeredIn}
+                      onValueChange={(value) => handleSelectChange("registeredIn", value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {companies.map((range) => (
+                          <SelectItem key={range} value={range}>{range}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-3">
+                    <Label htmlFor="capitalSought">How much capital are you seeking in the raise*</Label>
+                    <Select
+                      value={companyFormData.capitalSought}
+                      onValueChange={(value) => handleSelectChange("capitalSought", value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select capital" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {fundingRanges.map((range) => (
+                          <SelectItem key={range} value={range}>{range}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="fundingGoal">
-                    How much capital are you seeking in the raise*
-                  </Label>
-                  <Select
-                    value={companyFormData.capitalSought}
-                    onValueChange={(value) =>
-                      handleSelectChange("capitalSought", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select capital" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {fundingRanges.map((range) => (
-                        <SelectItem key={range} value={range}>
-                          {range}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
+                  <div className="space-y-3">
+                    <Label htmlFor="budgetForFundraise">How much have you budgeted for costs related to your fundraise?*</Label>
+                    <Select
+                      value={companyFormData.budgetForFundraise}
+                      onValueChange={(value) => handleSelectChange("budgetForFundraise", value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select funding range" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {fundraisercost.map((range) => (
+                          <SelectItem key={range} value={range}>{range}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-3">
+                    <Label htmlFor="companyStage">My Company is:*</Label>
+                    <Select
+                      value={companyFormData.companyStage}
+                      onValueChange={(value) => handleSelectChange("companyStage", value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select funding range" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {industries.map((range) => (
+                          <SelectItem key={range} value={range}>{range}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="fundingGoal">
-                    How much have you budgeted for costs related to your
-                    fundraise?*
-                  </Label>
-                  <Select
-                    value={companyFormData.budgetForFundraise}
-                    onValueChange={(value) =>
-                      handleSelectChange("budgetForFundraise", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select funding range" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {fundraisercost.map((range) => (
-                        <SelectItem key={range} value={range}>
-                          {range}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+
+                {/* Banking Information Section */}
+                <div className="space-y-3 pt-4">
+                  <h3 className="text-lg font-semibold text-blue-700 mb-2">Banking Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <Label htmlFor="bankName">Bank Name*</Label>
+                      <Select
+                        name="bankName"
+                        required
+                        onValueChange={(value) => handleSelectChange("bankName", value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your bank" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Commercial Bank of Ethiopia">Commercial Bank of Ethiopia</SelectItem>
+                          <SelectItem value="Awash Bank">Awash Bank</SelectItem>
+                          <SelectItem value="Dashen Bank">Dashen Bank</SelectItem>
+                          <SelectItem value="Abyssinia Bank">Abyssinia Bank</SelectItem>
+                          <SelectItem value="Cooperative Bank of Oromia">Cooperative Bank of Oromia</SelectItem>
+                          <SelectItem value="Nib International Bank">Nib International Bank</SelectItem>
+                          <SelectItem value="United Bank">United Bank</SelectItem>
+                          <SelectItem value="Wegagen Bank">Wegagen Bank</SelectItem>
+                          <SelectItem value="Oromia International Bank">Oromia International Bank</SelectItem>
+                          <SelectItem value="Berhan Bank">Berhan Bank</SelectItem>
+                          <SelectItem value="Lion International Bank">Lion International Bank</SelectItem>
+                          <SelectItem value="Zemen Bank">Zemen Bank</SelectItem>
+                          <SelectItem value="Enat Bank">Enat Bank</SelectItem>
+                          <SelectItem value="Addis International Bank">Addis International Bank</SelectItem>
+                          <SelectItem value="Bunna International Bank">Bunna International Bank</SelectItem>
+                          <SelectItem value="Abay Bank">Abay Bank</SelectItem>
+                          <SelectItem value="Debub Global Bank">Debub Global Bank</SelectItem>
+                          <SelectItem value="Amhara Bank">Amhara Bank</SelectItem>
+                          <SelectItem value="Hijra Bank">Hijra Bank</SelectItem>
+                          <SelectItem value="Goh Betoch Bank">Goh Betoch Bank</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-3">
+                      <Label htmlFor="accountName">Account Name*</Label>
+                      <Input
+                        id="accountName"
+                        name="accountName"
+                        type="text"
+                        placeholder="e.g. John Doe"
+                        className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <Label htmlFor="accountNumber">Account Number*</Label>
+                      <Input
+                        id="accountNumber"
+                        name="accountNumber"
+                        type="text"
+                        placeholder="e.g. 1234567890"
+                        className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <Label htmlFor="iban">IBAN/SWIFT (optional)</Label>
+                      <Input
+                        id="iban"
+                        name="iban"
+                        type="text"
+                        placeholder="e.g. SWIFT/IBAN code"
+                        className="h-11 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="mycompanyis">My Company is:*</Label>
-                  <Select
-                    value={companyFormData.companyStage}
-                    onValueChange={(value) =>
-                      handleSelectChange("companyStage", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select funding range" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {industries.map((range) => (
-                        <SelectItem key={range} value={range}>
-                          {range}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex items-start space-x-2 mt-6">
+
+                <div className="flex items-start space-x-3 mt-6">
                   <Checkbox id="teamTerms" required />
-                  <Label htmlFor="teamTerms" className="text-sm">
+                  <Label htmlFor="teamTerms" className="text-base">
                     I agree to the{" "}
                     <button
                       type="button"
@@ -780,7 +896,7 @@ export default function StartupCreatePage() {
                 <div className="flex justify-end pt-6">
                   <Button
                     type="submit"
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="py-2 text-md bg-blue-600 hover:bg-blue-700 rounded-lg shadow"
                   >
                     Continue
                   </Button>
@@ -846,7 +962,7 @@ export default function StartupCreatePage() {
                       {expandedSection === "step2" && (
                         <div className="p-4 bg-blue-50">
                           <p className="text-sm text-gray-600">
-                            Take your slides and documents - we'll craft them
+                            Take your slides and documents - we&apos;ll craft them
                             into beautiful, persuasive pitch decks that win
                             funding.
                           </p>
